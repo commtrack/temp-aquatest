@@ -1,5 +1,6 @@
 import datetime
-from django.db import models
+
+from django.contrib.gis.db import models
 
 from locations.models import Location
 
@@ -24,9 +25,31 @@ class WqmArea(WqmLocation):
     def __unicode__(self):
         return self.name
 
+class DelivarySystem(models.Model):
+    name = models.CharField(max_length=100, 
+                            help_text="house connection, public tap, borehole, protected spring, unprotected spring, river, dam or lake, reservoir,distribution system")
+    
+    def __unicode__(self):
+        return self.name
+
 class SamplingPoint(WqmLocation):
     """ The point the tests are done """
+    
+    POINT_TYPE_CHOICES = (
+                                  ("ground", "Ground"),
+                                  ("surface","Surface"),
+                                  )
+    TREATEMENT_CHOICES = (
+                          ('treated', 'Treated'),
+                          ('untreated', 'Untreated'),
+                          )
     wqmarea = models.ForeignKey(WqmArea)
+    point_type = models.CharField(max_length=30, choices=POINT_TYPE_CHOICES)
+    delivary_system = models.ForeignKey(DelivarySystem)
+    treatement = models.CharField(max_length=30, choices=TREATEMENT_CHOICES)
+    point = models.PointField(blank=True)
+    
+    objects = models.GeoManager()
 
     def __unicode__(self):
         return self.name
