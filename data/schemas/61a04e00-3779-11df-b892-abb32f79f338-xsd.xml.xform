@@ -1,0 +1,198 @@
+<h:html xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns="http://www.w3.org/2002/xforms"
+	  xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	  xmlns:jr="http://openrosa.org/javarosa">
+<h:head>
+    <h:title>Field Tests Form</h:title>
+    <meta jr:name="physchem_test_report_001"/>
+    <model>
+    <itext>
+ 	 	<translation lang="English"  default="">
+    			<text id="PointCode">
+     	 			<value>Where was the sample taken?</value>
+    			</text>
+			<text id="AssessmentDate">
+     	 			<value>Sample Date</value>
+    			</text>
+			<text id="turbidity">
+     	 			<value>Turbidity</value>
+    			</text>
+			<text id="conductivity">
+     	 			<value>Electrical Conductivity</value>
+    			</text>
+			<text id="ph">
+     	 			<value>pH reading</value>
+    			</text>
+			<text id="chlorine">
+     	 			<value>Free Chlorine</value>
+    			</text>
+    			<text id="Temperature">
+     	 			<value>Temp (deg. C)</value>
+    			</text>
+    			<text id="Weather">
+     	 			<value>Weather conditions</value>
+    			</text>
+			<text id="EnteredBy">
+     	 			<value>Your name</value>
+    			</text>
+			<text id="Comments">
+     	 			<value>Any other comments</value>
+    			</text>
+  		</translation>
+		<translation lang="Afrikaans">
+    			<text id="PointCode">
+     	 			<value>Waar was die monster geneem?</value>
+    			</text>
+			<text id="AssessmentDate">
+     	 			<value>Datum (waarop monster geneem is)</value>
+    			</text>
+			<text id="turbidity">
+     	 			<value>Troebelheid</value>
+    			</text>
+			<text id="conductivity">
+     	 			<value>Elektriese geleibaarheid</value>
+    			</text>
+			<text id="ph">
+     	 			<value>pH lesing</value>
+    			</text>
+			<text id="chlorine">
+     	 			<value>Chloor</value>
+    			</text>
+    			<text id="Temperature">
+     	 			<value>Temp (deg. C)</value>
+    			</text>
+    			<text id="Weather">
+     	 			<value>Weer</value>
+    			</text>
+			<text id="EnteredBy">
+     	 			<value>Jou naam</value>
+    			</text>
+			<text id="Comments">
+     	 			<value>Einige ander komments</value>
+    			</text>
+  		</translation>
+	</itext>
+	<instance>
+		<physchem_test xmlns="http://www.aquatest-za.org/physchem">
+			<Meta>
+				<formName>physchem_test_report_001</formName>
+				<formVersion>0.0.1</formVersion>
+			</Meta>
+				
+			<Assessment>
+				<PointCode />
+				<AssessmentDate />
+				<Temperature />
+				<Weather />
+			</Assessment>
+
+         		<TestResults>
+					<turbidity />
+	        		<conductivity />     
+	        		<ph />
+	        		<chlorine />
+	        	</TestResults>
+
+         		<DataCapture>
+					<EnteredBy />
+					<DeviceID />
+					<Comments />
+				</DataCapture>
+		</physchem_test>
+	</instance>
+		
+<bind id="PointCode" nodeset="/physchem_test/Assessment/PointCode" type="xsd:string" required="true()" />
+<bind id="AssessmentDate" nodeset="/physchem_test/Assessment/AssessmentDate" type="xsd:date" required="true()" jr:preload="date" jr:preloadParams="today"/>
+<bind id="turbidity" nodeset="/physchem_test/TestResults/turbidity" type="xsd:decimal" required="false()"/>
+<bind id="conductivity" nodeset="/physchem_test/TestResults/conductivity" type="xsd:decimal" required="false()"/>
+<bind id="ph" nodeset="/physchem_test/TestResults/ph" type="xsd:decimal" required="false()"/>
+<bind id="chlorine" nodeset="/physchem_test/TestResults/chlorine" type="xsd:decimal" required="false()"/>
+<bind id="Temperature" nodeset="/physchem_test/Assessment/Temperature" type="xsd:decimal" required="false()"/>
+<bind id="Weather" nodeset="/physchem_test/Assessment/Weather" type="xsd:string" required="false()"/>
+<bind id="EnteredBy" nodeset="/physchem_test/DataCapture/EnteredBy" type="xsd:string" required="true()" jr:preload="property" jr:preloadParams="your-name"/>
+<bind id="DeviceID" nodeset="/physchem_test/DataCapture/DeviceID" type="xsd:string" required="true()" jr:preload="property" jr:preloadParams="DeviceID"/>
+<bind id="Comments" nodeset="/physchem_test/DataCapture/Comments" type="xsd:string" required="false()"/>
+
+</model>
+</h:head>			
+<h:body>
+
+
+<select1 bind="PointCode">
+<label ref="jr:itext('PointCode')" />
+
+<item><label>Brandvlei - Borehole</label><value>NNHMBV-005</value></item>
+<item><label>Brandvlei - Municipal Offices</label><value>NNHMBV-002</value></item>
+<item><label>Brandvlei - Brandvlei Water Treatment Works, Filters</label><value> NNHMBV-001</value></item>
+<item><label>Brandvlei - Kayalisa</label><value> NNHMBV-004</value></item>
+<item><label>Brandvlei - Rondomskrik House</label><value> NNHMBV-003</value></item>
+<item><label>Calvinia - Calvinia Storage</label><value> NNHMCA-001</value></item>
+<item><label>Calvinia - 1st Avenue - West Calvinia</label><value> NNHMCA-004</value></item>
+<item><label>Calvinia - Municipal Offices</label><value> NNHMCA-005</value></item>
+<item><label>Calvinia - Water Street House</label><value> NNHMCA-002</value></item>
+<item><label>Calvinia - Tulp Street</label><value> NNHMCA-003</value></item>
+<item><label>Calvinia - Calvinia East - De Lange Street</label><value> NCNDHC-001</value></item>
+<item><label>Calvinia - Calvinia West - Teerhak Street</label><value> NCNDHC-002</value></item>
+<item><label>Calvinia - Calvinia Water Treatment Works, Final</label><value> NNHMCA-006</value></item>
+<item><label>Calvinia - Calvinia West - Suide Street</label><value> NNHMCA-007</value></item>
+<item><label>Klipwerf - Klipwerf</label><value> NCHKLI-001</value></item>
+<item><label>Loeriesfontein - Storage</label><value> NNHMLF-002</value></item>
+<item><label>Loeriesfontein - Borehole</label><value> NNHMLF-005</value></item>
+<item><label>Loeriesfontein - Municipal Offices</label><value> NNHMLF-004</value></item>
+<item><label>Loeriesfontein - Sportsground, Tulp Street</label><value> NNHMLF-003</value></item>
+<item><label>Loeriesfontein - Loeriesfontein Skema</label><value> NCNDHL-001</value></item>
+<item><label>Loeriesfontein - Town</label><value> NNHMLF-001</value></item>
+<item><label>Melkkraal - Melkkraal</label><value> NCHMEK-001</value></item>
+<item><label>Middelpos - Town</label><value> NNHMMP-002</value></item>
+<item><label>Middelpos - Reservoir</label><value> NNHMMP-003</value></item>
+<item><label>Middelpos - Middelpos Town</label><value> NCNDHD-001</value></item>
+<item><label>Middelpos - Borehole</label><value> NNHMMP-001</value></item>
+<item><label>Nieuwoudtville - Municipal Offices</label><value> NNHMNV-001</value></item>
+<item><label>Nieuwoudtville - Borehole</label><value> NNHMNV-004</value></item>
+<item><label>Nieuwoudtville - Open Source</label><value> NNHMNV-005</value></item>
+<item><label>Nieuwoudtville - Proteaville</label><value> NNHMNV-002</value></item>
+<item><label>Nieuwoudtville - Caravan Park</label><value> NNHMNV-003</value></item>
+
+</select1>
+
+<input bind="AssessmentDate">
+<label ref="jr:itext('AssessmentDate')" />
+</input>
+
+<input bind="turbidity">
+<label ref="jr:itext('turbidity')" />
+</input>
+
+<input bind="conductivity">
+<label ref="jr:itext('conductivity')" />
+</input>
+
+<input bind="chlorine">
+<label ref="jr:itext('chlorine')" />
+</input>
+
+<input bind="ph">
+<label ref="jr:itext('ph')" />
+</input>
+
+<input bind="Temperature">
+<label ref="jr:itext('Temperature')" />
+</input>
+
+<input bind="Weather">
+<label ref="jr:itext('Weather')" />
+</input>
+
+<input bind="EnteredBy">
+<label ref="jr:itext('EnteredBy')" />
+</input>
+
+<input bind="Comments">
+<label ref="jr:itext('Comments')" />
+</input>
+
+	 
+</h:body>
+</h:html>
+

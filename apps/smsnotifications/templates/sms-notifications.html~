@@ -1,0 +1,38 @@
+{% extends "layout-split-2.html" %}
+{% load pagination-tags %}
+{% load region-tags %}
+
+{% block hq-stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}/domain/stylesheets/sfb.css?version=3"/>
+{% endblock hq-stylesheets %}
+
+<!--Reporter and ReporterProfile will make up a tester and tie him to a domain
+here its easier to live to just change the ui to create the feelin of tester-->
+
+{% block right %}
+<!--<div class="module">-->
+<a href="/smsnotification"> <<-- Back </a>
+<div class="span-12" style="margin-left:auto; margin-right:auto; float:none">
+<h3>{% if notification %}Edit SMS Notification for - {{ notification.authorised_sampler.full_name }}{% else %}Add a SMS Notification{% endif %}</h3>
+    <form class="sfb clear" method="post" id="fm-notifications-add" action="/smsnotification/{% if notification %}{{ notification.pk }}{% else %}add{% endif %}">
+	{% for field in form %}
+        <div  class="span-5 clear">
+	  <div style="float:right;">
+	    {{ field.errors }}
+            <label>{{ field.label_tag }}</label>
+	  </div>
+        </div>
+        <div class="span-2">
+	  {{ field }}
+	</div>
+        
+    {% endfor %}
+    <p>
+	<input type="submit" value="{% if notification %}Save Changes{% else %}Add SMS notification{% endif %}" />{% if notification %}
+        <input type="submit" name="delete" value="Delete Notification" />{% endif %}
+    </p>
+    </form>
+   
+</div>
+<div class="sfb clear">&zwnj;</div>
+{% endblock %}

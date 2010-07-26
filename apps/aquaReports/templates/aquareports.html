@@ -1,0 +1,70 @@
+{% extends "hq/base.html" %}
+{% load i18n %}
+{% load wqm-tags %}
+{% load pagination-tags %}
+
+{% block title %}{% trans "Reports" %}{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{MEDIA_URL}}/graphing/flot/jquery.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}/graphing/flot/jquery.flot.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}/aquatest/js/selector.js"></script>
+{% endblock %}
+
+{% block org_content %}
+<h2>{%trans "AquaTest Reports index"%}</h2>
+
+<br>
+
+
+
+<div class="module">
+    <div style="text-align:right;">
+        <a href="/pdfview" class="add"> Export pdf </a> ||<a href="" class="add"> Export csv </a> || <a href="" class="add"> Export Excel </a>
+    </div>
+    <table>
+            <thead>
+                    <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Sample point</th>
+                            <th scope="col">Tester</th>
+                            <th scope="col">Param1</th>
+                            <th scope="col">Param2</th>
+                            <!--<th scope="col">Samples (All time)</th>-->
+                            <th scope="col">Mark</th>
+                    </tr>
+            </thead>
+            <tbody>{% if points.object_list %}{% for point in points.object_list %}
+                    <tr>
+                            <td></td>
+                            <td>{% if point.name %}{{ point.name }}{% else %} <span class="unknown">Unknown</span>{% endif %}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <!--<td>{% if point.wqmarea %}{{ point.wqmarea }}{% else %} <span class="unknown">Unknown</span>{% endif %}</td>-->
+                            <!--<td>{% if point.wqmarea.wqmauthority %}{{ point.wqmarea.wqmauthority }}{% else %}<span class="na">None</span>{% endif %}</td>-->
+                            <!--{% get_points_with_counts point %}-->
+                            <td>
+                                <!--<a href="/samplingpoints/{{ point.pk }}">Edit</a> |
+                                <a href="/samplingpoints/{{ point.pk }}/delete">Delete</a>-->
+                            </td>
+                    </tr>{% endfor %}{% else %}
+
+                     <tr class="no-data">
+                                <td colspan="3">
+                                        No Sampling Point Yet.
+                                        <a href="/samplingpoints/add" class="add">
+                                                Add a Sampling point
+                                        </a>
+                                </td>
+                        </tr>{% endif %}
+                </tbody>
+                <tfoot>
+                        <tr>
+                                <td colspan="3">
+                                        {% paginator points %}
+                                </td>
+                        </tr>
+                </tfoot>
+	</table>
+</div>
+{% endblock %}

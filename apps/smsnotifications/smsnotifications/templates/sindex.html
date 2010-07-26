@@ -1,0 +1,60 @@
+{% extends "hq/base.html" %}
+{% load i18n %}
+{% load notification-tags %}
+{% load pagination-tags %}
+
+{% block title %}{% trans "SMS Notifications" %}{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{MEDIA_URL}}/graphing/flot/jquery.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}/graphing/flot/jquery.flot.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}/aquatest/js/selector.js"></script>
+{% endblock %}
+
+{% block org_content %}
+<div class="module">
+	<h2>SMS Notifications</h2>
+        <br>
+        <div style="text-align:right;">
+            <a href="/smsnotification/add" class="add"> Add a new SMS notification </a>
+        </div>
+        <table>
+		<thead>
+			<tr>
+				<th scope="col">Point name</th>
+                                <th scope="col">Area</th>
+                                <th scope="col">Tester name</th>
+				<th scope="col">Notification type</th>
+                                <th scope="col">Digest</th>
+                                <th scope="col">Actions</th>
+			</tr>
+		</thead>
+                <tbody>{% if notifications.object_list %}{% for notification in notifications.object_list %}
+			<tr>
+				<td>{{ notification.sampling_point }}</td>
+                                <td>{{ notification.sampling_point.wqmarea.name }}</td>
+				<td>{{ notification.authorised_sampler.full_name }}</td>
+                                <td>{{ notification.notification_type }}</td>
+                                <td>{{ notification.digest }}</td>
+                                <td>
+                                    <a href="/smsnotification/{{ notification.pk }}">Edit</a> |
+                                    <a href="/smsnotification/{{ notification.pk }}/delete">Delete</a>
+                                </td>
+			</tr>{% endfor %}{% else %}
+                        <tr>
+                            <td> No any notifications. 
+                                <a href="/smsnotification/add" >Add a new sms notification</a></td>
+                        </tr>
+                        {% endif %}
+                </tbody>
+                <tfoot>
+			<tr>
+				<td colspan="3">
+					{% paginator notifications %}
+				</td>
+			</tr>
+		</tfoot>
+        </table>
+</div>
+
+
+{% endblock %}

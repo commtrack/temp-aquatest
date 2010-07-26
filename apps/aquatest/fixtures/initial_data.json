@@ -1,0 +1,38 @@
+[
+  {
+    "pk": 1, 
+    "model": "domain.domain", 
+    "fields": {
+      "is_active": 1, 
+      "name": "itido"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "domain.membership", 
+    "fields": {
+      "domain": 1, 
+      "is_active": 1, 
+      "member_type": 3, 
+      "member_id": 1
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "admin", 
+      "first_name": "", 
+      "last_name": "", 
+      "is_active": 1, 
+      "is_superuser": 1, 
+      "is_staff": 1, 
+      "last_login": "2010-03-21 12:58:04", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$00782$6f58e0570175739d19f830521fd0f98a9d8ca654", 
+      "email": "a@b.com", 
+      "date_joined": "2010-03-21 12:37:44"
+    }
+  }
+]

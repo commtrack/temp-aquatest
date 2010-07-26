@@ -1,0 +1,173 @@
+{% extends "layout-split-2.html" %}
+{% load reporters-tags %}
+{% load pagination-tags %}
+{% load testers_tags %}
+{% load region-tags %}
+
+{% block hq-stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}/domain/stylesheets/sfb.css?version=3"/>
+{% endblock hq-stylesheets %}
+
+<!--Reporter and ReporterProfile will make up a tester and tie him to a domain
+here its easier to live to just change the ui to create the feelin of tester-->
+
+{% block title %}{% if reporter %}Edit {{ reporter }}{% else %}Add a Tester{% endif %}{% endblock %}
+
+{% block right %}
+<!--<div class="module">-->
+<div class="span-12" style="margin-left:auto; margin-right:auto; float:none">
+    <form class="sfb clear" method="post" id="fm-rep-add" action="/testers/{% if reporter %}{{ reporter.pk }}{% else %}add{% endif %}">
+        <h3>{% if reporter %}Edit - {{ reporter }}{% else %}Add a Tester{% endif %}</h3>
+        <!--<div>-->
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-rep-add-alias">Username (Alias)</label>
+            </div>
+        </div>
+        <div class="span-2">
+                <input type="text" class="required" id="fm-rep-add-alias" name="alias"{% if reporter %} value="{{ reporter.alias }}"{% endif %} />
+                <!--<p class="help">Must be alphanumeric, up to 20 characters.</p>-->
+        </div>
+        
+        <!--<div>-->
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-rep-add-first_name" class="suffix">First<span class="acc"> Name</span></label>
+            </div>
+        </div>
+        <div class="span-2">
+                <input type="text" id="fm-rep-add-first_name" name="first_name"{% if reporter %} value="{{ reporter.first_name }}"{% endif %} />
+                
+        </div>
+        <!--<div>-->
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-rep-add-last_name" class="suffix">Last<span class="acc"> Name</span></label>
+            </div>
+        </div>
+        <div class="span-2">
+                <input type="text" id="fm-rep-add-last_name" name="last_name"{% if reporter %} value="{{ reporter.last_name }}"{% endif %} />     
+        </div>
+        <!--<div>-->
+<!--        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-rep-add-chw_id" class="suffix">ID</label>
+            </div>
+        </div>
+        <div class="span-2">
+                <input type="text" id="fm-rep-add-chw_id" name="chw_id"{% if reporter.chw_id %} value="{{ reporter.chw_id }}"{% endif %} />
+                
+        </div>-->
+        <!--<div>-->
+        <!--Removed a the chw_username and join the alias with the username-->
+        <!--<div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-rep-add-chw_username" class="suffix">Username</label>
+            </div>
+        </div>
+        <div class="span-2">
+                <input type="text" id="fm-rep-add-chw_username" name="chw_username"{% if reporter.chw_username %} value="{{ reporter.chw_username }}"{% endif %} />
+        </div>
+-->
+
+        {% if all_backends %}
+
+        <!--<div id="fm-rep-add-connections">-->
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label>Primary Connection:</label>
+            </div>
+        </div>
+
+        {% if connections %}{% for connection in connections %}
+         <input type="hidden" name="conn-id" value="{{ connection.pk }}" />
+         <div class="span-5 clear">
+            <div style="float:right;">
+                <select name="conn-backend">
+                        <option></option>{% for backend in all_backends %}
+                        <option value="{{ backend.pk }}"{% ifequal backend connection.backend %} selected="selected"{% endifequal %}>{{ backend.slug }}</option>{% endfor %}
+                </select>
+            </div>
+         </div>
+                <input type="text" name="conn-identity" value="{{ connection.identity }}" />
+        {% endfor %}
+        {% else %}
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <select name="conn-backend">
+                        <option selected="selected"></option>{% for backend in all_backends %}
+                        <option value="{{ backend.pk }}"{% if backend.selected %} selected="selected"{% endif %}>{{ backend.slug }}</option>{% endfor %}
+                </select>
+                <!--<input type="text" name="conn-identity" />-->
+            </div></div>
+        <input type="text" name="conn-identity" />
+        {% endif %}
+<!--</div>-->{% endif %}
+
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-rep-add-e_mail">E-Mail</label>
+            </div>
+        </div>
+        <div class="span-2">
+                <input type="text" class="required" id="fm-rep-add-e_mail" name="e_mail"{% if reporter %} value="{{ reporter.e_mail }}"{% endif %} />
+        </div>
+
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label>Primary Group</label>
+            </div>
+        </div>
+        {% if all_groups %}{% if groups %}{% for group in groups %}
+        <div class="span-2">
+            <select name="group">
+                    <option></option>{% for my_group in all_groups %}
+                    <option value="{{ my_group.pk }}" class="depth-{{ my_group.depth }}"{% ifequal my_group group %} selected="selected"{% endifequal %}>{{ my_group.title }}</option>{% endfor %}
+            </select>
+        </div>{% endfor %}{% else %}
+        <div class="span-2">
+            <select name="group">
+                    <option></option>{% for my_group in all_groups %}
+                    <option value="{{ my_group.pk }}" class="depth-{{ my_group.depth }}">{{ my_group.title }}</option>{% endfor %}
+            </select>
+        </div>{% endif %}{% else %}
+            <!--<div class="no-data">-->
+        <div class="span-2">
+            No Groups Yet.
+            <a href="/groups/add" class="add">
+                    Add a Group
+            </a>
+        </div>
+        {% endif %}
+        {% if reporter %}
+        {% region "edit-reporter" %}{% endif %}
+
+        <div class="submit">
+                <input type="submit" value="{% if reporter %}Save Changes{% else %}Add Tester{% endif %}" />{% if reporter %}
+                <input type="submit" name="delete" value="Delete {{ reporter }}" />{% endif %}
+        </div>
+    </form>
+</div>
+<div class="sfb clear">&zwnj;</div>
+
+
+<!--modify the script according to the changes made on the form-->
+<script type="text/javascript">
+	$(function() {
+
+		/* make the connection(s) div (above) clonable, so
+		 * more than one connection can be added at once */
+		var id ="#fm-rep-add-connections";
+		$(id + " > div").cloneable("connection", true);
+		$(id + " > label").text("Connection(s)");{% if all_groups %}
+
+		/* groups are also clonable */
+		var id ="#fm-rep-add-groups";
+		$(id + " > div").cloneable("groups", true);
+		$(id + " > label").text("Group(s)");{% endif %}
+
+		/* validate the form on submit */
+		$("#fm-rep-add").rs_validate();
+	});
+</script>
+{% endblock %}

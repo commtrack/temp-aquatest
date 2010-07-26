@@ -1,0 +1,188 @@
+<h:html xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns="http://www.w3.org/2002/xforms"
+	  xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	  xmlns:jr="http://openrosa.org/javarosa">
+<h:head>
+    <h:title>H2S Test Form</h:title>
+    <meta jr:name="h2s_test_report_001"/>
+    <model>
+	<itext>
+ 	 	<translation lang="English" default="">
+    			<text id="PointCode">
+     	 			<value>Where was the sample taken?</value>
+    			</text>
+			<text id="AssessmentDate">
+     	 			<value>Sample Date</value>
+    			</text>
+			<text id="h2s">
+     	 			<value>H2S test result</value>
+    			</text>
+			<text id="h2sfailed">
+     	 			<value>black (test failed)</value>
+    			</text>
+			<text id="h2spassed">
+     	 			<value>clear or murky (test passed)</value>
+    			</text>
+			<text id="h2sbatch">
+     	 			<value>H2S test batch number</value>
+    			</text>
+			<text id="EnteredBy">
+     	 			<value>Your name</value>
+    			</text>
+			<text id="Comments">
+     	 			<value>Any other comments</value>
+    			</text>
+  		</translation>
+		<translation lang="Afrikaans">
+    			<text id="PointCode">
+     	 			<value>Waar was die monster geneem?</value>
+    			</text>
+			<text id="AssessmentDate">
+     	 			<value>Datum (waarop die monster geneem is)</value>
+    			</text>
+			<text id="h2s">
+     	 			<value>H2S toets uitslag:</value>
+    			</text>
+			<text id="h2sfailed">
+     	 			<value>swart (toets gedop)</value>
+    			</text>
+			<text id="h2spassed">
+     	 			<value>skoon (toets geslaag)</value>
+    			</text>
+			<text id="h2sbatch">
+     	 			<value>H2S toets bondelnommer</value>
+    			</text>
+			<text id="EnteredBy">
+     	 			<value>Jou naam</value>
+    			</text>
+			<text id="Comments">
+     	 			<value>Einige ander komments</value>
+    			</text>
+  		</translation>
+	</itext>
+
+	<instance>
+		<h2s_test xmlns="http://www.aquatest-za.org/h2s">
+			<Meta>
+				<formName>h2s_test_report_001</formName>
+				<formVersion>0.0.1</formVersion>
+			</Meta>
+				
+			<Assessment>
+				<PointCode />
+
+        			<AssessmentDate />
+				<h2sbatch /> 
+
+         		</Assessment>
+
+         		<TestResults>
+
+	        		<h2s />
+	        	</TestResults>
+
+         		<DataCapture>
+
+	       			<EnteredBy />
+				<DeviceID />
+				<Comments />
+
+         		</DataCapture>
+		</h2s_test>
+	</instance>
+		
+<!--<bind id="SiteArea" nodeset="/h2s_test/Assessment/SiteArea" type="xsd:string" required="true()" />-->
+
+
+<bind id="PointCode" nodeset="/h2s_test/Assessment/PointCode" type="xsd:string" required="true()" />
+
+<bind id="AssessmentDate" nodeset="/h2s_test/Assessment/AssessmentDate" type="xsd:date" required="true()" jr:preload="date" jr:preloadParams="today"/>
+
+
+<bind id="h2s" nodeset="/h2s_test/TestResults/h2s" type="xsd:string" required="true()"/>
+<bind id="h2sbatch" nodeset="/h2s_test/Assessment/h2sbatch" type="xsd:int" required="true()"/>
+
+<bind id="EnteredBy" nodeset="/h2s_test/DataCapture/EnteredBy" type="xsd:string" required="true()" jr:preload="property" jr:preloadParams="your-name"/>
+<bind id="DeviceID" nodeset="/h2s_test/DataCapture/DeviceID" type="xsd:string" required="true()" jr:preload="property" jr:preloadParams="DeviceID"/>
+<bind id="Comments" nodeset="/h2s_test/DataCapture/Comments" type="xsd:string" required="false()"/>
+
+</model>
+</h:head>			
+<h:body>
+
+
+<select1 bind="PointCode">
+<label ref="jr:itext('PointCode')" />
+
+<item><label>Brandvlei - Borehole</label><value>NNHMBV-005</value></item>
+<item><label>Brandvlei - Municipal Offices</label><value>NNHMBV-002</value></item>
+<item><label>Brandvlei - Brandvlei Water Treatment Works, Filters</label><value> NNHMBV-001</value></item>
+<item><label>Brandvlei - Kayalisa</label><value> NNHMBV-004</value></item>
+<item><label>Brandvlei - Rondomskrik House</label><value> NNHMBV-003</value></item>
+<item><label>Calvinia - Calvinia Storage</label><value> NNHMCA-001</value></item>
+<item><label>Calvinia - 1st Avenue - West Calvinia</label><value> NNHMCA-004</value></item>
+<item><label>Calvinia - Municipal Offices</label><value> NNHMCA-005</value></item>
+<item><label>Calvinia - Water Street House</label><value> NNHMCA-002</value></item>
+<item><label>Calvinia - Tulp Street</label><value> NNHMCA-003</value></item>
+<item><label>Calvinia - Calvinia East - De Lange Street</label><value> NCNDHC-001</value></item>
+<item><label>Calvinia - Calvinia West - Teerhak Street</label><value> NCNDHC-002</value></item>
+<item><label>Calvinia - Calvinia Water Treatment Works, Final</label><value> NNHMCA-006</value></item>
+<item><label>Calvinia - Calvinia West - Suide Street</label><value> NNHMCA-007</value></item>
+<item><label>Klipwerf - Klipwerf</label><value> NCHKLI-001</value></item>
+<item><label>Loeriesfontein - Storage</label><value> NNHMLF-002</value></item>
+<item><label>Loeriesfontein - Borehole</label><value> NNHMLF-005</value></item>
+<item><label>Loeriesfontein - Municipal Offices</label><value> NNHMLF-004</value></item>
+<item><label>Loeriesfontein - Sportsground, Tulp Street</label><value> NNHMLF-003</value></item>
+<item><label>Loeriesfontein - Loeriesfontein Skema</label><value> NCNDHL-001</value></item>
+<item><label>Loeriesfontein - Town</label><value> NNHMLF-001</value></item>
+<item><label>Melkkraal - Melkkraal</label><value> NCHMEK-001</value></item>
+<item><label>Middelpos - Town</label><value> NNHMMP-002</value></item>
+<item><label>Middelpos - Reservoir</label><value> NNHMMP-003</value></item>
+<item><label>Middelpos - Middelpos Town</label><value> NCNDHD-001</value></item>
+<item><label>Middelpos - Borehole</label><value> NNHMMP-001</value></item>
+<item><label>Nieuwoudtville - Municipal Offices</label><value> NNHMNV-001</value></item>
+<item><label>Nieuwoudtville - Borehole</label><value> NNHMNV-004</value></item>
+<item><label>Nieuwoudtville - Open Source</label><value> NNHMNV-005</value></item>
+<item><label>Nieuwoudtville - Proteaville</label><value> NNHMNV-002</value></item>
+<item><label>Nieuwoudtville - Caravan Park</label><value> NNHMNV-003</value></item>
+
+</select1>
+
+<input bind="AssessmentDate">
+
+	<label ref="jr:itext('AssessmentDate')" />
+
+</input>
+
+     
+<select1 bind="h2s">
+
+	<label ref="jr:itext('h2s')" />
+	<item>
+		<label ref="jr:itext('h2sfailed')" />
+        	<value>positive</value> 
+	</item>
+	<item>
+        	<label ref="jr:itext('h2spassed')" />
+        	<value>negative</value>
+	</item>
+
+</select1>
+
+<input bind="h2sbatch">
+	<label ref="jr:itext('h2sbatch')" />
+</input>
+
+<input bind="EnteredBy">
+	<label ref="jr:itext('EnteredBy')" />
+</input>
+
+<input bind="Comments">
+	<label ref="jr:itext('Comments')" />
+</input>
+
+	 
+</h:body>
+</h:html>
+

@@ -1,0 +1,97 @@
+        <!--<div>-->
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-point-add-name">Name</label>
+            </div>
+        </div>
+        <div class="span-2">
+                <input type="text" class="required" id="fm-point-add-name" name="name"{% if point %} value="{{ point.name }}"{% endif %} />
+
+        </div>
+        <!--<div>-->
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-point-add-code" class="suffix">Code</label>
+            </div>
+        </div>
+        <div class="span-2">
+              <input type="text" id="fm-point-add-code" name="code"{% if point %} value="{{ point.code }}"{% endif %} />
+        </div>
+<!-- adding point type -->
+	  <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-point-add-point-type">Point Type</label>
+            </div>
+        </div>
+        <div class="span-2">
+        {% if point_types %}
+            <select name="point_type">
+                <option></option>{% for p_type in point_types %}
+                <option value="{{ p_type }}" class="depth-{{ p_type.depth }}"{% if p_type %}{% ifequal p_type point.point_type %} selected="selected"{% endifequal %}{% endif %}>{{ p_type }}</option>{% endfor %}
+            </select>
+	{% endif %}	
+	</div>
+
+<!--  adding delivary system-->
+	<div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-point-add-delivary-system">Delivary System</label>
+            </div>
+        </div>
+        {% if delivary_system %}
+            <select name="delivary_system">
+                <option></option>{% for d_sys in delivary_system %}
+                <option value="{{ d_sys.pk }}" class="depth-{{ d_sys.depth }}"{% if d_sys %}{% ifequal d_sys point.delivary_system %} selected="selected"{% endifequal %}{% endif %}>{{ d_sys.name }}</option>{% endfor %}
+            </select>
+	{% else %}        
+	      <p>No Delivary system added yet.! </p>
+	{% endif %}	
+	</div>
+
+<!--  adding treatement -->
+	<div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-point-add-name">Treatement</label>
+            </div>
+        </div>
+        <div class="span-2">
+                <input type="text" class="required" id="fm-point-add-name" name="name"{% if point %} value="{{ point.name }}"{% endif %} />
+        </div>
+
+
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label>Coordinates</label>
+            </div>
+        </div>
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-point-add-last_name" class="suffix">Latitude</span></label>
+            </div>
+        </div>
+        <div class="span-2">
+            <input type="text" id="fm-point-add-latitude" name="latitude"{% if point %}{% if point.latitude%} value="{{ point.latitude }}"{% endif %}{% endif %} />
+        </div>
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-point-add-chw_id" class="suffix">Longitude</label>
+            </div>
+        </div>
+        <div class="span-2">
+            <input type="text" id="fm-point-add-longitude" name="longitude"{% if point %}{% if point.longitude %} value="{{ point.longitude }}"{% endif %}{% endif %} />
+        </div>
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label>Wqm Area</label>
+            </div>
+        </div>
+        <div class="span-2">
+        {% if areas %}
+            <select name="wqmarea">
+                <option></option>{% for area in areas %}
+                <option value="{{ area.pk }}" class="depth-{{ area.depth }}"{% if point %}{% ifequal area point.wqmarea %} selected="selected"{% endifequal %}{% endif %}>{{ area.name }}</option>{% endfor %}
+            </select>
+	{% else %}        
+	      <p>No wqm Area added yet.! </p>
+	{% endif %}	
+	</div>

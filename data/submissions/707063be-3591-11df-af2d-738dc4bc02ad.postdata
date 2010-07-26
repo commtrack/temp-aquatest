@@ -1,0 +1,4 @@
+Content-type: text/xml
+Content-length: 591
+
+<?xml version='1.0' ?><physchem_test xmlns="http://www.aquatest-za.org/physchem"><Meta><formName>physchem_test_report_001</formName><formVersion>0.0.1</formVersion></Meta><Assessment><PointCode>NNHMBV-005</PointCode><AssessmentDate>2010-03-22</AssessmentDate><Temperature>23.0</Temperature><Weather>GOOD</Weather></Assessment><TestResults><turbidity>23.0</turbidity><conductivity>25.0</conductivity><ph>6.0</ph><chlorine>2.0</chlorine></TestResults><DataCapture><EnteredBy>ALLEN</EnteredBy><DeviceID>LWRYWILK0ZCFO61Y7XIXGMDP5</DeviceID><Comments>ADOJ</Comments></DataCapture></physchem_test>

@@ -1,0 +1,397 @@
+<h:html xmlns:h="http://www.w3.org/1999/xhtml"
+        xmlns="http://www.w3.org/2002/xforms"
+	  xmlns:ev="http://www.w3.org/2001/xml-events"
+	  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	  xmlns:jr="http://openrosa.org/javarosa">
+<h:head>
+    <h:title>H2S Test Form Intsika Yethu LM</h:title>
+    <meta jr:name="h2s_test_report_001"/>
+    <model>
+	<itext>
+ 	 	<translation lang="English" default="">
+    			<text id="PointCode">
+     	 			<value>Where was the sample taken?</value>
+    			</text>
+    		<text id="OtherName">
+     	 			<value>New sample point name</value>
+    		</text>
+			<text id="AssessmentDate">
+     	 			<value>Sample Date</value>
+    			</text>
+    		<text id="waterrunning">
+     	 			<value>Is the water running?</value>
+    		</text>
+    		<text id="waterrunningyes">
+     	 			<value>yes</value>
+    		</text>
+    		<text id="waterrunningno">
+     	 			<value>no</value>
+    		</text>
+    		<text id="supplytreated">
+     	 			<value>Is the water treated?</value>
+    		</text>
+    		<text id="supplytreatedyes">
+     	 			<value>yes, treated water</value>
+    		</text>
+    		<text id="supplytreatedno">
+     	 			<value>no, untreated water</value>
+    		</text>
+    		<text id="supplytype">
+     	 			<value>Type of source</value>
+    		</text>
+    		<text id="supplytypeborehole">
+     	 			<value>borehole</value>
+    		</text>
+    		<text id="supplytypestandpipe">
+     	 			<value>unprotected spring</value>
+    		</text>
+    		<text id="supplytypeprotectedspring">
+     	 			<value>protected spring</value>
+    		</text>
+    		<text id="supplytypeunprotectedspring">
+     	 			<value>unprotected spring</value>
+    		</text>
+    		<text id="supplytyperiver">
+     	 			<value>river</value>
+    		</text>
+    		<text id="supplytypeother">
+     	 			<value>other</value>
+    		</text>
+			<text id="h2s">
+     	 			<value>H2S test result</value>
+    			</text>
+			<text id="h2sfailed">
+     	 			<value>black (test failed)</value>
+    			</text>
+			<text id="h2spassed">
+     	 			<value>clear or murky (test passed)</value>
+    			</text>
+			<text id="h2sbatch">
+     	 			<value>H2S test batch number</value>
+    			</text>
+			<text id="EnteredBy">
+     	 			<value>Your name</value>
+    			</text>
+			<text id="Comments">
+     	 			<value>Any other comments</value>
+    			</text>
+  		</translation>
+	</itext>
+
+	<instance>
+		<h2s_test xmlns="">
+			<Meta>
+				<formName>h2s_test_report_001</formName>
+				<formVersion>0.0.1</formVersion>
+			</Meta>
+				
+			<Assessment>
+				<Authority>Chris Hani DM</Authority>
+				<PointArea>Intsika Yethu LM</PointArea>
+				<PointCode />
+				<WaterRunning />
+				<TreatedWater />
+				<SupplyType />
+				<OtherName />
+        		<AssessmentDate />
+				<h2sbatch /> 
+         	</Assessment>
+         		
+         	<TestResults>
+	        		<h2s />
+	       	</TestResults>
+         	
+         	<DataCapture>
+	       		<EnteredBy />
+				<DeviceID />
+				<Comments />
+         	</DataCapture>
+		</h2s_test>
+	</instance>
+		
+<bind id="PointCode" nodeset="/h2s_test/Assessment/PointCode" type="xsd:string" required="true()" />
+<bind id="OtherName" nodeset="/h2s_test/Assessment/OtherName" type="xsd:string" relevant="/h2s_test/Assessment/PointCode = 'NEW'"/>
+<bind id="AssessmentDate" nodeset="/h2s_test/Assessment/AssessmentDate" type="xsd:date" required="true()" jr:preload="date" jr:preloadParams="today"/>
+<bind id="WaterRunning" nodeset="/h2s_test/Assessment/WaterRunning" type="xsd:string" required="true()" />
+<bind id="TreatedWater" nodeset="/h2s_test/Assessment/TreatedWater" type="xsd:string" required="true()" />
+<bind id="SupplyType" nodeset="/h2s_test/Assessment/SupplyType" type="xsd:string" required="true()" />
+<bind id="h2s" nodeset="/h2s_test/TestResults/h2s" type="xsd:string" required="true()"/>
+<bind id="h2sbatch" nodeset="/h2s_test/Assessment/h2sbatch" type="xsd:int" required="true()"/>
+<bind id="EnteredBy" nodeset="/h2s_test/DataCapture/EnteredBy" type="xsd:string" required="true()" jr:preload="property" jr:preloadParams="your-name"/>
+<bind id="DeviceID" nodeset="/h2s_test/DataCapture/DeviceID" type="xsd:string" required="true()" jr:preload="property" jr:preloadParams="DeviceID"/>
+<bind id="Comments" nodeset="/h2s_test/DataCapture/Comments" type="xsd:string" required="false()"/>
+
+</model>
+</h:head>			
+<h:body>
+
+
+<select1 bind="PointCode">
+<label ref="jr:itext('PointCode')" />
+<item><label>Barracks</label><value>CHIN-BARCKS-1</value></item>
+<item><label>Bolokodlela</label><value>CHIN-BOLELA-1</value></item>
+<item><label>Bolotwa</label><value>CHIN-BOLTWA-1</value></item>
+<item><label>Boomplaas</label><value>CHIN-BOOAAS-1</value></item>
+<item><label>Bumbane</label><value>CHIN-BUMANE-1</value></item>
+<item><label>Camama</label><value>CHIN-CAMAMA-1</value></item>
+<item><label>Camama Forest 1</label><value>CHIN-CAMT 1-1</value></item>
+<item><label>Camama Forest 2</label><value>CHIN-CAMT 2-1</value></item>
+<item><label>Chaba</label><value>CHIN-CHAABA-1</value></item>
+<item><label>Choto</label><value>CHIN-CHOOTO-1</value></item>
+<item><label>Cube</label><value>CHIN-CUBUBE-1</value></item>
+<item><label>Cube Village</label><value>CHIN-CUBAGE-1</value></item>
+<item><label>Cungcwana</label><value>CHIN-CUNANA-1</value></item>
+<item><label>Cwecweni</label><value>CHIN-CWEENI-1</value></item>
+<item><label>Cwecweni – weir</label><value>CHIN-CWEEIR-1</value></item>
+<item><label>Damani</label><value>CHIN-DAMANI-1</value></item>
+<item><label>Dayimani</label><value>CHIN-DAYANI-1</value></item>
+<item><label>Daza</label><value>CHIN-DAZAZA-1</value></item>
+<item><label>Dekerts Hill</label><value>CHIN-DEKILL-1</value></item>
+<item><label>Dikeni</label><value>CHIN-DIKENI-1</value></item>
+<item><label>Dlakavu</label><value>CHIN-DLAAVU-1</value></item>
+<item><label>Dolophini</label><value>CHIN-DOLINI-1</value></item>
+<item><label>Dudumashe</label><value>CHIN-DUDSHE-1</value></item>
+<item><label>Dutch</label><value>CHIN-DUTTCH-1</value></item>
+<item><label>East bank</label><value>CHIN-EASANK-1</value></item>
+<item><label>Emangweni</label><value>CHIN-EMAENI-1</value></item>
+<item><label>Emaqwathini</label><value>CHIN-EMAINI-1</value></item>
+<item><label>Emdeni</label><value>CHIN-EMDENI-1</value></item>
+<item><label>Emthonjeni</label><value>CHIN-EMTENI-1</value></item>
+<item><label>Emzimeni</label><value>CHIN-EMZENI-1</value></item>
+<item><label>Entilini</label><value>CHIN-ENTINI-1</value></item>
+<item><label>Esigangeni</label><value>CHIN-ESIENI-1</value></item>
+<item><label>Exeni</label><value>CHIN-EXEENI-1</value></item>
+<item><label>Fama</label><value>CHIN-FAMAMA-1</value></item>
+<item><label>Ganya</label><value>CHIN-GANNYA-1</value></item>
+<item><label>Gcibala</label><value>CHIN-GCIALA-1</value></item>
+<item><label>Gcina</label><value>CHIN-GCIINA-1</value></item>
+<item><label>Gcingca</label><value>CHIN-GCIGCA-1</value></item>
+<item><label>Gxojeni</label><value>CHIN-GXOENI-1</value></item>
+<item><label>Hala</label><value>CHIN-HALALA-1</value></item>
+<item><label>Holi</label><value>CHIN-HOLOLI-1</value></item>
+<item><label>Jojweni</label><value>CHIN-JOJENI-1</value></item>
+<item><label>Keti</label><value>CHIN-KETETI-1</value></item>
+<item><label>Khayamnandi</label><value>CHIN-KHANDI-1</value></item>
+<item><label>Komkhulu</label><value>CHIN-KOMULU-1</value></item>
+<item><label>Konofini</label><value>CHIN-KONINI-1</value></item>
+<item><label>Kulongqayi</label><value>CHIN-KULAYI-1</value></item>
+<item><label>Kwabutshingi</label><value>CHIN-KWANGI-1</value></item>
+<item><label>Kwagongqo</label><value>CHIN-KWAGQO-1</value></item>
+<item><label>Kwalumane</label><value>CHIN-KWAANE-1</value></item>
+<item><label>Kwanyoka</label><value>CHIN-KWAOKA-1</value></item>
+<item><label>Kwa qithi</label><value>CHIN-KWATHI-1</value></item>
+<item><label>Lalini</label><value>CHIN-LALINI-1</value></item>
+<item><label>Lower Lanti</label><value>CHIN-LOWNTI-1</value></item>
+<item><label>Lower Ncora</label><value>CHIN-LOWORA-1</value></item>
+<item><label>Lower qutsa</label><value>CHIN-LOWTSA-1</value></item>
+<item><label>Lower Seplana S.A Scheme 1</label><value>CHIN-LOWE 1-1</value></item>
+<item><label>Lower Seplana S.A Scheme 2</label><value>CHIN-LOWE 2-1</value></item>
+<item><label>Lower Woodehouse</label><value>CHIN-LOWUSE-1</value></item>
+<item><label>Lumanyo scheme</label><value>CHIN-LUMEME-1</value></item>
+<item><label>Luqolo 1</label><value>CHIN-LUQO 1-1</value></item>
+<item><label>Luqolo 2</label><value>CHIN-LUQO 2-1</value></item>
+<item><label>Luxeni</label><value>CHIN-LUXENI-1</value></item>
+<item><label>Luxhomo</label><value>CHIN-LUXOMO-1</value></item>
+<item><label>Mabhentseni</label><value>CHIN-MABENI-1</value></item>
+<item><label>Madakeni</label><value>CHIN-MADENI-1</value></item>
+<item><label>Mahlathini</label><value>CHIN-MAHINI-1</value></item>
+<item><label>Mahlungulu</label><value>CHIN-MAHULU-1</value></item>
+<item><label>Mangweni</label><value>CHIN-MANENI-1</value></item>
+<item><label>Maqomeni</label><value>CHIN-MAQENI-1</value></item>
+<item><label>Mathafeni</label><value>CHIN-MATENI-1</value></item>
+<item><label>Matholanyile</label><value>CHIN-MATILE-1</value></item>
+<item><label>Mazizi</label><value>CHIN-MAZIZI-1</value></item>
+<item><label>Mbewane</label><value>CHIN-MBEANE-1</value></item>
+<item><label>Mbinzana</label><value>CHIN-MBIANA-1</value></item>
+<item><label>Mcambalala</label><value>CHIN-MCAALA-1</value></item>
+<item><label>Mdange</label><value>CHIN-MDANGE-1</value></item>
+<item><label>Mdeni</label><value>CHIN-MDEENI-1</value></item>
+<item><label>Mdibaniso</label><value>CHIN-MDIISO-1</value></item>
+<item><label>Mgongxo</label><value>CHIN-MGOGXO-1</value></item>
+<item><label>Mgqomo</label><value>CHIN-MGQOMO-1</value></item>
+<item><label>Mgxobozweni</label><value>CHIN-MGXENI-1</value></item>
+<item><label>Mhaga</label><value>CHIN-MHAAGA-1</value></item>
+<item><label>Middle Qutsa</label><value>CHIN-MIDTSA-1</value></item>
+<item><label>Mission (Mahlathini)</label><value>CHIN-MISNI)-1</value></item>
+<item><label>Mission (Manzimahle)</label><value>CHIN-MISLE)-1</value></item>
+<item><label>Mission (Ngxabangu)</label><value>CHIN-MISGU)-1</value></item>
+<item><label>Mmangobomvu</label><value>CHIN-MMAMVU-1</value></item>
+<item><label>Mmangweni</label><value>CHIN-MMAENI-1</value></item>
+<item><label>Mngqanqa</label><value>CHIN-MNGNQA-1</value></item>
+<item><label>Mnyangula</label><value>CHIN-MNYULA-1</value></item>
+<item><label>Mome</label><value>CHIN-MOMOME-1</value></item>
+<item><label>Mphunga</label><value>CHIN-MPHNGA-1</value></item>
+<item><label>Mpothulo</label><value>CHIN-MPOULO-1</value></item>
+<item><label>Mqabaqabeni</label><value>CHIN-MQAENI-1</value></item>
+<item><label>Mthimbini</label><value>CHIN-MTHINI-1</value></item>
+<item><label>Mthonjeni</label><value>CHIN-MTHENI-1</value></item>
+<item><label>Mtla</label><value>CHIN-MTLTLA-1</value></item>
+<item><label>Mvumelwano</label><value>CHIN-MVUANO-1</value></item>
+<item><label>Ndenxe</label><value>CHIN-NDENXE-1</value></item>
+<item><label>Ndlangisa</label><value>CHIN-NDLISA-1</value></item>
+<item><label>Ndlunkulu</label><value>CHIN-NDLULU-1</value></item>
+<item><label>Ndungwane</label><value>CHIN-NDUANE-1</value></item>
+<item><label>New mine</label><value>CHIN-NEWINE-1</value></item>
+<item><label>Ngcatharhu</label><value>CHIN-NGCRHU-1</value></item>
+<item><label>Ngojini</label><value>CHIN-NGOINI-1</value></item>
+<item><label>Ngotyeni</label><value>CHIN-NGOENI-1</value></item>
+<item><label>Ngqutura</label><value>CHIN-NGQURA-1</value></item>
+<item><label>Ngqwru</label><value>CHIN-NGQWRU-1</value></item>
+<item><label>Ngwevane</label><value>CHIN-NGWANE-1</value></item>
+<item><label>Ngxabangu</label><value>CHIN-NGXNGU-1</value></item>
+<item><label>Ngxabani</label><value>CHIN-NGXANI-1</value></item>
+<item><label>Ngxwashu</label><value>CHIN-NGXSHU-1</value></item>
+<item><label>Nobokhwe A</label><value>CHIN-NOBE A-1</value></item>
+<item><label>Nobokhwe B</label><value>CHIN-NOBE B-1</value></item>
+<item><label>Nogate Village</label><value>CHIN-NOGAGE-1</value></item>
+<item><label>Nolonga</label><value>CHIN-NOLNGA-1</value></item>
+<item><label>Nomqolo</label><value>CHIN-NOMOLO-1</value></item>
+<item><label>Nqwabebeni</label><value>CHIN-NQWENI-1</value></item>
+<item><label>Ntlakwefolo</label><value>CHIN-NTLOLO-1</value></item>
+<item><label>Ntlakwevenkile</label><value>CHIN-NTLILE-1</value></item>
+<item><label>Ntlonze</label><value>CHIN-NTLNZE-1</value></item>
+<item><label>Ntshingeni</label><value>CHIN-NTSENI-1</value></item>
+<item><label>Ntsintsi</label><value>CHIN-NTSTSI-1</value></item>
+<item><label>Ntwashini</label><value>CHIN-NTWINI-1</value></item>
+<item><label>Nyalasa</label><value>CHIN-NYAASA-1</value></item>
+<item><label>Nyongwana</label><value>CHIN-NYOANA-1</value></item>
+<item><label>Nyongweni</label><value>CHIN-NYOENI-1</value></item>
+<item><label>Panatyiphu</label><value>CHIN-PANPHU-1</value></item>
+<item><label>Qaqeni</label><value>CHIN-QAQENI-1</value></item>
+<item><label>Qhitsi</label><value>CHIN-QHITSI-1</value></item>
+<item><label>Qhumanco</label><value>CHIN-QHUNCO-1</value></item>
+<item><label>Qineni</label><value>CHIN-QINENI-1</value></item>
+<item><label>Qolombeni</label><value>CHIN-QOLENI-1</value></item>
+<item><label>Qumbu</label><value>CHIN-QUMMBU-1</value></item>
+<item><label>Qutsa Ndungwana</label><value>CHIN-QUTANA-1</value></item>
+<item><label>Rhwantsana Mission</label><value>CHIN-RHWION-1</value></item>
+<item><label>Rhwantsana - Mzantsi</label><value>CHIN-RHWTSI-1</value></item>
+<item><label>Sdikidiki</label><value>CHIN-SDIIKI-1</value></item>
+<item><label>Sentile</label><value>CHIN-SENILE-1</value></item>
+<item><label>Sgubudwini</label><value>CHIN-SGUINI-1</value></item>
+<item><label>Shweni</label><value>CHIN-SHWENI-1</value></item>
+<item><label>Sigqabeni</label><value>CHIN-SIGENI-1</value></item>
+<item><label>Singeni</label><value>CHIN-SINENI-1</value></item>
+<item><label>Somthotho</label><value>CHIN-SOMTHO-1</value></item>
+<item><label>Stron yard</label><value>CHIN-STRARD-1</value></item>
+<item><label>Tafeni</label><value>CHIN-TAFENI-1</value></item>
+<item><label>Taiwan</label><value>CHIN-TAIWAN-1</value></item>
+<item><label>Trustini</label><value>CHIN-TRUINI-1</value></item>
+<item><label>Tsakane 1. (Manuneni)</label><value>CHIN-TSANI)-1</value></item>
+<item><label>Tsakane iv Guse 11P</label><value>CHIN-TSA11P-1</value></item>
+<item><label>Tsakane iv Guse S</label><value>CHIN-TSAE S-1</value></item>
+<item><label>Tshakane 111. (Panatyiphu)</label><value>CHIN-TSHHU)-1</value></item>
+<item><label>Tshatshu</label><value>CHIN-TSHSHU-1</value></item>
+<item><label>Tshayela</label><value>CHIN-TSHELA-1</value></item>
+<item><label>Tshifini</label><value>CHIN-TSHINI-1</value></item>
+<item><label>Tsolokazi</label><value>CHIN-TSOAZI-1</value></item>
+<item><label>Tsomo mission village</label><value>CHIN-TSOAGE-1</value></item>
+<item><label>Tunzini</label><value>CHIN-TUNINI-1</value></item>
+<item><label>Uper Lanti</label><value>CHIN-UPENTI-1</value></item>
+<item><label>Upper Bilatye</label><value>CHIN-UPPTYE-1</value></item>
+<item><label>Upper kwababa</label><value>CHIN-UPPABA-1</value></item>
+<item><label>Upper Langanci</label><value>CHIN-UPPNCI-1</value></item>
+<item><label>Upper Woodehouse</label><value>CHIN-UPPUSE-1</value></item>
+<item><label>Voyizana</label><value>CHIN-VOYANA-1</value></item>
+<item><label>White city</label><value>CHIN-WHIITY-1</value></item>
+<item><label>Xabisweni</label><value>CHIN-XABENI-1</value></item>
+<item><label>Xume</label><value>CHIN-XUMUME-1</value></item>
+<item><label>Zigudu Mission</label><value>CHIN-ZIGION-1</value></item>
+<item><label>Zingquthu</label><value>CHIN-ZINTHU-1</value></item>
+<item><label>Zundwane komkhulu</label><value>CHIN-ZUNULU-1</value></item>
+<item><label>Zwelakhe</label><value>CHIN-ZWEKHE-1</value></item>
+<item><label>Zwelitsha</label><value>CHIN-ZWESHA-1</value></item>
+<item><label>Other/new</label><value>NEW</value></item>
+</select1>
+
+<input bind="OtherName">
+	<label ref="jr:itext('OtherName')" />
+</input>
+
+<input bind="AssessmentDate">
+	<label ref="jr:itext('AssessmentDate')" />
+</input>
+
+<select1 bind="WaterRunning">
+	<label ref="jr:itext('waterrunning')" />
+	<item>
+		<label ref="jr:itext('waterrunningyes')" />
+        	<value>yes</value> 
+	</item>
+	<item>
+        	<label ref="jr:itext('waterrunningno')" />
+        	<value>no</value>
+	</item>
+</select1>
+
+<select1 bind="TreatedWater">
+	<label ref="jr:itext('supplytreated')" />
+	<item>
+		<label ref="jr:itext('supplytreatedyes')" />
+        	<value>yes</value> 
+	</item>
+	<item>
+        	<label ref="jr:itext('supplytreatedno')" />
+        	<value>no</value>
+	</item>
+</select1>
+
+
+
+<select1 bind="SupplyType">
+	<label ref="jr:itext('supplytype')" />
+	<item>
+		<label ref="jr:itext('supplytypestandpipe')" />
+        	<value>standpipe</value> 
+	</item>
+	<item>
+        	<label ref="jr:itext('supplytypeborehole')" />
+        	<value>borehole</value>
+	</item>
+	<item>
+        	<label ref="jr:itext('supplytyperiver')" />
+        	<value>river</value>
+	</item>
+	<item>
+        	<label ref="jr:itext('supplytypeprotectedspring')" />
+        	<value>protected spring</value>
+	</item>
+	<item>
+        	<label ref="jr:itext('supplytypeunprotectedspring')" />
+        	<value>unprotected spring</value>
+	</item>
+	<item>
+        	<label ref="jr:itext('supplytypeother')" />
+        	<value>other</value>
+	</item>
+</select1>
+
+     
+<select1 bind="h2s">
+	<label ref="jr:itext('h2s')" />
+	<item>
+		<label ref="jr:itext('h2sfailed')" />
+        	<value>positive</value> 
+	</item>
+	<item>
+        	<label ref="jr:itext('h2spassed')" />
+        	<value>negative</value>
+	</item>
+</select1>
+
+<input bind="h2sbatch">
+	<label ref="jr:itext('h2sbatch')" />
+</input>
+
+<input bind="EnteredBy">
+	<label ref="jr:itext('EnteredBy')" />
+</input>
+
+<input bind="Comments">
+	<label ref="jr:itext('Comments')" />
+</input>
+	 
+</h:body>
+</h:html>
+
+

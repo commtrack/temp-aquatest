@@ -1,0 +1,58 @@
+    <form class="sfb clear" method="post" id="fm-notifications-add" action="/smsnotification/{% if notification %}{{ notification.pk }}{% else %}add{% endif %}">
+        <h3>{% if notification %}Edit SMS Notification for - {{ notification.authorised_sampler.full_name }}{% else %}Add a SMS Notification{% endif %}</h3>
+        <!--<div>-->
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-point-add-point">Point Name</label>
+            </div>
+        </div>
+        <div class="span-2">
+                <select name="sampling_point">
+                        <option></option>{% for point in points %}
+                        <option value="{{ point.pk }}" class="depth-{{ point.depth }}"{% if point %}{% ifequal point notification.sampling_point %} selected="selected"{% endifequal %}{% endif %}>{{ point.name }}</option>{% endfor %}
+                </select>
+                <!--<p class="help">This is a sampling point name.</p>-->
+        </div>
+        <!--<div>-->
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-point-add-authorised_tester">Authorised Tester</label>
+            </div>
+        </div>
+        <div class="span-2">
+                <select name="authorised_sampler">
+                        <option></option>{% for tester in testers %}
+                        <option value="{{ tester.pk }}" class="depth-{{ tester.depth }}"{% if tester %}{% ifequal tester notification.authorised_sampler %} selected="selected"{% endifequal %}{% endif %}>{{ tester.full_name }}</option>{% endfor %}
+                </select>
+                <!--<p class="help">This is a Authorised sampler.</p>-->
+        </div>
+        <!--<div>-->
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-point-add-notification_type">Notification Type</label>
+            </div>
+        </div>
+        <div class="span-2">
+                <select name="notification_type">
+                        <option></option>{% for choice in notification_types_choices %}
+                        <option value="{{ choice.pk }}" class="depth-{{ choice.depth }}"{% if choice %}{% ifequal choice notification.notification_type %} selected="selected"{% endifequal %}{% endif %}>{{ choice }}</option>{% endfor %}
+                 </select>
+                <!--<p class="help">This is a Notification type</p>-->
+        </div>
+        <!--<div>-->
+        <div class="span-5 clear">
+            <div style="float:right;">
+                <label for="fm-point-add-digest">Digest</label>
+            </div>
+        </div>
+        <div class="span-2">
+                <input type="checkbox" name="digest" {% if notification.digest %}checked="checked"{% endif %}/>
+        </div>
+
+        
+        <div class="submit">
+            <!--<button type="submit" /> {% if point %}Save Changes{% else %}Add Sampling Point{% endif %}</button>-->
+            <input type="submit" value="{% if notification %}Save Changes{% else %}Add SMS notification{% endif %}" />{% if notification %}
+            <input type="submit" name="delete" value="Delete Notification" />{% endif %}
+        </div>
+    </form>

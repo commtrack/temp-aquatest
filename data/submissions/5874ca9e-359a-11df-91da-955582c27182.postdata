@@ -1,0 +1,4 @@
+Content-type: text/xml
+Content-length: 445
+
+<?xml version='1.0' ?><h2s_test xmlns="http://www.aquatest-za.org/h2s"><Meta><formName>h2s_test_report_001</formName><formVersion>0.0.1</formVersion></Meta><Assessment><PointCode>NNHMBV-005</PointCode><AssessmentDate>2010-03-21</AssessmentDate><h2sbatch>8</h2sbatch></Assessment><TestResults><h2s>positive</h2s></TestResults><DataCapture><EnteredBy>A</EnteredBy><DeviceID>0.148798822739</DeviceID><Comments>AD</Comments></DataCapture></h2s_test>

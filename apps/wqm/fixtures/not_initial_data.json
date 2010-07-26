@@ -1,0 +1,81 @@
+[
+  {
+    "pk": 1, 
+    "model": "locations.location", 
+    "fields": {
+      "code": "123", 
+      "name": "DTree", 
+      "parent": null, 
+      "longitude": null, 
+      "latitude": null, 
+      "type": null
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "locations.location", 
+    "fields": {
+      "code": "51", 
+      "name": "Area 51", 
+      "parent": null, 
+      "longitude": null, 
+      "latitude": null, 
+      "type": null
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "locations.location", 
+    "fields": {
+      "code": "1234", 
+      "name": "DTree House", 
+      "parent": null, 
+      "longitude": null, 
+      "latitude": null, 
+      "type": null
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "wqm.wqmlocation", 
+    "fields": {
+      "modified": null, 
+      "created": "2010-03-21 12:59:01"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "wqm.wqmlocation", 
+    "fields": {
+      "modified": null, 
+      "created": "2010-03-21 12:59:01"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "wqm.wqmlocation", 
+    "fields": {
+      "modified": null, 
+      "created": "2010-03-21 12:59:01"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "wqm.wqmauthority", 
+    "fields": {}
+  }, 
+  {
+    "pk": 2, 
+    "model": "wqm.wqmarea", 
+    "fields": {
+      "wqmauthority": 1
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "wqm.samplingpoint", 
+    "fields": {
+      "wqmarea": 2
+    }
+  }
+]
