@@ -19,6 +19,17 @@
 {% block left %}
 <div class="module">
 	<h2>Testers</h2>
+	
+	<form method="get" id="search">
+		<input type="text" name="q" />
+		<input type="submit" value="Search tester" />
+	</form>
+	<h1>
+	    {% if search_string %}
+	    	Search for : {{ search_string }}
+	    {% endif %}
+	</h1>
+	
         <div style="text-align:right;">
             <a href="/testers/add" class="add"> Add a new Tester </a>
         </div>
@@ -35,18 +46,15 @@
 			</tr>
 		</thead>
 		<tbody>{% if reporters.object_list %}{% for reporter in reporters.object_list %}
-			<!--<tr class="{% _get_class reporter.id %}">-->
-                        <tr>
-				<!--<td><a href="{% self_link "reporter" reporter.pk %}"{% if reporter.full_name %}>{{ reporter.full_name }}{% else %} class="unknown">Unknown{% endif %}</a></td>-->
+			<tr class="{% cycle 'rowo' 'rowt' %}">
 				<td><a href="/testers/{{ reporter.pk }}"{% if reporter.last_name %}>{{ reporter.last_name }}{% else %} class="unknown">Unknown{% endif %}</a></td>
-                                <td><a href="/testers/{{ reporter.pk }}"{% if reporter.last_name %}>{{ reporter.first_name }}{% else %} class="unknown">Unknown{% endif %}</a></td>
+                <td><a href="/testers/{{ reporter.pk }}"{% if reporter.last_name %}>{{ reporter.first_name }}{% else %} class="unknown">Unknown{% endif %}</a></td>
 				<td>{% if reporter.connection %}{{ reporter.connection.identity }}{% else %}<span class="na">None</span>{% endif %}</td>
-				<!--<td>{{ reporter.last_seen }}</td>-->
-                                {% get_counts_for_tester reporter %}
-                                <td>
-                                    <a href="/testers/{{ reporter.pk }}">Edit</a> |
-                                    <a href="/testers/{{ reporter.pk }}/delete">Delete</a>
-                                </td>
+				{% get_counts_for_tester reporter %}
+                <td>
+                	<a href="/testers/{{ reporter.pk }}">Edit</a> |
+                    <a href="/testers/{{ reporter.pk }}/delete">Delete</a>
+                </td>
 			</tr>{% endfor %}{% else %}
 			<tr class="no-data">
 				<td colspan="3">
