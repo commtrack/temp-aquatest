@@ -10,4 +10,4 @@ export/*
 bad/*
 rapidsms-django.log*
 rapidsms.log*
-
+.settings
