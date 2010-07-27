@@ -11,31 +11,58 @@
 {% endblock %}
 
 {% block org_content %}
+<div id="subheading">
+	<ul>
+		<li><a href="{% url wqm.views.index %}"><b>Sampling Point</b></a></li>
+		<li><a href="{% url wqm.views.mapindex %}"><b>Map</b></a></li>
+		<li>&nbsp;</li>
+	</ul> 
+</div>
 <h2>{%trans "Sample points registered in the system"%}</h2>
-
 <br>
-
+<h1>
+    {% if search_string %}
+    	{{ search_string }}
+    {% endif %}
+</h1>
 <p>
     {% trans "Show points for:" %}
     <!--need a js to interact the selection-->
-    <select id="selectDistrict" name="districts" onchange="showDistrict(this.value)" >
-            <option>-----------</option>
-            {% for district in districts %}
-            <!--put value to point to the actual html file-->
-            <option value="{{ district.id }}">{{ district.name }}</option>
-            {% endfor %}
-    </select>
+    <form method="get" id="search">
+		<select id="selectDistrict" name="q" >
+	            <option value=""></option>
+	            {% for district in districts %}
+	            <!--put value to point to the actual html file-->
+	            <option value="{{ district.id }}">{{ district.name }}</option>
+	            {% endfor %}
+	    </select>
+	    <input type="submit" value="Filter" />
+	</form>
 </p>
 
 <div class="module">
     <div style="text-align:right;">
         <a href="/samplingpoints/add" class="add"> Add a new Sampling Point </a>
     </div>
-    <table>
-            <thead>
-                    <tr>
-                            <th scope="col">Point Name</th>
-                            <th scope="col">Area</th>
+    
+    <table class="sortable">
+	{% for column, display in columns %}
+		<col{% ifequal column sort_column %} class="sorted"{% endifequal %} />
+	{% endfor %}
+
+	<thead>
+		{% for column, display in columns %}
+			{% ifequal column sort_column %}
+				<th class="sorted {% if sort_descending %}descending{% else %}ascending{% endif %}">
+					<a href="?q={{ search_string }}&sort_descending={% if sort_descending %}false{% else %}true{% endif %}&sort_column={{ column }}" title="Sort by {{ display }}{% if sort_descending %} (asc){% endif %}">
+						{{ display }}
+					</a>
+				</th>
+			{% else %}
+				<th><a href="?q={{ search_string }}&sort_column={{ column }}" title="Sort by {{ display }}">{{ display }}</a></th>
+			{% endifequal %}
+		{% endfor%}
+    			<!-- additional table headers -->
                             <th scope="col">District</th>
                             <th scope="col">Samples(Last Month)</th>
                             <th scope="col">Samples (All time)</th>
@@ -43,7 +70,7 @@
                     </tr>
             </thead>
             <tbody>{% if points.object_list %}{% for point in points.object_list %}
-                    <tr>
+                    <tr class="{% cycle 'rowo' 'rowt' %}">
                             <td>{% if point.name %}{{ point.name }}{% else %} <span class="unknown">Unknown</span>{% endif %}</td>
                             <td>{% if point.wqmarea %}{{ point.wqmarea }}{% else %} <span class="unknown">Unknown</span>{% endif %}</td>
                             <td>{% if point.wqmarea.wqmauthority %}{{ point.wqmarea.wqmauthority }}{% else %}<span class="na">None</span>{% endif %}</td>
@@ -71,6 +98,7 @@
                         </tr>
                 </tfoot>
 	</table>
+
 </div>
 
 {% endblock %}

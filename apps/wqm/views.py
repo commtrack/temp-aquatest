@@ -45,6 +45,7 @@ from reporters.views import message, check_reporter_form, update_reporter
 #from reporters.models import Reporter, PersistantBackend, PersistantConnection
 from reporters.models import *
 from wqm.models import SamplingPoint, WqmAuthority, WqmArea
+from wqm.forms import DateForm, SamplingPointForm
 
 logger_set = False
 
@@ -61,11 +62,47 @@ def message(req, msg, link=None):
 
 @login_and_domain_required
 def index(req):
+    columns = (("name", "Point Name"),
+               ("wqmarea", "Area"),
+               )
+    sort_column, sort_descending = _get_sort_info(req, default_sort_column="name",
+                                                  default_sort_descending=False)
+    sort_desc_string = "-" if sort_descending else ""
+    search_string = req.REQUEST.get("q", "")
+
+    query = SamplingPoint.objects.order_by("%s%s" % (sort_desc_string, sort_column))
+
+    if search_string == "":
+        query = query.all()
+
+    else:
+        district = WqmAuthority.objects.get(id = search_string)
+        query = query.filter(
+           Q(wqmarea__wqmauthority__id=district.id ))
+        search_string = district
+    
+    points = paginated(req, query)
     return render_to_response(req,
         "index.html", {
-        "points": paginated(req, SamplingPoint.objects.all(), prefix="point"),
-        "districts": WqmAuthority.objects.all(),
+                       "columns": columns,
+                       "points": points, 
+                       "districts": WqmAuthority.objects.all(),
+                       "sort_column": sort_column,
+                       "sort_descending": sort_descending,
+                       "search_string": search_string,
     })
+
+def _get_sort_info(request, default_sort_column, default_sort_descending):
+    sort_column = default_sort_column
+    sort_descending = default_sort_descending
+    if "sort_column" in request.GET:
+        sort_column = request.GET["sort_column"]
+    if "sort_descending" in request.GET:
+        if request.GET["sort_descending"].startswith("f"):
+            sort_descending = False
+        else:
+            sort_descending = True
+    return (sort_column, sort_descending)
 
 @require_http_methods(["GET", "POST"])
 @login_and_domain_required
@@ -275,3 +312,35 @@ def comma(string_or_list):
     else:
         list = string_or_list
         return ", ".join(list)
+
+@login_and_domain_required
+def mapindex(req):
+    samplingpoints = SamplingPoint.objects.all().order_by('wqmarea__name','name')
+#    counting the number of abnormal range values..
+#    Get the abnormal values from the sample submitted.
+    counts = []
+    if req.method == 'POST':
+            form = DateForm(req.POST)
+            if form.is_valid():
+                start = form.cleaned_data["startdate"]
+                end = form.cleaned_data["enddate"]
+#                failure = req.POST.get("failure","")
+
+                samples = Sample.objects.filter(sampling_point__in = samplingpoints)
+                samples = samples.filter(date_received__range =(start, end))
+#                points = samplingpoints
+    else:
+        form = DateForm()
+        for samplingpoint in samplingpoints:
+            samples = Sample.objects.filter(sampling_point__in = samplingpoints)
+#        points = samplingpoints
+
+    for point in samplingpoints:
+        counts.append({"count": Sample.objects.filter(sampling_point = point).count()})             
+    
+    return render_to_response(req,'wqm/index.html', {
+        'samplingpoints': samplingpoints,
+        'form': form,
+        'counts': counts,
+        'content': render_to_string('wqm/samplepoints.html', {'samplingpoints': samplingpoints}),
+    })

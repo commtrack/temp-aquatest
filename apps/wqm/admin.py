@@ -1,7 +1,10 @@
-from django.contrib import admin
+from django.contrib.gis import admin
+from django.contrib.gis.maps.google import GoogleMap
 
 from hq.models import *
-from wqm.models import WqmAuthority,WqmArea,SamplingPoint
+from wqm.models import WqmAuthority,WqmArea,SamplingPoint,DelivarySystem
+
+GMAP = GoogleMap(key='ABQIAAAAwLx05eiFcJGGICFj_Nm3yxSy7OMGWhZNIeCBzFBsFwAAIleLbBRLVT87XVW-AJJ4ZR3UOs3-8BnQ-A') # Can also set GOOGLE_MAPS_API_KEY in settings
 
 class WqmAuthorityAdmin(admin.ModelAdmin):
     list_display = ('name', 'modified', 'created')
@@ -25,7 +28,7 @@ class WqmAreaAdmin(admin.ModelAdmin):
     )
 admin.site.register(WqmArea, WqmAreaAdmin)
 
-class SamplingPointAdmin(admin.ModelAdmin):
+class SamplingPointAdmin(admin.OSMGeoAdmin):
     list_display = ('name', 'wqmarea', 'modified', 'created')
     search_fields = ('name', 'wqmarea', 'modified', 'created')
     list_filter = ['name']
@@ -33,10 +36,37 @@ class SamplingPointAdmin(admin.ModelAdmin):
         (None, {
             'fields' : ('name', 'code', 'wqmarea', 'modified', 'created')
         }),
-        ('Coordinates', {
-            'fields' : ('latitude', 'longitude')
-        })
+        (None, {
+            'fields' : ('point_type', 'delivary_system','treatement')
+        }),
+        ('Map', {
+            'fields' : ('point',)
+        }),
     )
 admin.site.register(SamplingPoint, SamplingPointAdmin)
+#admin.site.register(SamplingPoint, admin.GeoModelAdmin)
 
 
+admin.site.register(DelivarySystem)
+
+class SamplingPointAdminGoogle(admin.OSMGeoAdmin):
+    extra_js = [GMAP.api_url + GMAP.key]
+    map_template = 'wqm/admin/google.html'
+    
+    list_display = ('name', 'wqmarea', 'modified', 'created')
+    search_fields = ('name', 'wqmarea', 'modified', 'created')
+    list_filter = ['name']
+    fieldsets = (
+        (None, {
+            'fields' : ('name', 'code', 'wqmarea', 'modified', 'created')
+        }),
+        (None, {
+            'fields' : ('point_type', 'delivary_system','treatement')
+        }),
+        ('Map', {
+            'fields' : ('point',)
+        }),
+    )
+# Register the google enabled admin site
+google_admin = admin.AdminSite()
+google_admin.register(SamplingPoint, SamplingPointAdminGoogle)

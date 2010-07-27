@@ -14,67 +14,24 @@
 <!--<div class="module">-->
 <a href="/samplingpoints"> <<-- Back </a>
 <div class="span-12" style="margin-left:auto; margin-right:auto; float:none">
-    <form class="sfb clear" method="post" id="fm-point-add" action="/samplingpoints/{% if point %}{{ point.pk }}{% else %}add{% endif %}">
-        <h3>{% if point %}Edit - {{ point }}{% else %}Add a Sampling Point{% endif %}</h3>
-
-        <!--<div>-->
-        <div class="span-5 clear">
-            <div style="float:right;">
-                <label for="fm-point-add-name">Name</label>
-            </div>
-        </div>
-        <div class="span-2">
-                <input type="text" class="required" id="fm-point-add-name" name="name"{% if point %} value="{{ point.name }}"{% endif %} />
-
-        </div>
-        <!--<div>-->
-        <div class="span-5 clear">
-            <div style="float:right;">
-                <label for="fm-point-add-code" class="suffix">Code</label>
-            </div>
-        </div>
-        <div class="span-2">
-              <input type="text" id="fm-point-add-code" name="code"{% if point %} value="{{ point.code }}"{% endif %} />
-        </div>
-        <div class="span-5 clear">
-            <div style="float:right;">
-                <label>Coordinates</label>
-            </div>
-        </div>
-        <div class="span-5 clear">
-            <div style="float:right;">
-                <label for="fm-point-add-last_name" class="suffix">Latitude</span></label>
-            </div>
-        </div>
-        <div class="span-2">
-            <input type="text" id="fm-point-add-latitude" name="latitude"{% if point %}{% if point.latitude%} value="{{ point.latitude }}"{% endif %}{% endif %} />
-        </div>
-        <div class="span-5 clear">
-            <div style="float:right;">
-                <label for="fm-point-add-chw_id" class="suffix">Longitude</label>
-            </div>
-        </div>
-        <div class="span-2">
-            <input type="text" id="fm-point-add-longitude" name="longitude"{% if point %}{% if point.longitude %} value="{{ point.longitude }}"{% endif %}{% endif %} />
-        </div>
-        <div class="span-5 clear">
-            <div style="float:right;">
-                <label>Wqm Area</label>
-            </div>
-        </div>
-        <div class="span-2">
-            {% if areas %}
-            <select name="wqmarea">
-                <option></option>{% for area in areas %}
-                <option value="{{ area.pk }}" class="depth-{{ area.depth }}"{% if point %}{% ifequal area point.wqmarea %} selected="selected"{% endifequal %}{% endif %}>{{ area.name }}</option>{% endfor %}
-            </select>
-        </div>{% endif %}
-
-        <div class="submit">
-                <input type="submit" value="{% if point %}Save Changes{% else %}Add Sampling Point{% endif %}" />{% if point %}
-                <input type="submit" name="delete" value="Delete {{ point }}" />{% endif %}
-        </div>
-    </form>
+    <h3>{% if point %}Edit - {{ point }}{% else %}Add a Sampling Point{% endif %}</h3>
+	    <form class="sfb clear" method="post" id="fm-point-add" action="/samplingpoints/{% if point %}{{ point.pk }}{% else %}add{% endif %}">
+			{% for field in form %}
+		        <div  class="span-5 clear">
+			  <div style="float:right;">
+			    {{ field.errors }}
+		            <label>{{ field.label_tag }}</label>
+			  </div>
+		        </div>
+		        <div class="span-2">
+			  {{ field }}
+			</div>
+		        
+		    {% endfor %}
+		    <p>
+			<input type="submit" value="{% if point %}Save Changes{% else %}Add SMS notification{% endif %}" />
+		    </p>
+	    </form>
 </div>
 <div class="sfb clear">&zwnj;</div>
 

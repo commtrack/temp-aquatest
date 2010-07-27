@@ -29,7 +29,7 @@ use_curl = False
 #filename = r"C:\Documents and Settings\Cory Zue\Desktop\reg.xml"
 #filename = r'C:\Source\hq\commcare-hq\tests\deployment\multipart\multipart-3.txt'
 #filename = r'/media/Otoro/projects/AquaTest/data/attachments/aqua2.xml'
-filename = r'/media/Otoro/Goto Trash/projects/AquaTest/data/attachments/phychem.xml'
+filename = r'/media/Otoro/codes/temp-xforms/h2stest.xml' 
 #filename = r'D:\Work\AquaTest\repo\AquatestClone\data\attachments\h2s.xml'
 #filename = os.path.join(os.getcwd(), 'test-data', 'multipart-1.post')
 
