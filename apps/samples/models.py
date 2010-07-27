@@ -31,7 +31,7 @@ class Parameter(SampleDates):
     test_name = models.CharField(max_length=120)
     unit = models.CharField(max_length=50, null=True, blank=True)
     lookup_hint = models.BooleanField()
-    test_name_short = models.CharField(max_length=20)
+    test_name_short = models.CharField(max_length=20, help_text="must correspond to xform test")
 
     def __unicode__(self):
         return self.test_name
@@ -43,16 +43,17 @@ class Sample(SampleDates):
     taken_by = models.ForeignKey(Reporter)
     sampling_point = models.ForeignKey(SamplingPoint)
     notes = models.CharField(max_length=250, null=True, blank=True)
-    batch_number = models.CharField(max_length=100)
-    # some_field to check if this sample is new o not.
+    batch_number = models.CharField(max_length=100, null=True, blank=True)
     incubated = models.BooleanField(default=False)
     date_taken = models.DateTimeField()
     date_received = models.DateTimeField()
+    
+    class Meta:
+        ordering = ['-date_received']
 
     def __unicode__(self):
         return self.notes
 
-#class MeasuredValue(SampleDates):
 class MeasuredValue(models.Model):
     '''
     The measured values
@@ -237,12 +238,8 @@ def check_and_add_sample(sender, instance, created, **kwargs): #get sender, inst
                     value.save()
                     vals.append(value)
     # A function to send sms notification.
-#    send_event_google_calender('hall 4','fred usiku','h2s')
     send_sms_notifications(sample,vals,xform)
-#    send_event_google_calender('sample.sampling_point','sample.taken_by','h2s')
-    
-#    alert_google_calendar(sample,vals)
-# Register to receive signals each time a Metadata is saved
-    
+
+# Register to receive signals each time a Metadata is saved    
 post_save.connect(check_and_add_sample, sender=Metadata)
 

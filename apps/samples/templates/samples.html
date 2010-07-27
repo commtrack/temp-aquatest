@@ -1,6 +1,7 @@
 {% extends "hq/base.html" %}
 {% load i18n %}
 {% load samples_tags %}
+{% load pagination-tags %}
 
 {% block title %}{% trans "Samples" %}{% endblock %}
 {% block javascripts %}
@@ -13,12 +14,20 @@
 <h2>Samples</h2>
 <br>
 
+<h1>
+    {% if search_string %}
+    {% for d in search_string %}
+    	{{ d }}
+    {% endfor %}
+    {% endif %}
+</h1>
+
     {% trans "Show Samples for:" %}
     <!--need a js to interact the selection-->
-<form id="search" method="GET">
+<form method="get" id="search">
     <select name="q">
-            <option>-----------</option>
-            {% for district in districts %}
+            <option value=""></option>
+            {% for district in sort_districts %}
             <!--put value to point to the actual html file-->
             <option value="{{ district.id }}">{{ district.name }}</option>
             {% endfor %}
@@ -26,13 +35,37 @@
     <input type="submit" value="Filter"/>
 </form>
 
-<!--<form method="get" id="search">
-    <input name="q" type="text" value="{{ search_string }}" />
-    <input type="submit" value="Search" />
-</form>-->
-
-
-
-{% get_samples user %}
+<table>
+		<thead>
+			<tr>
+	            <th>Sampling point (Area)</th>
+	            <th>Taken by</th>
+	            <th>Date Taken</th>
+	            <th>Date Received</th>
+	            <th>Results</th>
+	       	</tr>
+	    </thead>
+	 	<tbody>
+	 		{% for sample in samples.object_list %}
+	 		<tr class="{% cycle 'even' 'odd' %}">
+	 			<td>{{ sample.sampling_point }} ({{ sample.sampling_point.wqmarea}})</td>
+	 			<td>{{sample.taken_by}}</td>
+	 			<td>{{sample.date_taken}}</td>
+	 			<td>{{sample.date_received}}</td>
+	 			
+	 				{% m_values sample %}
+	 			
+	 		</tr>
+	 		{% endfor %}
+	 	</tbody>   
+	 	<tfoot>
+			<tr>
+				<td colspan="5">
+					{% paginator samples %}
+				</td>
+			</tr>
+		</tfoot>
+	 	
+	 </table>
 
 {% endblock %}
