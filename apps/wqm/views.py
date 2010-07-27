@@ -23,6 +23,7 @@ from django.contrib.auth.views import redirect_to_login
 from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
+from django.template.loader import render_to_string
 
 from rapidsms.webui.utils import render_to_response, paginated
 
@@ -46,6 +47,8 @@ from reporters.views import message, check_reporter_form, update_reporter
 from reporters.models import *
 from wqm.models import SamplingPoint, WqmAuthority, WqmArea
 from wqm.forms import DateForm, SamplingPointForm
+from samples.models import Sample
+
 
 logger_set = False
 
