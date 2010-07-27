@@ -1,0 +1,21 @@
+{% load i18n %}
+{% load calendar-tags %}
+
+<p>
+<input id="close" class="jqmClose" type="button" value="Close" style="float:right;"/>
+</p>
+<div>
+    <center><b>{{ date }}</b></center><br>
+    {{ count }}
+                            {% ifequal count 1 %}
+                               : Sample
+                            {% endifequal %}
+                            {% ifnotequal count 1 %}
+                               : Samples
+                            {% endifnotequal %}
+
+
+
+</div>
+{% get_samples day month year area %}
+

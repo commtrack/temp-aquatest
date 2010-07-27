@@ -1,0 +1,96 @@
+{% extends "hq/base.html" %}
+
+{% load i18n %}
+{% load wqm-tags %}
+{% block javascripts %}
+
+    <script type="text/javascript" src="{{MEDIA_URL}}/aquatest_calendar/javascripts/jquery.js"></script>
+
+    <script type="text/javascript" src="{{MEDIA_URL}}/aquatest_calendar/javascripts/jqModal.js"></script>
+    <script type="text/javascript" src="{{MEDIA_URL}}/aquatest_calendar/javascripts/show_samples.js"></script>
+{% endblock %}
+{% block page_stylesheets %}
+<link type="text/css" rel="stylesheet" href="{{MEDIA_URL}}/hq/stylesheets/modal_dialog.css" />
+<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}/aquatest_calendar/stylesheets/aqua_calendar.css" />
+{% endblock %}
+
+{% block title %}{% trans "Reports by Calender" %}{% endblock %}
+
+{% block org_content %}
+
+
+<h2>{%trans "Report by Calender"%}</h2>
+
+    <h3>{% ifequal area 0 %}Samples in all Areas{% endifequal %}
+        {% ifnotequal area 0 %}Samples in {% for name in location_name %}{{ name }} {% endfor %}{% endifnotequal %}
+
+
+
+
+    </h3>
+   
+    <form method="get" id="search">
+		<select id="selectDistrict" name="area" >
+	           
+	            {% for search in search_string %}
+	            <option value="{{ search.id }}">{{ search }}</option>
+                  
+	            {% endfor %}
+	    </select>
+	    <input type="submit" value="Filter" />
+    </form>
+
+        <table class="calendar">
+
+          <tr>
+            <th><a href="?year={{ cal.prev.0 }}&month={{ cal.prev.1 }}&area={{ area }}">&laquo;</a></th>
+            <th colspan="5">{{ cal.getMonthHeader.0 }} {{ cal.getMonthHeader.1 }}</th>
+            <th><a href="?year={{ cal.next.0 }}&month={{ cal.next.1 }}&area={{ area }}">&raquo;</a></th>
+          </tr>
+          <tr>
+            {% for wk in cal.getWeekHeader %}
+              <th>{{ wk }}</th>
+            {% endfor %}
+          </tr>
+          {% for line in cal.getMonthCalendar %}
+          <tr>
+
+                {% for day in line %}
+                <td id="{{ day.0 }}">
+                {% if day.1 %}
+                    <div id="dt{{ day.0 }}" class="abnormal{{ day.3 }}" > <div id="ct{{ date.0 }}" >
+                    {{ day.0 }}
+                    <center> 
+                    <div class="formtrigger js_link" onclick="show_samples('{{ cal.next.0 }}', '{{ cal.next.1 }}', '{{ day.0 }}','{{ area }}', '#formlist');">
+                            {{ day.2 }}
+                            {% ifequal day.2 1 %}
+                                : Sample
+                            {% endifequal %}
+                            {% ifnotequal day.2 1 %}
+                                : Samples
+                            {% endifnotequal %}
+
+
+
+                    </div>
+                    </center>
+                {% else %}
+                    {% if day.0 %}
+                        {{ day.0 }}
+                        
+                    {% endif %}
+                {% endif %}
+                  </div>
+                </div>
+              
+              </td>
+
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </table>
+
+<div class="modal_dialog" id="formlist">
+Hello World
+</div>
+{% endblock %}
