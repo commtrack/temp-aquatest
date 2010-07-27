@@ -1,0 +1,143 @@
+    body {
+      font-family: Verdana, Tahoma, Arial, sans-serif;
+      font-size:   10pt;
+    }
+    h2, h3 {
+      color: blue;
+    }
+    .allCalendar {
+      vertical-align: top;
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+
+    cal_month_calendartd {
+      padding-left: 0.5em;
+      vertical-align: top;
+      text-align: left;
+    }
+     .th {
+      border-style: solid;
+      border: solid blue 1px;
+      border-width: 1px;
+      text-align: center;
+    }
+    
+    .allCalendar td {
+      padding-left: 0.5em;
+      vertical-align: top;
+      text-align: left;
+    }
+    .calendar {
+      border-style: solid;
+      border-width: 1px;
+      background-color: white;
+    }
+    .calendar th {
+      border-style: solid;
+      border: solid blue 1px;
+      border-width: 1px;
+      text-align: center;
+    }
+ /*   .calendar td {
+      border-style: none;
+      border-width: 1px;
+      text-align: right;
+      color: gray;
+    }*/
+    .calendar td{
+    	width: 70px;
+	height: 100px;
+	border: solid blue 1px;
+        /*background:black;*/
+        vertical-align: top;
+	text-align: left;
+
+    }
+    .event {
+      border-collapse: collapse;
+      border-style: solid;
+      border-width: 1px;
+      text-align: left;
+      margin-bottom: 1em;
+    }
+    .event th {
+      border-style: solid;
+      border-width: 1px;
+      border-color: gray;
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+    }
+    .event td {
+      border-style: solid;
+      border-width: 1px;
+      color: gray;
+    }
+    .eventHead {
+      font-size: large;
+      font-weight: bold;
+      color: blue;
+    }
+    .inputLabel {
+      padding-right: 0.5em;
+    }
+.dateHolderDiv{
+        width: 110px;
+	height: 80px;
+        /*padding: 2px;*/
+	font-size: 13px;
+        background: green;
+	color: black;
+	font-family: arial;
+}
+/*###################################################################
+#
+#
+#check this
+#
+###################################################################*/
+
+.abnormal0{
+     /*   width: px;
+	height: 80px;*/
+        /*padding: 2px;*/
+	font-size: 13px;
+        background: white;
+	color: black;
+	font-family: arial;
+}
+
+.abnormal1{
+        width: 110px;
+	height: 80px;
+        /*padding: 2px;*/
+	font-size: 13px;
+        background: green;
+	color: black;
+	font-family: arial;
+}
+
+.abnormal2{
+        width: 110px;
+	height: 80px;
+        /*padding: 2px;*/
+	font-size: 13px;
+        background: yellow;
+	color: black;
+	font-family: arial;
+}
+
+.abnormal3{
+        width: 110px;
+	height: 80px;
+        /*padding: 2px;*/
+	font-size: 13px;
+        background: red;
+	color: black;
+	font-family: arial;
+}
+
+
+/*.modal_dialog{
+    display: none;
+}*/

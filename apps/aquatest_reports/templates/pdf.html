@@ -1,0 +1,13 @@
+{% extends "hq/base.html" %}
+{% load show_samples-tags %}
+{% load i18n %}
+
+
+{% block title %}{% trans "Reports by Calender" %}{% endblock %}
+
+{% block org_content %}
+
+
+{% get_samples samples %}
+
+{% endblock %}

@@ -1,0 +1,265 @@
+{% extends "hq/base.html" %}
+{% load reports-tags %}
+{% load i18n %}
+
+
+{% block title %}{% trans "Reports by Calender" %}{% endblock %}
+
+{% block org_content %}
+
+
+{% if wqmarea%}
+
+<h3>Select Wqm Area</h3>
+
+      <form action="/sampling_points" method="post">
+<table border="1">
+    <thead>
+        <tr>
+            <th>Select</th>
+            <th>Wqm Area</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for area in samples %}
+        <tr>
+            <td><input type="checkbox" name="area" value="{{ area.id }}" /></td>
+            <td>{{ area }}</td>
+        </tr>
+        {% endfor %}       
+    </tbody>
+</table>
+
+<input type="submit" value="ok" name="wqmarea" />
+</form>
+
+
+{% endif  %}
+
+{% if sampling_points %}
+<h3>Select Date Sampling Points</h3>
+
+<form action="/testers" method="post">
+<table border="1">
+    <thead>
+        <tr>
+            <th>Select</th>
+            <th>Sampling Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for point in samples %}
+        <tr>
+            <td><input type="checkbox" name="sampling_points" value="{{ point.id }}" /></td>
+            <td>{{ point }}</td>
+        </tr>{% endfor %}
+
+    </tbody>
+</table>
+    {% for i in selected_wqmarea %}
+   <input type="hidden" name="selected_wqm" value="{{ i }}" />
+   {% endfor %}
+<!--<input type="hidden" name="selected_wqm" value="{{ selected_wqmarea }}" />-->
+<input type="submit" value="ok" name="samplingpoint" /> 
+</form>
+{% endif %}
+
+
+{% if testers %}
+<h3>Select Testers</h3>
+<form action="/date_range" method="post">
+<table border="1">
+    <thead>
+        <tr>
+            <th>Select</th>
+            <th>Testers</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>{% for tester in testers%}
+            <td><input type="checkbox" name="testers" value="{{ tester.id }}" /></td>
+            <td>{{ tester }}</td>
+        </tr>{% endfor %}
+    </tbody>
+</table>
+    {% for samples_id in samples_ids %}
+   <input type="hidden" name="selected_testers" value="{{ samples_id }}" />
+   {% endfor %}
+<input type="submit" value="ok" name="tester" />
+</form>
+
+
+{% endif %}
+{% if daterange %}
+<h3>Select Date Range</h3>
+      <form action="/create_report" method="post">
+<table border="1">
+    <thead>
+        <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>
+                Date<select  name="startDate">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+          </select>
+                Month
+          <select name="startDate">
+              <option value="1">Jan</option>
+              <option value="2">Feb</option>
+              <option value="3">Mar</option>
+              <option value="4">Apr</option>
+              <option value="5">May</option>
+              <option value="6">Jun</option>
+              <option value="7">Jul</option>
+              <option value="8">Aug</option>
+              <option value="9">Oct</option>
+              <option value="10">Nov</option>
+              <option value="11">Sep</option>
+              <option value="12">Dec</option>
+          </select>
+          Year
+          <select name="startDate">
+              <option value="2008">2008</option>
+              <option value="2009">2009</option>
+              <option value="2010">2010</option>
+              <option value="2011">2011</option>
+              <option value="2012">2012</option>
+              <option value="2013">2013</option>
+              <option value="2014">2014</option>
+              <option value="2015">2015</option>
+              <option value="2016">2016</option>
+              <option value="2017">2017</option>
+              <option value="2018">2018</option>
+              <option value="2019">2019</option>
+              <option value="2020">2020</option>
+          </select></td>
+            <td>
+              Date
+              <select  name="endDate">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+          </select>
+              Month
+          <select name="endDate">
+              <option value="1">Jan</option>
+              <option value="2">Feb</option>
+              <option value="3">Mar</option>
+              <option value="4">Apr</option>
+              <option value="5">May</option>
+              <option value="6">Jun</option>
+              <option value="7">Jul</option>
+              <option value="8">Aug</option>
+              <option value="9">Oct</option>
+              <option value="10">Nov</option>
+              <option value="11">Sep</option>
+              <option value="12">Dec</option>
+          </select>
+              Year
+          <select name="endDate">
+              <option value="2008">2008</option>
+              <option value="2009">2009</option>
+              <option value="2010">2010</option>
+              <option value="2011">2011</option>
+              <option value="2012">2012</option>
+              <option value="2013">2013</option>
+              <option value="2014">2014</option>
+              <option value="2015">2015</option>
+              <option value="2016">2016</option>
+              <option value="2017">2017</option>
+              <option value="2018">2018</option>
+              <option value="2019">2019</option>
+              <option value="2020">2020</option>
+          </select></td>
+        </tr>
+    </tbody>
+</table>
+  {% for samples_id in samples_ids %}
+   <input type="hidden" name="selected_all" value="{{ samples_id }}"  />
+   {% endfor %}
+<input type="submit" value="ok" name="date" />
+</form>
+
+{% endif %}
+
+{% if data %}
+<h3>Data</h3>
+<!--<a href="/export_csv?{% for i in samples_ids %}samples={{ i }}
+    {% endfor %}
+    " >Export CSV</a>-->
+<form name="samples_ids" action="/export_csv" method="post">
+    {% for i in samples_ids %}
+    <input type="hidden" name="samples" value="{{ i }}" />
+    {% endfor %}
+    <input type="submit" value="Export CSV" />
+</form>
+{% get_samples samples %}
+
+
+{% endif %}
+
+
+{% endblock %}
