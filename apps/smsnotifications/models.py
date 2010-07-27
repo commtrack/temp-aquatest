@@ -26,37 +26,18 @@ class NotificationChoice(models.Model):
     def __unicode__(self):
         return self.choice
 
-#def _add_choice(sender, instance, created, **kwargs): #get sender, instance, created
-#    # TODO: add a domain filter.
-#    if not created:     return
-#    print '<<<<<<<<<<<<<<<<<< ADDING CHOICE >>>>>>>>>>>>>>>>>>>>>'
-#    xchoice = NotificationChoice()
-#    try:
-#        print '<<<<<<<<<<<<<<<<<< TRY 1 >>>>>>>>>>>>>>>>>>>>>'
-#        xchoice.choice = instance.form_display_name
-#        print '<<<<<<<<<<<<<<<<<< TRY 2 >>>>>>>>>>>>>>>>>>>>>'
-#        xchoice.xform = instance # error is here u kan just use an instance as an object.
-#        print '<<<<<<<<<<<<<<<<<< TRY 3 >>>>>>>>>>>>>>>>>>>>>'
-#    except Exception, e:
-#        # TODO: report error.
-#        print '<<<<<<<<<<<<<<<<<< error >>>>>>>>>>>>>>>>>>>>>'
-#        raise
-#    xchoice.save()
-#    print '<<<<<<<<<<<<<<<<<< TRY 4 >>>>>>>>>>>>>>>>>>>>>'
-
 class SmsNotification(models.Model):
-    sampling_point = models.ForeignKey(SamplingPoint)
+    sampling_point = models.ManyToManyField(SamplingPoint, help_text="Hold down Ctrl for multiple selections")
     authorised_sampler = models.ForeignKey(Reporter)
-    # notification_type = models.CharField(max_length=160, choices=NOTIFICATION_TYPE_CHOICES)
-    # TODO: Notification shuld be selected from the type of xforms.
+    # TODO: Notification should be selected from the type of xforms.
     notification_type = models.ForeignKey(NotificationChoice)
-    digest = models.BooleanField()
+    failure_notification = models.BooleanField(default=False, help_text="select if you want to send sms only when value is out of range")
+    digest = models.BooleanField(default=False)
     modified = models.DateTimeField(null=True, blank=True)
     created = models.DateTimeField(default=datetime.now())
-
-
+    
     def __unicode__(self):
-            return self.notification_type
+            return '%s notification for %s'%(self.notification_type, self.authorised_sampler)
 
 def _send_sms(reporter_id, message_text):
     data = {"uid":  reporter_id,
@@ -107,21 +88,3 @@ def send_sms_notifications(sub, vals):
         thread = Thread(target=_send_sms,args=(reporter.id, msg2 ))
         thread.start()
 
-
-
-# Register to receive signals each time a Sample is saved
-#post_save.connect(send_sms_notifications, sender=Sample)
-
-# register to receive signals each time an xform is saved.
-# TODO: add signal on delete too.
-#post_save.connect(_add_choice, sender=FormDefModel)
-
-# from cory
-#sample.create()
-#measuredvalue.create(sample=sample)
-
-#post_save.connect(some_func, sender=Sample)
-#you would write another method
-#and then have
-#post_save.connect(some_other_func, sender=MeasuredValue)
-#then it will be called when the measuredvalue is saved

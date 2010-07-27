@@ -49,15 +49,22 @@ from locations.models import Location, LocationType
 from wqm.models import WqmAuthority, SamplingPoint
 from smsnotifications.models import SmsNotification, NotificationChoice
 
+from django import forms
+from django.forms import ModelForm
+
 logger_set = False
 
+class SmsNotificationForm(ModelForm):
+    class Meta:
+        model = SmsNotification
+        exclude = ('modified','created',)
 
 @login_and_domain_required
 def index(request):
     template_name = 'sindex.html'
 
-    notifications = SmsNotification.objects.all()
-    points = SamplingPoint.objects.all()
+    notifications = SmsNotification.objects.all().order_by("-authorised_sampler")
+    points = SamplingPoint.objects.all().order_by("name")
     districts = WqmAuthority.objects.all()
 
     return render_to_response(request,
@@ -67,164 +74,6 @@ def index(request):
         "districts":    districts,
     })
 
-@require_http_methods(["GET", "POST"])
-@login_and_domain_required
-def add_notifications(req):
-
-    def get(req):
-        template_name = "sms-notifications.html"
-        notifications = SmsNotification.objects.all()
-        districts = WqmAuthority.objects.all()
-        points = SamplingPoint.objects.all()
-        testers = get_tester(req.user)
-        return render_to_response(req,
-                template_name, {
-                "notifications": paginated(req, notifications, prefix="smsnotice"),
-                "points" : points,
-                "districts" : districts,
-                "testers" : testers,
-                "notification_types_choices" : NotificationChoice.objects.all(),
-            })
-
-    @transaction.commit_manually
-    def post(req):
-        # check the form for errors
-        notice_errors = check_notice_form(req)
-
-        # if any fields were missing, abort.
-        missing = notice_errors["missing"]
-        exists = notice_errors["exists"]
-
-        if missing:
-            transaction.rollback()
-            return message(req,
-                "Missing Field(s): %s" % comma(missing),
-                link="/smsnotification/add")
-        # if authorised tester with same notification and point exists, abort.
-        if exists:
-            transaction.rollback()
-            return message(req,
-                "%s already exist" % comma(exists),
-                link="/smsnotification/add")
-
-        try:
-            # create the notification object from the form
-            notification = SmsNotification()
-
-            rep = Reporter.objects.get(pk = req.POST.get("authorised_sampler",""))
-            notification.authorised_sampler = rep
-
-            choice = NotificationChoice.objects.get(pk = req.POST.get("notification_type",""))
-            notification.notification_type = choice
-
-            point = SamplingPoint.objects.get(pk = req.POST.get("sampling_point",""))
-            notification.sampling_point = point
-
-            notification.digest = req.POST.get("digest","")
-
-            
-            # save the changes to the db
-            notification.save()
-            transaction.commit()
-
-            # full-page notification
-            return message(req,
-                "SMS notification %s added" % (notification.pk),
-                link="/smsnotification")
-
-        except Exception, err:
-            transaction.rollback()
-            raise
-
-    # invoke the correct function...
-    # this should be abstracted away
-    if   req.method == "GET":  return get(req)
-    elif req.method == "POST": return post(req)
-
-
-@login_and_domain_required
-def edit_notifications(req, pk):
-    notification = get_object_or_404(SmsNotification, pk=pk)
-
-    def get(req):
-        template_name = "sms-notifications.html"
-        notifications = SmsNotification.objects.all()
-        districts = WqmAuthority.objects.all()
-        points = SamplingPoint.objects.all()
-        testers = get_tester(req.user)
-        return render_to_response(req,
-            template_name, {
-                # display paginated sampling points
-                "notifications": paginated(req, notifications, prefix="smsnotice"),
-                "points" : points,
-                "districts" : districts,
-                "testers" : testers,
-                "notification_types_choices" : NotificationChoice.objects.all(),
-                "notification" : notification,
-                })
-
-    @transaction.commit_manually
-    def post(req):
-        # delete notification if a delete button was pressed.
-        if req.POST.get("delete", ""):
-            pk = notification.pk
-            notification.delete()
-
-            transaction.commit()
-            return message(req,
-                "Notification %d deleted" % (pk),
-                link="/smsnotification")
-        else:
-            # check the form for errors
-            notice_errors = check_notice_form(req)
-
-            # if any fields were missing, abort.
-            missing = notice_errors["missing"]
-            exists = notice_errors["exists"]
-
-            if missing:
-                transaction.rollback()
-                return message(req,
-                    "Missing Field(s): %s" % comma(missing),
-                    link="/smsnotification/add")
-            # if authorised tester with same notification and point exists, abort.
-    #        if exists:
-    #            transaction.rollback()
-    #            return message(req,
-    #                "%s already exist" % comma(exists),
-    #                link="/smsnotification/add")
-
-            try:
-                # create the notification object from the form
-                rep = Reporter.objects.get(pk = req.POST.get("authorised_sampler",""))
-                notification.authorised_sampler = rep
-
-                choice = NotificationChoice.objects.get(pk = req.POST.get("notification_type",""))
-                notification.notification_type = choice
-
-                point = SamplingPoint.objects.get(pk = req.POST.get("sampling_point",""))
-                notification.sampling_point = point
-
-                notification.digest = req.POST.get("digest","")
-
-
-                # save the changes to the db
-                notification.save()
-                transaction.commit()
-
-                # full-page notification
-                return message(req,
-                    "SMS notification %s updated" % (notification.pk),
-                    link="/smsnotification")
-
-            except Exception, err:
-                transaction.rollback()
-                raise
-
-    # invoke the correct function...
-    # this should be abstracted away
-    if   req.method == "GET":  return get(req)
-    elif req.method == "POST": return post(req)
 
 @login_and_domain_required
 def delete_notifications(req, pk):
@@ -286,3 +135,41 @@ def get_tester(current_user):
             reporter = rep.reporter
             reporters.append(reporter)
     return reporters
+
+@login_and_domain_required
+def add_notifications(request):
+    template_name = "sms-notifications.html"
+    if request.method == 'POST': # If the form has been submitted...
+        form = SmsNotificationForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            # saving the form data is not cleaned
+            form.save()
+            return message(request,
+                        "SMS Notification Added",
+                        link="/smsnotification")
+    else:
+        form = SmsNotificationForm() # An unbound form
+
+    return render_to_response(request,template_name, {
+        'form': form,
+    })
+
+@login_and_domain_required
+def edit_notifications(request, pk):
+    template_name = "sms-notifications.html"
+    notification = get_object_or_404(SmsNotification, pk=pk)
+    if request.method == 'POST': # If the form has been submitted...
+        form = SmsNotificationForm(request.POST, instance = notification) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            # saving the form data is not cleaned
+            form.save()
+            return message(request,
+                        "SMS Notification Updated",
+                        link="/smsnotification")
+    else:
+        form = SmsNotificationForm(instance=notification)
+    
+    return render_to_response(request,template_name, {
+        'form': form,
+        'notification': notification,
+    })
