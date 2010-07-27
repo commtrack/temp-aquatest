@@ -12,105 +12,12 @@ from smsnotifications.models import SmsNotification, send_sms_notifications, _se
 from datetime import datetime
 import httplib, urllib
 from threading import Thread
-from calender.models import *
-#from djangogcal.calendar import *
 
-from datetime import datetime
-try:
-  from xml.etree import ElementTree
-except ImportError:
-  from elementtree import ElementTree
-import gdata.calendar.service
-import gdata.service
-import atom.service
-import gdata.calendar
-import atom
-import getopt
-import sys
-import string
-import time
 
 H2S_XMLNS = "http://www.aquatest-za.org/h2s"
 PHYSCHEM_XMLNS = "http://www.aquatest-za.org/physchem"
 SAMPLE_XMLNS = [H2S_XMLNS, PHYSCHEM_XMLNS]
 
-# TODO: clean up the code.
-def today_samples_data():
-    today = datetime.today()
-    query = Sample.objects.filter(  date_received__day = today.day,
-                                    date_received__month = today.month,
-                                    date_received__year = today.year)
-
-    return query
-
-def count_samples():
-    today = datetime.today()
-    query = Sample.objects.filter(  date_received__day = today.day,
-                                    date_received__month = today.month,
-                                    date_received__year = today.year)
-    count = query.count()
-    return count
-
-
-def send_event_google_calender(where):
-    cal_client = gdata.calendar.service.CalendarService()
-    cal_client.email = 'aquatest.project@gmail.com'
-    cal_client.password = 'admin1234xy'
-    cal_client.source = 'Google-Calendar_Python_Sample-1.0'
-    cal_client.ProgrammaticLogin()
-    count = count_samples()
-#    count =1
-    title = ("%s. %s") % (count,where)
-    data = today_samples_data()
-#    data = Sample.objects.all()
-    content =""" """
-    content += """
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Date taken    </th>
-                <th>Sampling Point</th>
-                <th>Tester        </th>
-                <th>parameters    </th>
-            </tr>
-        </thead>
-        <tbody>
-        """
-    for i in data:
-        content += """<tr>"""
-        content += """ <td>%s</td>""" % i.date_taken
-        content += """ <td>%s</td>""" % i.sampling_point
-        content += """ <td>%s</td>""" % i.taken_by
-        content += """ <td>h2s positive ph 7.3 cl 36mg</td>"""
-        content += """</tr>"""
-    content += """</tbody></table>"""
-    atime = time.gmtime()
-    stime = time.gmtime(time.time() + 3600)
-    event = gdata.calendar.CalendarEventEntry()
-    event.title = atom.Title(text=title)
-    event.content = atom.Content(text=content)
-#    event.where.append(gdata.calendar.Where(value_string=where))
-#    start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', atime)
-    start_time = time.strftime('%Y-%m-%d', atime)
-#    end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', stime)
-    end_time = time.strftime('%Y-%m-%d', stime)
-    event.when.append(gdata.calendar.When(start_time=start_time, end_time=end_time))
-    cal_path = '/calendar/feeds/aquatest.project@gmail.com/private/full'
-    new_event = cal_client.InsertEvent(event, cal_path)
-    if new_event:
-        sync = SyncEvents()
-        sync.event_id = new_event.id.text
-        sync.date = datetime.now()
-        sync.sent = True
-        sync.save()
-    else:
-        sync = SyncEvents()
-        sync.event_id = new_event.id.text
-        sync.date = datetime.now()
-        sync.sent = False
-        sync.save()
-    
-    return new_event
 
 class SampleDates(models.Model):
     """
