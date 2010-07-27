@@ -1,0 +1,13 @@
+*.pyc
+.project
+.pydevproject
+data/attachments/*
+data/submissions/*
+data/schemas/*
+data/builds/*
+submissions/*
+export/*
+bad/*
+rapidsms-django.log*
+rapidsms.log*
+.settings
