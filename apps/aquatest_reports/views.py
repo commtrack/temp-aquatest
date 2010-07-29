@@ -12,13 +12,9 @@ from reporters.models import Reporter
 from samples.models import Parameter
 import csv
 from django.http import HttpResponse
-#from django import http
-#from django.shortcuts import render_to_response
-#from django.template.loader import get_template
-#from django.template import Context
-#import ho.pisa as pisa
-#import cStringIO as StringIO
-#import cgi
+
+from reportlab.pdfgen import canvas
+#from reportlab import *
 
 logger_set = False
 
@@ -70,6 +66,7 @@ def testers(request):
     samples = Sample.objects.filter(id__in = selected_wqma,
                                     sampling_point__in = selected_samplingPoints,
                                     )
+
     samples_ids=[]
     testers=[]
     for sample in samples:
@@ -143,149 +140,108 @@ def create_report(request):
 
     return render_to_response(request, template_name,context)
 
-@login_and_domain_required
-def data(request):
-    selected_wqm_samplingPoints_tester = request.POST.getlist('selected_all')
-    print '**********************'
-    print selected_wqm_samplingPoints_tester
-#    samples = Sample.objects.filter(id__in=selected_wqm_samplingPoints_tester)
-    samples = Sample.objects.all()
-    data = 1
-    template_name="reports_samples.html"
-    context = {}
-    context = {
-        "samples":samples,
-        "data":data,
-    }
-
-
-    return render_to_response(request, template_name,context)
 
 @login_and_domain_required
-def points(request):
-
-    template_name="reports_samples.html"
-    context = {}
-    context = {
-        "samples":samples
-    }
-
-
-    return render_to_response(request, template_name,context)
-
-@login_and_domain_required
-#def export_csv(request):
-#
-#    template_name="reports_samples.html"
-#    context = {}
-#    response = HttpResponse(mimetype='text/csv')
-#    response['Content-Disposition'] = 'attachment; filename=somefilename.csv'
-#
-#    writer = csv.writer(response)
-#    writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
-#    writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
-#    context = {
-#        "samples":samples
-#    }
-#
-#
-#    return render_to_response(request, template_name,context)
-
 def export_csv(request):
     samples_to_export = request.POST.getlist('samples')
-    print 'i am being executed====='
 
     samples = Sample.objects.filter(id__in = samples_to_export
                                     )
-    for i in samples:
-     print i.taken_by
 
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=AquaTestReport.csv'
 
     writer = csv.writer(response)
-#    parms = Parameter.objects.all()
-#    for parm in parms:
-    writer.writerow(['Area', 'Sampling Point', 'Tester', 'Parameter','Parameter shortname'])
+
+    title = ['Area', 'Sampling Point', 'Tester']
+
+    for sample in samples:
+        results = MeasuredValue.objects.filter(sample=sample)
+        for result in results:
+                if result.parameter.test_name not in title:
+                    title.append(result.parameter.test_name)
+
+    writer.writerow(title)
     for sample in samples:
         point = sample.sampling_point
         results = MeasuredValue.objects.filter(sample=sample)
+        data = [point.wqmarea, point, sample.taken_by]
         for result in results:
-            writer.writerow([point.wqmarea, point, sample.taken_by, result.value,result.parameter.test_name])
+            data.append(result)
+        writer.writerow(data)
     return response
 
-#def write_pdf(template_src="pdf.html", context_dict):
-#    template = get_template(template_src)
-#    context = Context(context_dict)
-#    html  = template.render(context)
-#    result = StringIO.StringIO()
-#    pdf = pisa.pisaDocument(StringIO.StringIO(
-#        html.encode("UTF-8")), result)
-#    if not pdf.err:
-#        return http.HttpResponse(result.getvalue(), \
-#             mimetype='application/pdf')
-#    return http.HttpResponse('Gremlins ate your pdf! %s' % cgi.escape(html))
-#
-#def article(request):
-#    article = get_object_or_404(Article, pk=id)
-#
-#    return write_pdf('dtd/pdf/template.html',{
-#        'pagesize' : 'A4',
-#        'article' : article})
+@login_and_domain_required
+def pdf_view(request):
+    samples_to_export = request.POST.getlist('samples')
+    samples = Sample.objects.filter(id__in = samples_to_export
+                                    )
+    std = request.POST.get('start_date').split('-')
+    ste = request.POST.get('end_date').split('-')
+    styear = int(std[0])
+    stmonth = int(std[1])
+    stday = int(std[2])
+    endyear = int(ste[0])
+    endmonth = int(ste[1])
+    endday = int(ste[2])
+    samples
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(mimetype='application/pdf')
+#    response['Content-Disposition'] = 'attachment; filename=AquaTestReport.pdf'
+    response['Content-Disposition'] = ' filename=AquaTestReport.pdf'
 
+    # Create the PDF object, using the response object as its "file."
+    p = canvas.Canvas(response)
+    title = "AquaTest Report for date Range %s-%s-%s to %s-%s-%s" % (styear,stmonth,stday,endyear,endmonth,endday)
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    title2 = []
 
-######################
-#def indexi(request):
-#    return http.HttpResponse("""
-#        <html><body>
-#            <h1>Example 1</h1>
-#            Please enter some HTML code:
-#            <form action="/download/" method="post" enctype="multipart/form-data">
-#            <textarea name="data">Hello <strong>World</strong></textarea>
-#            <br />
-#            <input type="submit" value="Convert HTML to PDF" />
-#            </form>
-#            <hr>
-#            <h1>Example 2</h1>
-#            <p><a href="ezpdf_sample">Example with template</a>
-#        </body></html>
-#        """)
-#
-#def download(request):
-#    if request.POST:
-#        result = StringIO.StringIO()
-#        pdf = pisa.CreatePDF(
-#            StringIO.StringIO(request.POST["data"]),
-#            result
-#            )
-#
-#        if not pdf.err:
-#            return http.HttpResponse(
-#                result.getvalue(),
-#                mimetype='application/pdf')
-#
-#    return http.HttpResponse('We had some errors')
-#
-#def render_to_pdf(template_src, context_dict):
-#    template = get_template(template_src)
-#    context = Context(context_dict)
-#    html  = template.render(context)
-#    result = StringIO.StringIO()
-#    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("ISO-8859-1")), result)
-#    if not pdf.err:
-#        return http.HttpResponse(result.getvalue(), mimetype='application/pdf')
-#    return http.HttpResponse('We had some errors<pre>%s</pre>' % cgi.escape(html))
-#
-#def ezpdf_sample(request):
-#    blog_entries = []
-#    for i in range(1,10):
-#        blog_entries.append({
-#            'id': i,
-#            'title':'Playing with pisa 3.0.16 and dJango Template Engine',
-#            'body':'This is a simple example..'
-#            })
-#    return render_to_pdf('entries.html',{
-#        'pagesize':'A4',
-#        'title':'My amazing blog',
-#        'blog_entries':blog_entries})
+    for sample in samples:
+        results = MeasuredValue.objects.filter(sample=sample)
+        for result in results:
+                if result.parameter.test_name not in title2:
+                    title2.append(result.parameter.test_name)
+
+    p.drawString(100,750, title)
+
+    i = 50
+    j = 700
+    p.drawString(i,j, "Area")
+    i = i + 50
+    p.drawString(i,j, "Sampling Point")
+    i = i + 100
+    p.drawString(i,j, "Tester")
+    i = i + 100
+    for titles in title2:
+        desplay = ' %s '% titles
+        p.drawString(i,j, desplay)
+        i = i + 80
+    j = j - 50
+    for sample in samples:
+        i = 50
+        point = sample.sampling_point
+        area = "%s" % point.wqmarea
+        sampling = "%s" % point
+        tester = "%s" % sample.taken_by
+        p.drawString(i,j, area)
+        i = i + 50
+        p.drawString(i,j, sampling)
+        i = i + 100
+        p.drawString(i,j, tester)
+        i = i + 100
+        results = MeasuredValue.objects.filter(sample=sample)
+        for result in results:
+            data = "%s" % result.value
+            p.drawString(i,j, data)
+            i = i + 80
+        j = j - 15
+
+#    p.drawString(Paragraph("Wumpus vs Cave Population Report",
+# styles['Title']))
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+    return response

@@ -83,10 +83,16 @@ class CalendarController(object):
                 abnormal = 0
                 if day in self.curr.events:
                     data = True
-                    a = Sample.objects.filter(date_taken__day = day,
+                    if self.area == 0:
+                        a = Sample.objects.filter(date_taken__day = day,
+                                    date_taken__month = self.curr.month,
+                                    date_taken__year = self.curr.year)
+                    else:
+                        a = Sample.objects.filter(date_taken__day = day,
                                             date_taken__month = self.curr.month,
-                                            date_taken__year = self.curr.year)
-                    a.filter(sampling_point__wqmarea = self.area)
+                                            date_taken__year = self.curr.year,
+                                            sampling_point__wqmarea__id = self.area
+                                            )
                     total = a.count()
 ##
 #Write a function here that assign number to abnormal due to being in abnormal range

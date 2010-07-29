@@ -22,15 +22,23 @@ def _get_class(count):
 @register.simple_tag
 def get_samples(samples):
 #    samples = Sample.objects.all()
-    parms = Parameter.objects.all()
+    title = []
+    for sample in samples:
+        results = MeasuredValue.objects.filter(sample=sample)
+        for result in results:
+                if result.parameter.test_name not in title:
+                    title.append(result.parameter.test_name)
+#    parms = Parameter.objects.all()
     ret = ''
     ret += '''<table>\n<thead><tr>
             <th>Area</th>
             <th>Sampling point</th>
             <th>Tester</th>
             '''
-    for i in parms:
-        ret += '<th>Parameter</th>'
+#    for i in parms:
+    for i in title:
+        ret += '<th>%s</th>'% i
+
     ret +=       '''
             </tr></thead>
     '''
@@ -47,7 +55,7 @@ def get_samples(samples):
                 if results:
                     for result in results:
                         ret += '<td>'
-                        ret += '%s \t %s ' % (result.value,result.parameter.test_name_short)
+                        ret += '%s ' % (result.value)
                         ret += '</td>'
                 else:
                     ret += '<td>%s</td>' % ('No parameter for this submited sample')

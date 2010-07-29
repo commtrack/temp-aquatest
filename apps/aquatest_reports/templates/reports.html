@@ -247,14 +247,19 @@
 
 {% if data %}
 <h3>Data</h3>
-<!--<a href="/export_csv?{% for i in samples_ids %}samples={{ i }}
-    {% endfor %}
-    " >Export CSV</a>-->
 <form name="samples_ids" action="/export_csv" method="post">
     {% for i in samples_ids %}
     <input type="hidden" name="samples" value="{{ i }}" />
     {% endfor %}
     <input type="submit" value="Export CSV" />
+</form>
+<form name="samples_ids" action="/export_pdf" method="post">
+         {% for i in samples_ids %}
+             <input type="hidden" name="samples" value="{{ i }}" />
+         {% endfor %}
+         <input type="hidden" name="start_date" value="{{ selected_start_date.date }}" />
+         <input type="hidden" name="end_date" value="{{ selected_end_date.date }}" />
+     <input type="submit" value="Export PDF" />
 </form>
 {% get_samples samples %}
 

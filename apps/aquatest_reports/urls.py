@@ -7,10 +7,8 @@ urlpatterns = patterns('aquatest_reports.views',
     (r'^testers$', 'testers'),
     (r'^date_range$', 'date_range'),
     (r'^create_report$', 'create_report'),
-    (r'^data$', 'data'),
-    (r'^points$', 'points'),
     (r'^export_csv$', 'export_csv'),
-#    (r'^indexi$', 'indexi'),
+    (r'^export_pdf$', 'pdf_view'),
 
 )
 

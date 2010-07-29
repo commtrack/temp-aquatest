@@ -31,8 +31,9 @@
    
     <form method="get" id="search">
 		<select id="selectDistrict" name="area" >
-	           
+	           <option value="0">All Areas</option>
 	            {% for search in search_string %}
+                    
 	            <option value="{{ search.id }}">{{ search }}</option>
                   
 	            {% endfor %}
