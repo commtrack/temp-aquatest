@@ -83,8 +83,8 @@ class Range(models.Model):
      This class provide the range of the measured values, and the date
      created or modified.
     """
-    maximum = models.IntegerField()
-    minimum = models.IntegerField()
+    maximum = models.DecimalField(decimal_places=2, max_digits=7)
+    minimum = models.DecimalField(decimal_places=2, max_digits=7)
     modified = models.DateTimeField(blank=True, null=True)
     created = models.DateTimeField(default=datetime.now())
 
@@ -99,9 +99,9 @@ class NormalRange(Range):
         return '%d - %d' % (self.minimum, self.maximum)
 
 class AbnormalRange(Range):
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=255)
     value_rule = models.ForeignKey(ValueRule)
-    remedialaction = models.CharField(max_length=20)
+    remedialaction = models.CharField(max_length=20, blank=True)
     color = models.CharField(max_length=25)
 
     def __unicode__(self):
