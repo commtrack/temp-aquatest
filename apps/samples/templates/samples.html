@@ -47,7 +47,7 @@
 	    </thead>
 	 	<tbody>
 	 		{% for sample in samples.object_list %}
-	 		<tr class="{% cycle 'even' 'odd' %}">
+	 		<tr class="{% cycle 'odd' 'even' %}">
 	 			<td>{{ sample.sampling_point }} ({{ sample.sampling_point.wqmarea}})</td>
 	 			<td>{{sample.taken_by}}</td>
 	 			<td>{{sample.date_taken}}</td>

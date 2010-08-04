@@ -19,7 +19,7 @@ geomodeladmin =  GeoModelAdmin(SamplingPoint, google_admin)
 db_field = SamplingPoint._meta.get_field('point')
  
 class SamplingPointForm(ModelForm):
-    point = CharField(widget=geomodeladmin.get_map_widget(db_field))
+    point = forms.CharField(widget=geomodeladmin.get_map_widget(db_field))
     
     class Meta:
         model = SamplingPoint
@@ -32,16 +32,16 @@ class SamplingPointForm(ModelForm):
  
 #class GMapInput(Input):
 #    """
-#    Widget para seleccionar un punto en un mapa de Google
+#        Widget parameter selector for google maps
 #    """
 # 
 #    def render(self, name, value, attrs=None):
 #        """
-#        Atributos extras:
-#         - width: ancho del mapa en pixeles
-#         - height: alto del mapa en pixeles
-#         - center: latitud,longitud del punto central del mapa
-#         - zoom: zoom inicial del mapa, 1 - 17
+#            Atributos extras:
+#             - width: ancho del mapa en pixeles
+#             - height: alto del mapa en pixeles
+#             - center: latitud,longitud del punto central del mapa
+#             - zoom: zoom inicial del mapa, 1 - 17
 #        """
 # 
 #        final_attrs = self.build_attrs(attrs)
