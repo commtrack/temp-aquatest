@@ -109,191 +109,43 @@ def _get_sort_info(request, default_sort_column, default_sort_descending):
 
 @require_http_methods(["GET", "POST"])
 @login_and_domain_required
-def edit_samplingpoints(req, pk):
+def edit_samplingpoints(request, pk):
+    template_name = "samplingpoints.html"
     point = get_object_or_404(SamplingPoint, pk=pk)
+    if request.method == 'POST': # If the form has been submitted...
+        form = SamplingPointForm(request.POST, instance = point) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            # saving the form data is not cleaned
+            form.save()
+            return message(request,
+                        "Sampling Point Updated",
+                        link="/samplingpoints")
+    else:
+        form = SamplingPointForm(instance = point) # An unbound form
 
-    def get(req):
-        return render_to_response(req,
-            "samplingpoints.html", {
-
-                # display paginated sampling points
-                "points": paginated(req, SamplingPoint.objects.all()),
-                "districts": WqmAuthority.objects.all(),
-                "point": point,
-                "areas": WqmArea.objects.all(),
-                })
-
-    @transaction.commit_manually
-    def post(req):
-
-        # if DELETE was clicked... delete
-        # the object, then and redirect
-        if req.POST.get("delete", ""):
-            pk = point.pk
-            point.delete()
-
-            transaction.commit()
-            return message(req,
-                "Sampling Point %d deleted" % (pk),
-                link="/samplingpoints")
-
-        else:
-            # check the form for errors (just
-            # missing fields, for the time being)
-            point_errors = check_point_form(req)
-
-            # if any fields were missing, abort. this is
-            # the only server-side check we're doing, for
-            # now, since we're not using django forms here
-            # Note: Shuld put an exist error for the sampling code
-            # as no than one point can have same code.
-            missing = point_errors["missing"]
-            if missing:
-                transaction.rollback()
-                return message(req,
-                    "Missing Field(s): %s" %
-                        ", ".join(missing),
-                    link="/samplingpoints/%s" % (point.pk))
-
-            try:
-                # automagically update the fields of the
-                # update_via_querydict(SamplingPoint, req.POST).save()
-                latitude = req.POST.get("latitude","")
-                if latitude == "":
-                    latitude = None
-                longitude = req.POST.get("longitude","")
-                if longitude == "":
-                    longitude = None
-                
-                point.name = req.POST.get("name","")
-                point.code = req.POST.get("code","")
-                point.latitude = latitude
-                point.longitude = longitude
-                point.wqmarea = WqmArea.objects.get(pk = req.POST.get("wqmarea",""))
-                # no exceptions, so no problems
-                # commit everything to the db
-                point.save()
-                transaction.commit()
-
-                return message(req,
-                    "Sampling point %d updated" % (point.pk),
-                    link="/samplingpoints")
-
-            except Exception, err:
-                transaction.rollback()
-                raise
-
-    # invoke the correct function...
-    # this should be abstracted away
-    if   req.method == "GET":  return get(req)
-    elif req.method == "POST": return post(req)
-
-def check_point_form(req):
-
-    # verify that all non-blank
-    # fields were provided
-#    missing = [
-#        field.verbose_name
-#        for field in SamplingPoint._meta.fields
-#        if req.POST.get(field.name, "") == ""
-#           and field.blank == False]
-
-    missing = []
-    if req.POST.get("name","") == "":
-        missing.append('name')
-    if req.POST.get("code","") == "":
-        missing.append('code')
-    if req.POST.get("wqmarea","") == "":
-        missing.append('wqmarea')
-
-
-    exists = []
-    code = req.POST.get("code","")
-    if SamplingPoint.objects.filter( code=code ):
-        exists = ['code']
-
-    # TODO: add other validation checks,
-    # or integrate proper django forms
-    return {
-        "missing": missing,
-        "exists": exists }
+    return render_to_response(request,template_name, {
+        'form': form,
+        'point': point
+    })
 
 @require_http_methods(["GET", "POST"])
 @login_and_domain_required
-def add_samplingpoint(req):
+def add_samplingpoint(request):
+    template_name = "samplingpoints.html"
+    if request.method == 'POST': # If the form has been submitted...
+        form = SamplingPointForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            # saving the form data is not cleaned
+            form.save()
+            return message(request,
+                        "Sampling Point Added",
+                        link="/samplingpoints")
+    else:
+        form = SamplingPointForm() # An unbound form
 
-    def get(req):
-        return render_to_response(req,
-            "samplingpoints.html", {
-
-                # display paginated sampling points
-                "points": paginated(req, SamplingPoint.objects.all()),
-                "districts": WqmAuthority.objects.all(),
-                
-                "areas": WqmArea.objects.all(),
-                })
-
-    @transaction.commit_manually
-    def post(req):
-        # check the form for errors (just
-        # missing fields, for the time being)
-        point_errors = check_point_form(req)
-
-        # if any fields were missing, abort. this is
-        # the only server-side check we're doing, for
-        # now, since we're not using django forms here
-        missing = point_errors["missing"]
-        exists = point_errors["exists"]
-        if missing:
-            transaction.rollback()
-            return message(req,
-                "Missing Field(s): %s" % comma(missing),
-                link="/samplingpoints/add")
-
-        # if code exists, abort.
-        if exists:
-            transaction.rollback()
-            return message(req,
-                "Field(s) already exist: %s" % comma(exists),
-                link="/samplingpoints/add")
-
-        try:
-            # automagically update the fields of the
-            # reporter object, from the form
-            # update_via_querydict(SamplingPoint, req.POST).save()
-            latitude = req.POST.get("latitude","")
-            if latitude == "":
-                latitude = None
-            longitude = req.POST.get("longitude","")
-            if longitude == "":
-                longitude = None
-            name = req.POST.get("name","")
-            ## some errrrors here.
-            wqmarea = WqmArea.objects.get(pk = req.POST.get("wqmarea",""))
-
-            SamplingPoint(  name = req.POST.get("name",""),
-                            code = req.POST.get("code",""),
-                            latitude = latitude ,
-                            longitude = longitude,
-                            wqmarea = wqmarea,).save()
-
-            # no exceptions, so no problems
-            # commit everything to the db
-            transaction.commit()
-
-            # full-page notification
-            return message(req,
-                "Sampling point %s Added" % (name,),
-                link="/samplingpoints")
-
-        except Exception, err:
-            transaction.rollback()
-            raise
-
-    # invoke the correct function...
-    # this should be abstracted away
-    if   req.method == "GET":  return get(req)
-    elif req.method == "POST": return post(req)
+    return render_to_response(request,template_name, {
+        'form': form,
+    })
 
 @require_http_methods(["GET", "POST"])
 @login_and_domain_required

@@ -31,7 +31,6 @@ engine=mysql
 name=database
 user=root
 password=password
-
 #host=
 #port=
 

@@ -8,13 +8,13 @@
 <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}/domain/stylesheets/sfb.css?version=3"/>
 {% endblock hq-stylesheets %}
 
-{% block title %}{% if point %}Edit {{ point }}{% else %}Add a Sampling Point{% endif %}{% endblock %}
+{% block title %}{% if point %}Edit {{ point }} - {{ point.wqmarea }}{% else %}Add a Sampling Point{% endif %}{% endblock %}
 
 {% block right %}
 <!--<div class="module">-->
 <a href="/samplingpoints"> <<-- Back </a>
 <div class="span-12" style="margin-left:auto; margin-right:auto; float:none">
-    <h3>{% if point %}Edit - {{ point }}{% else %}Add a Sampling Point{% endif %}</h3>
+    <h3>{% if point %}Edit : {{ point }} - {{ point.wqmarea }}{% else %}Add a Sampling Point{% endif %}</h3>
 	    <form class="sfb clear" method="post" id="fm-point-add" action="/samplingpoints/{% if point %}{{ point.pk }}{% else %}add{% endif %}">
 			{% for field in form %}
 		        <div  class="span-5 clear">
