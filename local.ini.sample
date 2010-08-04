@@ -12,7 +12,7 @@
 
 [rapidsms]
 #apps=admin,reporters,hq,httptester,django_extensions,receiver,xformmanager,reports,graphing,webapp,locations,patterns,docs,ajax,messaging,buildmanager,requestlogger,backups,photos,django.contrib.comments
-apps=admin,backends,ajax,webapp,patterns,locations,reporters,hq,graphing,django_extensions,receiver,xformmanager,reports,httptester,messaging,logger,logtracker,buildmanager,requestlogger,backups,domain,django_granular_permissions,django_tables,user_registration,samples,smsnotifications,standards,wqm,aquatest,docs
+apps=admin,backends,ajax,webapp,patterns,locations,reporters,hq,graphing,django_extensions,receiver,xformmanager,reports,httptester,messaging,logger,logtracker,buildmanager,requestlogger,backups,domain,django_granular_permissions,django_tables,user_registration,samples,smsnotifications,standards,wqm,aquatest,aquatest_calendar,aquatest_reports,docs
 backends=http
 
 # -- DATABASE
@@ -27,13 +27,10 @@ backends=http
 # port=<database-port>                                          * not used for sqlite3
 
 [database]
-#engine=sqlite3
-#name=cchq.db
-
 engine=mysql
-name=watertest
+name=database
 user=root
-password=
+password=password
 #host=
 #port=
 
@@ -48,12 +45,20 @@ password=
 level=debug
 file=rapidsms.log
 
+[log]
+level=debug
+file=/var/log/shadowpoll/rapidsms.log
+
 # -- APPS
 #
 # In this area you can define configurations for individual applications. The app
 # must be listed under the section [rapidsms] in "apps". If no configuration is
 # listed for your app it will use the default parameters. However, if you wish to
 # run two apps of the same type, you MUST define configure them explicitly here.
+
+[httptester]
+host=localhost
+port=8080
 
 [receiver]
 export_path=data
@@ -92,6 +97,11 @@ image_path=data/photos
 # must be listed under the section [rapidsms] in "backends". If no configuration is
 # listed for your backend it will use the default parameters. However, if you wish to
 # run two backends of the same type, you MUST define configure them explicitly here.
+
+
+[http]
+host=localhost
+port=8080
 
 #[spomc]
 #type=spomc

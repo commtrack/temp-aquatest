@@ -4,8 +4,9 @@ MORE INFO AT: http://code.google.com/p/django-rest-interface/wiki/RestifyDjango
 
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
-import md5, time, random
+import time, random
 from hq.authentication import get_username_password, get_auth_dict
+from hashlib import md5
 
 def djangouser_auth(username, password):
     """

@@ -1,0 +1,1566 @@
+[
+    {
+        "pk": 1, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Hantam Local Municipality", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Amathole DM", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Chris Hani DM", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Brandvlei", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Calvinia", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Klipwerf", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Loeriesfontein", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Melkkraal", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Middelpos", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Nieuwoudtville", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Swartkops", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Mnquma", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Lukhanji LM", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Emalahleni LM", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "locations.location", 
+        "fields": {
+            "code": null, 
+            "name": "Intsika Yethu LM", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "locations.location", 
+        "fields": {
+            "code": "NNHMBV-005", 
+            "name": "Borehole", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "locations.location", 
+        "fields": {
+            "code": "NCNDHC-001", 
+            "name": "Calvinia East - De Lange Street", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "locations.location", 
+        "fields": {
+            "code": "NNHMLF-004", 
+            "name": "Municipal offices", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "locations.location", 
+        "fields": {
+            "code": "NCHMEK-001", 
+            "name": "Melkkraal", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "locations.location", 
+        "fields": {
+            "code": "NNHMNV-003", 
+            "name": "Caravan park", 
+            "parent": null, 
+            "longitude": null, 
+            "latitude": null, 
+            "type": null
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 11:09:37"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 11:24:32"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 11:24:32"
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 11:24:32"
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "wqm.wqmlocation", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 11:24:32"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "wqm.wqmauthority", 
+        "fields": {}
+    }, 
+    {
+        "pk": 2, 
+        "model": "wqm.wqmauthority", 
+        "fields": {}
+    }, 
+    {
+        "pk": 3, 
+        "model": "wqm.wqmauthority", 
+        "fields": {}
+    }, 
+    {
+        "pk": 4, 
+        "model": "wqm.wqmarea", 
+        "fields": {
+            "wqmauthority": 1
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "wqm.wqmarea", 
+        "fields": {
+            "wqmauthority": 1
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "wqm.wqmarea", 
+        "fields": {
+            "wqmauthority": 1
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "wqm.wqmarea", 
+        "fields": {
+            "wqmauthority": 1
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "wqm.wqmarea", 
+        "fields": {
+            "wqmauthority": 1
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "wqm.wqmarea", 
+        "fields": {
+            "wqmauthority": 1
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "wqm.wqmarea", 
+        "fields": {
+            "wqmauthority": 1
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "wqm.wqmarea", 
+        "fields": {
+            "wqmauthority": 1
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "wqm.wqmarea", 
+        "fields": {
+            "wqmauthority": 2
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "wqm.wqmarea", 
+        "fields": {
+            "wqmauthority": 3
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "wqm.wqmarea", 
+        "fields": {
+            "wqmauthority": 3
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "wqm.wqmarea", 
+        "fields": {
+            "wqmauthority": 3
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "wqm.deliverysystem", 
+        "fields": {
+            "name": "house connection"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "wqm.deliverysystem", 
+        "fields": {
+            "name": "public tap"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "wqm.deliverysystem", 
+        "fields": {
+            "name": "borehole"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "wqm.deliverysystem", 
+        "fields": {
+            "name": "protected spring"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "wqm.deliverysystem", 
+        "fields": {
+            "name": "unprotected spring"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "wqm.deliverysystem", 
+        "fields": {
+            "name": "river"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "wqm.deliverysystem", 
+        "fields": {
+            "name": "dam or lake"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "wqm.deliverysystem", 
+        "fields": {
+            "name": "reservoir"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "wqm.deliverysystem", 
+        "fields": {
+            "name": "distribution system"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "wqm.samplingpoint", 
+        "fields": {
+            "point": "POINT (18.8587188687091007 -33.7902045201184009)", 
+            "point_type": "ground", 
+            "wqmarea": 4, 
+            "delivery_system": 3, 
+            "treatment": "untreated"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "wqm.samplingpoint", 
+        "fields": {
+            "point": "POINT (21.2255859336977011 -33.2846199635970024)", 
+            "point_type": "ground", 
+            "wqmarea": 5, 
+            "delivery_system": 2, 
+            "treatment": "treated"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "wqm.samplingpoint", 
+        "fields": {
+            "point": "POINT (20.8300781212710007 -33.5780147408194978)", 
+            "point_type": "ground", 
+            "wqmarea": 7, 
+            "delivery_system": 1, 
+            "treatment": "treated"
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "wqm.samplingpoint", 
+        "fields": {
+            "point": "POINT (20.6542968713024990 -33.3580616074806997)", 
+            "point_type": "ground", 
+            "wqmarea": 8, 
+            "delivery_system": 2, 
+            "treatment": "treated"
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "wqm.samplingpoint", 
+        "fields": {
+            "point": "POINT (20.1269531213960988 -33.6512082938729975)", 
+            "point_type": "ground", 
+            "wqmarea": 10, 
+            "delivery_system": 2, 
+            "treatment": "treated"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 10:02:06"
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 11:24:32"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 11:24:32"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 11:24:32"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "samples.sampledates", 
+        "fields": {
+            "modified": null, 
+            "created": "2010-07-30 11:24:32"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "samples.parameter", 
+        "fields": {
+            "test_name_short": "tcmpn", 
+            "lookup_hint": 0, 
+            "unit": "total coliforms / 100ml", 
+            "test_name": "tcmpn"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "samples.parameter", 
+        "fields": {
+            "test_name_short": "ecmpn", 
+            "lookup_hint": 0, 
+            "unit": "e. coli / 100ml", 
+            "test_name": "ecmpn"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "samples.parameter", 
+        "fields": {
+            "test_name_short": "turbidity", 
+            "lookup_hint": 0, 
+            "unit": "NTU", 
+            "test_name": "turbidity"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "samples.parameter", 
+        "fields": {
+            "test_name_short": "ph", 
+            "lookup_hint": 0, 
+            "unit": "ph scale units", 
+            "test_name": "ph"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "samples.parameter", 
+        "fields": {
+            "test_name_short": "h2s", 
+            "lookup_hint": 1, 
+            "unit": "", 
+            "test_name": "H2S strip test"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "samples.parameter", 
+        "fields": {
+            "test_name_short": "chlorine", 
+            "lookup_hint": 0, 
+            "unit": "", 
+            "test_name": "free chlorine"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "samples.parameter", 
+        "fields": {
+            "test_name_short": "conductivity", 
+            "lookup_hint": 0, 
+            "unit": "", 
+            "test_name": "electrical conductivity"
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "samples.sample", 
+        "fields": {
+            "date_taken": "2010-07-30 14:50:29", 
+            "notes": "", 
+            "batch_number": null, 
+            "sampling_point": 17, 
+            "date_received": "2010-07-30 14:50:31", 
+            "incubated": 0, 
+            "taken_by": 2
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "samples.sample", 
+        "fields": {
+            "date_taken": "2010-07-30 14:49:36", 
+            "notes": "", 
+            "batch_number": null, 
+            "sampling_point": 17, 
+            "date_received": "2010-07-30 14:49:38", 
+            "incubated": 0, 
+            "taken_by": 2
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "samples.sample", 
+        "fields": {
+            "date_taken": "2010-07-30 14:47:25", 
+            "notes": "", 
+            "batch_number": null, 
+            "sampling_point": 16, 
+            "date_received": "2010-07-30 14:47:26", 
+            "incubated": 0, 
+            "taken_by": 1
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "samples.sample", 
+        "fields": {
+            "date_taken": "2010-07-30 14:47:13", 
+            "notes": "", 
+            "batch_number": null, 
+            "sampling_point": 16, 
+            "date_received": "2010-07-30 14:47:14", 
+            "incubated": 0, 
+            "taken_by": 1
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "samples.measuredvalue", 
+        "fields": {
+            "sample": 15, 
+            "parameter": 4, 
+            "value": "4.5"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "samples.measuredvalue", 
+        "fields": {
+            "sample": 15, 
+            "parameter": 2, 
+            "value": "5"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "samples.measuredvalue", 
+        "fields": {
+            "sample": 15, 
+            "parameter": 5, 
+            "value": "1"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "samples.measuredvalue", 
+        "fields": {
+            "sample": 16, 
+            "parameter": 4, 
+            "value": "5.2"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "samples.measuredvalue", 
+        "fields": {
+            "sample": 16, 
+            "parameter": 2, 
+            "value": "4.5"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "samples.measuredvalue", 
+        "fields": {
+            "sample": 16, 
+            "parameter": 5, 
+            "value": "0"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "samples.measuredvalue", 
+        "fields": {
+            "sample": 17, 
+            "parameter": 3, 
+            "value": "1.2"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "samples.measuredvalue", 
+        "fields": {
+            "sample": 17, 
+            "parameter": 4, 
+            "value": "10"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "samples.measuredvalue", 
+        "fields": {
+            "sample": 17, 
+            "parameter": 7, 
+            "value": "145"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "samples.measuredvalue", 
+        "fields": {
+            "sample": 18, 
+            "parameter": 3, 
+            "value": "1.0"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "samples.measuredvalue", 
+        "fields": {
+            "sample": 18, 
+            "parameter": 4, 
+            "value": "9.6"
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "samples.measuredvalue", 
+        "fields": {
+            "sample": 18, 
+            "parameter": 6, 
+            "value": "0.6"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "samples.valuerule", 
+        "fields": {
+            "water_use_type": 1, 
+            "parameter": 2, 
+            "description": "e.coli per 100ml", 
+            "standard": 1
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "samples.valuerule", 
+        "fields": {
+            "water_use_type": 1, 
+            "parameter": 1, 
+            "description": "total coliforms per 100ml", 
+            "standard": 1
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "samples.valuerule", 
+        "fields": {
+            "water_use_type": 1, 
+            "parameter": 3, 
+            "description": "turbidity", 
+            "standard": 1
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "samples.valuerule", 
+        "fields": {
+            "water_use_type": 1, 
+            "parameter": 4, 
+            "description": "pH", 
+            "standard": 1
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "samples.valuerule", 
+        "fields": {
+            "water_use_type": 1, 
+            "parameter": 5, 
+            "description": "h2s strip test", 
+            "standard": 1
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "samples.valuerule", 
+        "fields": {
+            "water_use_type": 1, 
+            "parameter": 6, 
+            "description": "chlorine residual", 
+            "standard": 1
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "samples.valuerule", 
+        "fields": {
+            "water_use_type": 1, 
+            "parameter": 7, 
+            "description": "electrical conductivity", 
+            "standard": 1
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "0.00", 
+            "created": "2010-07-30 10:02:06", 
+            "maximum": "10.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "20.00", 
+            "created": "2010-07-30 10:02:06", 
+            "maximum": "99999.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "10.00", 
+            "created": "2010-07-30 10:45:17", 
+            "maximum": "20.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "5.00", 
+            "created": "2010-07-30 10:50:16", 
+            "maximum": "100.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "100.00", 
+            "created": "2010-07-30 10:54:03", 
+            "maximum": "99999.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "4.00", 
+            "created": "2010-07-30 10:54:03", 
+            "maximum": "5.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "9.50", 
+            "created": "2010-07-30 10:57:02", 
+            "maximum": "10.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "1.00", 
+            "created": "2010-07-30 10:57:02", 
+            "maximum": "5.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "5.00", 
+            "created": "2010-07-30 10:57:02", 
+            "maximum": "99999.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "10.00", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "99999.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "-99999.00", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "4.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "1.00", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "1.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "150.00", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "370.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "370.00", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "99999.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "0.50", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "99999.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "0.00", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "0.02", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "0.00", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "0.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "0.00", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "5.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "0.00", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "1.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "5.00", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "9.50", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "0.00", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "0.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "0.00", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "150.00", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 24, 
+        "model": "samples.range", 
+        "fields": {
+            "minimum": "0.02", 
+            "created": "2010-07-30 10:59:18", 
+            "maximum": "0.50", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 18, 
+        "model": "samples.normalrange", 
+        "fields": {
+            "description": "Negligible risk of microbial infection", 
+            "value_rule": 9
+        }
+    }, 
+    {
+        "pk": 19, 
+        "model": "samples.normalrange", 
+        "fields": {
+            "description": "Negligible risk of microbial infection", 
+            "value_rule": 8
+        }
+    }, 
+    {
+        "pk": 20, 
+        "model": "samples.normalrange", 
+        "fields": {
+            "description": "Class 1 compliant", 
+            "value_rule": 10
+        }
+    }, 
+    {
+        "pk": 21, 
+        "model": "samples.normalrange", 
+        "fields": {
+            "description": "Class 1 compliant", 
+            "value_rule": 11
+        }
+    }, 
+    {
+        "pk": 22, 
+        "model": "samples.normalrange", 
+        "fields": {
+            "description": "h2s test negative", 
+            "value_rule": 12
+        }
+    }, 
+    {
+        "pk": 23, 
+        "model": "samples.normalrange", 
+        "fields": {
+            "description": "electrical conductivity ok", 
+            "value_rule": 14
+        }
+    }, 
+    {
+        "pk": 24, 
+        "model": "samples.normalrange", 
+        "fields": {
+            "description": "chlorine residual ok", 
+            "value_rule": 13
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "yellow", 
+            "description": "Slight risk of microbial infection with continuous exposure; negligible effects with occasional or short-term exposure", 
+            "value_rule": 9, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "red", 
+            "description": "Significant and increasing risk of infectious disease transmission. As faecal coliform levels increase, the amount of water ingested required to cause infection decreases", 
+            "value_rule": 9, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "yellow", 
+            "description": "Risk of infectious disease transmission with continuous exposure; slight risk with occasional exposure", 
+            "value_rule": 9, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "yellow", 
+            "description": "Indicative of inadequate treatment, post-treatment contamination or growth in the distribution system. Risk of infectious disease transmission with continuous exposure and a slight risk with occasional exposure", 
+            "value_rule": 8, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "red", 
+            "description": "Indicative of poor treatment, post-treatment contamination or definite growth in the water distribution system. Significant and increasing risk of infectious disease transmission", 
+            "value_rule": 8, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "yellow", 
+            "description": "Class 2 compliant", 
+            "value_rule": 11, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "yellow", 
+            "description": "Class 2 compliant", 
+            "value_rule": 11, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "yellow", 
+            "description": "Class 2 compliant", 
+            "value_rule": 10, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "red", 
+            "description": "Not compliant", 
+            "value_rule": 10, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "red", 
+            "description": "Not compliant", 
+            "value_rule": 11, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 12, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "red", 
+            "description": "Not compliant", 
+            "value_rule": 11, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 13, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "red", 
+            "description": "Not compliant", 
+            "value_rule": 12, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 14, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "yellow", 
+            "description": "Class II - needs attention", 
+            "value_rule": 14, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 15, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "red", 
+            "description": "Not compliant", 
+            "value_rule": 14, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "red", 
+            "description": "Not compliant", 
+            "value_rule": 13, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "samples.abnormalrange", 
+        "fields": {
+            "color": "yellow", 
+            "description": "Too low", 
+            "value_rule": 13, 
+            "remedialaction": ""
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "reporters.role", 
+        "fields": {
+            "patterns": [], 
+            "code": "TEST", 
+            "name": "tester"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "reporters.reporter", 
+        "fields": {
+            "first_name": "Demo", 
+            "last_name": "Reporter1", 
+            "language": "English", 
+            "registered_self": 0, 
+            "alias": "demoreporter1", 
+            "role": 1, 
+            "location": 5, 
+            "groups": []
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "reporters.reporter", 
+        "fields": {
+            "first_name": "Demo", 
+            "last_name": "Reporter2", 
+            "language": "English", 
+            "registered_self": 0, 
+            "alias": "demoreporter2", 
+            "role": 1, 
+            "location": 12, 
+            "groups": []
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "standards.waterusetype", 
+        "fields": {
+            "created": "2010-07-30 12:07:45", 
+            "description": "Household", 
+            "modified": null
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "standards.standard", 
+        "fields": {
+            "created": "2010-07-30 12:38:41", 
+            "date_effective": "1996-01-01", 
+            "name": "South African Water Quality Guidelines (2nd ed.)", 
+            "modified": null, 
+            "govering_body": "DWAF"
+        }
+    }
+]

@@ -32,23 +32,23 @@
 	{% endif %}	
 	</div>
 
-<!--  adding delivary system-->
+<!--  adding delivery system-->
 	<div class="span-5 clear">
             <div style="float:right;">
-                <label for="fm-point-add-delivary-system">Delivary System</label>
+                <label for="fm-point-add-delivery-system">Delivery System</label>
             </div>
         </div>
-        {% if delivary_system %}
-            <select name="delivary_system">
-                <option></option>{% for d_sys in delivary_system %}
-                <option value="{{ d_sys.pk }}" class="depth-{{ d_sys.depth }}"{% if d_sys %}{% ifequal d_sys point.delivary_system %} selected="selected"{% endifequal %}{% endif %}>{{ d_sys.name }}</option>{% endfor %}
+        {% if delivery_system %}
+            <select name="delivery_system">
+                <option></option>{% for d_sys in delivery_system %}
+                <option value="{{ d_sys.pk }}" class="depth-{{ d_sys.depth }}"{% if d_sys %}{% ifequal d_sys point.delivery_system %} selected="selected"{% endifequal %}{% endif %}>{{ d_sys.name }}</option>{% endfor %}
             </select>
 	{% else %}        
-	      <p>No Delivary system added yet.! </p>
+	      <p>No Delivery system added yet.! </p>
 	{% endif %}	
 	</div>
 
-<!--  adding treatement -->
+<!--  adding treatment -->
 	<div class="span-5 clear">
             <div style="float:right;">
                 <label for="fm-point-add-name">Treatement</label>
