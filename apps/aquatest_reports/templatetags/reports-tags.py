@@ -14,36 +14,31 @@ def _get_class(count):
         return "even"
     return "odd"
 
-#def _getsamples()
-#    samples = Sample.objects.all()
-#    return samples
-
 
 @register.simple_tag
 def get_samples(samples):
-#    samples = Sample.objects.all()
     title = []
     for sample in samples:
         results = MeasuredValue.objects.filter(sample=sample)
         for result in results:
                 if result.parameter.test_name not in title:
                     title.append(result.parameter.test_name)
-#    parms = Parameter.objects.all()
     ret = ''
     ret += '''<table>\n<thead><tr>
             <th>Area</th>
             <th>Sampling point</th>
             <th>Tester</th>
             '''
-#    for i in parms:
+    vars = []
     for i in title:
         ret += '<th>%s</th>'% i
-
+        vars.append(i)
     ret +=       '''
             </tr></thead>
     '''
     count = 1
     if samples:
+        Data = []
         for sample in samples:
                 ret += '\n<tr class="%s">' % _get_class(count)
                 count += 1
@@ -51,16 +46,28 @@ def get_samples(samples):
                 ret += '<td>%s</td>' % (point.wqmarea)
                 ret += '<td>%s</td>' % (point)
                 ret += '<td>%s</td>' % (sample.taken_by)
+                
                 results = MeasuredValue.objects.filter(sample=sample)
+                dayData = []
+                
                 if results:
                     for result in results:
-                        ret += '<td>'
-                        ret += '%s ' % (result.value)
-                        ret += '</td>'
-                else:
-                    ret += '<td>%s</td>' % ('No parameter for this submited sample')
-                    
-                ret += '</tr>'
+                        if result.sample.id not in dayData:
+                            dayData.append(result.sample.id)
+                        dayData.append(result.parameter.test_name)
+                        dayData.append(result.value)
+                    Data.append(dayData)
+                    for i,li in enumerate(Data):
+                        for title in vars:
+                            if li[0]==result.sample.id:
+                                if title in li:
+                                    ret += '<td>'
+                                    val = int(li.index(title))
+                                    val = val + 1
+                                    ret += '%s ' % (Data[i][val])
+                                    ret += '</td>'
+                                else:
+                                    ret += '<td>-</td>'
     else:
         ret += '<td>No samples submitted</td>'
     ret += '</tbody></table>'
