@@ -155,20 +155,36 @@ def export_csv(request):
     writer = csv.writer(response)
 
     title = ['Area', 'Sampling Point', 'Tester']
-
+    params = []
     for sample in samples:
         results = MeasuredValue.objects.filter(sample=sample)
         for result in results:
                 if result.parameter.test_name not in title:
                     title.append(result.parameter.test_name)
-
+                    params.append(result.parameter.test_name)
     writer.writerow(title)
+
     for sample in samples:
+        Data = []
         point = sample.sampling_point
         results = MeasuredValue.objects.filter(sample=sample)
+        dayData = []
         data = [point.wqmarea, point, sample.taken_by]
         for result in results:
-            data.append(result)
+            if result.sample.id not in dayData:
+                dayData.append(result.sample.id)
+            dayData.append(result.parameter.test_name)
+            dayData.append(result.value)
+        Data.append(dayData)
+        for i,li in enumerate(Data):
+            for titl in params:
+                if li[0]==result.sample.id:
+                    if titl in li:
+                        val = int(li.index(titl))
+                        val = val + 1
+                        data.append((Data[i][val]))
+                    else:
+                        data.append('-')
         writer.writerow(data)
     return response
 
@@ -189,7 +205,7 @@ def pdf_view(request):
     # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(mimetype='application/pdf')
 #    response['Content-Disposition'] = 'attachment; filename=AquaTestReport.pdf'
-    response['Content-Disposition'] = ' filename=AquaTestReport.pdf'
+    response['Content-Disposition'] = 'attachment; filename=AquaTestReport.pdf'
 
     # Create the PDF object, using the response object as its "file."
     p = canvas.Canvas(response)
