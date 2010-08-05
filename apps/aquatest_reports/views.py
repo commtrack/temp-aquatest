@@ -12,8 +12,17 @@ from reporters.models import Reporter
 from samples.models import Parameter
 import csv
 from django.http import HttpResponse
-
+import create_pdf
 from reportlab.pdfgen import canvas
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import *
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.rl_config import defaultPageSize
+from reportlab.lib.units import inch
+from reportlab.lib import colors
+PAGE_HEIGHT=defaultPageSize[1]; PAGE_WIDTH=defaultPageSize[0]
+styles = getSampleStyleSheet()
 #from reportlab import *
 
 logger_set = False
@@ -95,12 +104,19 @@ def date_range(request):
     for sample in samples:
         samples_ids.append(sample.id)
     daterange = 1
+    end_date = datetime.today()
+    month_names = ['0','jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    start_date = datetime(end_date.year-1,end_date.month,end_date.day)
+    month_name = month_names[end_date.month]
     template_name="reports.html"
     context = {}
     context = {
     "daterange":daterange,
     "samples":samples,
-    "samples_ids":samples_ids
+    "samples_ids":samples_ids,
+    "start_date":start_date,
+    "end_date":end_date,
+    "month_names":month_name
 
     }
 
@@ -190,74 +206,8 @@ def export_csv(request):
 
 @login_and_domain_required
 def pdf_view(request):
-    samples_to_export = request.POST.getlist('samples')
-    samples = Sample.objects.filter(id__in = samples_to_export
-                                    )
-    std = request.POST.get('start_date').split('-')
-    ste = request.POST.get('end_date').split('-')
-    styear = int(std[0])
-    stmonth = int(std[1])
-    stday = int(std[2])
-    endyear = int(ste[0])
-    endmonth = int(ste[1])
-    endday = int(ste[2])
-    samples
-    # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(mimetype='application/pdf')
-#    response['Content-Disposition'] = 'attachment; filename=AquaTestReport.pdf'
     response['Content-Disposition'] = 'attachment; filename=AquaTestReport.pdf'
-
-    # Create the PDF object, using the response object as its "file."
-    p = canvas.Canvas(response)
-    title = "AquaTest Report for date Range %s-%s-%s to %s-%s-%s" % (styear,stmonth,stday,endyear,endmonth,endday)
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-    title2 = []
-
-    for sample in samples:
-        results = MeasuredValue.objects.filter(sample=sample)
-        for result in results:
-                if result.parameter.test_name not in title2:
-                    title2.append(result.parameter.test_name)
-
-    p.drawString(100,750, title)
-
-    i = 50
-    j = 700
-    p.drawString(i,j, "Area")
-    i = i + 50
-    p.drawString(i,j, "Sampling Point")
-    i = i + 100
-    p.drawString(i,j, "Tester")
-    i = i + 100
-    for titles in title2:
-        desplay = ' %s '% titles
-        p.drawString(i,j, desplay)
-        i = i + 80
-    j = j - 50
-    for sample in samples:
-        i = 50
-        point = sample.sampling_point
-        area = "%s" % point.wqmarea
-        sampling = "%s" % point
-        tester = "%s" % sample.taken_by
-        p.drawString(i,j, area)
-        i = i + 50
-        p.drawString(i,j, sampling)
-        i = i + 100
-        p.drawString(i,j, tester)
-        i = i + 100
-        results = MeasuredValue.objects.filter(sample=sample)
-        for result in results:
-            data = "%s" % result.value
-            p.drawString(i,j, data)
-            i = i + 80
-        j = j - 15
-
-#    p.drawString(Paragraph("Wumpus vs Cave Population Report",
-# styles['Title']))
-
-    # Close the PDF object cleanly, and we're done.
-    p.showPage()
-    p.save()
+    create_pdf.run(response, request)
     return response
+

@@ -105,6 +105,7 @@
         <tr>
             <td>
                 Date<select  name="startDate">
+                    <option value="{{start_date.day}}">{{start_date.day}}</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -139,6 +140,7 @@
           </select>
                 Month
           <select name="startDate">
+              <option value="{{start_date.month}}">{{month_names}}</option>
               <option value="1">Jan</option>
               <option value="2">Feb</option>
               <option value="3">Mar</option>
@@ -154,6 +156,7 @@
           </select>
           Year
           <select name="startDate">
+              <option value="{{start_date.year}}">{{start_date.year}}</option>
               <option value="2008">2008</option>
               <option value="2009">2009</option>
               <option value="2010">2010</option>
@@ -171,6 +174,7 @@
             <td>
               Date
               <select  name="endDate">
+                  <option value="{{end_date.day}}">{{end_date.day}}</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -205,6 +209,7 @@
           </select>
               Month
           <select name="endDate">
+              <option value="{{end_date.month}}">{{month_names}}</option>
               <option value="1">Jan</option>
               <option value="2">Feb</option>
               <option value="3">Mar</option>
@@ -220,6 +225,7 @@
           </select>
               Year
           <select name="endDate">
+              <option value="{{end_date.year}}">{{end_date.year}}</option>
               <option value="2008">2008</option>
               <option value="2009">2009</option>
               <option value="2010">2010</option>
@@ -252,8 +258,7 @@
     <input type="hidden" name="samples" value="{{ i }}" />
     {% endfor %}
     <input type="submit" value="Export CSV" />
-</form>
-<form name="samples_ids" action="/export_pdf" method="post">
+</form><form name="samples_ids" action="/export_pdf" method="post">
          {% for i in samples_ids %}
              <input type="hidden" name="samples" value="{{ i }}" />
          {% endfor %}
