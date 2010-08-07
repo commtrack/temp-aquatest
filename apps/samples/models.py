@@ -1,4 +1,7 @@
+import httplib, urllib
+from threading import Thread
 from datetime import datetime
+
 from django.db import models
 from django.db.models.signals import post_save
 
@@ -9,9 +12,7 @@ from wqm.models import SamplingPoint
 from xformmanager.models import Metadata
 from hq.models import ReporterProfile
 from smsnotifications.models import SmsNotification, send_sms_notifications, _send_sms
-from datetime import datetime
-import httplib, urllib
-from threading import Thread
+
 
 
 H2S_XMLNS = "http://www.aquatest-za.org/h2s"
