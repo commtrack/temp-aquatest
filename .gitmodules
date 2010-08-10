@@ -1,3 +1,3 @@
 [submodule "rapidsms"]
 	path = rapidsms
-	url = git@github.com:commtrack/temp-rapidsms.git
+	url = http://github.com/commtrack/temp-rapidsms.git
