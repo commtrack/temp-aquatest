@@ -25,6 +25,7 @@ def get_samples(samples,selected_params):
                     title.append(result.parameter.test_name)
     ret = ''
     ret += '''<table>\n<thead><tr>
+            <th>Date</th>
             <th>Area</th>
             <th>Sampling point</th>
             <th>Tester</th>
@@ -37,6 +38,7 @@ def get_samples(samples,selected_params):
             </tr></thead>
     '''
     count = 1
+    month_names = ['0','jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
     if samples:
         Data = []
         for sample in samples:
@@ -52,6 +54,8 @@ def get_samples(samples,selected_params):
                         dayData.append(result.value)
                     Data.append(dayData)
                     count += 1
+                    month_name = month_names[sample.date_taken.month]
+                    ret += '<td>%s-%s-%s</td>' % (sample.date_taken.year,month_name,sample.date_taken.day)
                     ret += '<td>%s</td>' % (point.wqmarea)
                     ret += '<td>%s</td>' % (point)
                     ret += '<td>%s</td>' % (sample.taken_by)

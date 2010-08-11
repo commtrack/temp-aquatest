@@ -49,7 +49,7 @@ def run(response,request,selected_parameters):
                 ('GRID', (0,0), (-1,-1), 0.25, colors.black),
                     ])
     pdf = []
-    title = [Paragraph('Area', styBackground), Paragraph('Sampling Point', styBackground), Paragraph('Tester', styBackground)]
+    title = [Paragraph('Date Taken', styBackground),Paragraph('Area', styBackground), Paragraph('Sampling Point', styBackground), Paragraph('Tester', styBackground)]
     params = []
     for para in selected_parameters:
         title.append(Paragraph(para, styBackground))
@@ -67,10 +67,11 @@ def run(response,request,selected_parameters):
                     dayData.append(result.sample.id)
                 dayData.append(result.parameter.test_name)
                 dayData.append(result.value)
+            date = '%s-%s-%s'%(sample.date_taken.year,month_names[sample.date_taken.month],sample.date_taken.day)
             ares = '%s'%point.wqmarea
             smpling = '%s'%point
             testr = '%s'% sample.taken_by
-            data = [Paragraph(ares, styBackground),Paragraph(smpling , styBackground),Paragraph(testr, styBackground)]
+            data = [Paragraph( date, styBackground), Paragraph(ares, styBackground),Paragraph(smpling , styBackground),Paragraph(testr, styBackground)]
             pdf.append(data)
             Data.append(dayData)
             for i,li in enumerate(Data):

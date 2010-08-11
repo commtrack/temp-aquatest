@@ -201,8 +201,9 @@ def export_csv(request):
     response['Content-Disposition'] = 'attachment; filename=AquaTestReport.csv'
 
     writer = csv.writer(response)
+    month_names = ['0','jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
-    title = ['Area', 'Sampling Point', 'Tester']
+    title = ['Date taken','Area', 'Sampling Point', 'Tester']
     params = selected_param
     for para in selected_param:
         title.append(para)
@@ -214,7 +215,9 @@ def export_csv(request):
         results = MeasuredValue.objects.filter(sample=sample, parameter__test_name__in = selected_param)
         if results:
             dayData = []
-            data = [point.wqmarea, point, sample.taken_by]
+            month_name = month_names[sample.date_taken.month]
+            date = '%s-%s-%s'%(sample.date_taken.year,month_name,sample.date_taken.day)
+            data = [date ,point.wqmarea, point, sample.taken_by]
             for result in results:
                 if result.sample.id not in dayData:
                     dayData.append(result.sample.id)

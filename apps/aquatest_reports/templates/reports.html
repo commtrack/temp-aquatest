@@ -51,7 +51,7 @@
         {% for point in samples %}
         <tr>
             <td><input type="checkbox" name="sampling_points" value="{{ point.id }}" /></td>
-            <td>{{ point }}</td>
+            <td>{{point.wqmarea}} - {{point}}</td>
         </tr>{% endfor %}
 
     </tbody>
