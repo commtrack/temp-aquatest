@@ -19,7 +19,7 @@ def _get_class(count):
 def get_samples(samples,selected_params):
     title = []
     for sample in samples:
-        results = MeasuredValue.objects.filter(sample=sample)
+        results = MeasuredValue.objects.filter(sample=sample,parameter__test_name__in = selected_params)
         for result in results:
                 if result.parameter.test_name not in title:
                     title.append(result.parameter.test_name)
@@ -30,7 +30,7 @@ def get_samples(samples,selected_params):
             <th>Tester</th>
             '''
     vars = []
-    for i in selected_params:
+    for i in title:
         ret += '<th>%s</th>'% i
         vars.append(i)
     ret +=       '''
@@ -41,15 +41,9 @@ def get_samples(samples,selected_params):
         Data = []
         for sample in samples:
                 ret += '\n<tr class="%s">' % _get_class(count)
-                count += 1
                 point = sample.sampling_point
-                ret += '<td>%s</td>' % (point.wqmarea)
-                ret += '<td>%s</td>' % (point)
-                ret += '<td>%s</td>' % (sample.taken_by)
-                
-                results = MeasuredValue.objects.filter(sample=sample)
+                results = MeasuredValue.objects.filter(sample=sample, parameter__test_name__in = selected_params)
                 dayData = []
-                
                 if results:
                     for result in results:
                         if result.sample.id not in dayData:
@@ -57,6 +51,10 @@ def get_samples(samples,selected_params):
                         dayData.append(result.parameter.test_name)
                         dayData.append(result.value)
                     Data.append(dayData)
+                    count += 1
+                    ret += '<td>%s</td>' % (point.wqmarea)
+                    ret += '<td>%s</td>' % (point)
+                    ret += '<td>%s</td>' % (sample.taken_by)
                     for i,li in enumerate(Data):
                         for title in vars:
                             if li[0]==result.sample.id:

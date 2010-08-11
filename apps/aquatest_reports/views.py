@@ -109,10 +109,6 @@ def parameters(request):
         for result in results:
                 if result.parameter.test_name not in parameter:
                     parameter.append(result.parameter.test_name)
-
-#        samples_ids.append(sample.id)
-#        if sample.taken_by not in testers:
-#            testers.append(sample.taken_by)
     template_name="reports.html"
     context = {}
     context = {
@@ -215,25 +211,26 @@ def export_csv(request):
     for sample in samples:
         Data = []
         point = sample.sampling_point
-        results = MeasuredValue.objects.filter(sample=sample)
-        dayData = []
-        data = [point.wqmarea, point, sample.taken_by]
-        for result in results:
-            if result.sample.id not in dayData:
-                dayData.append(result.sample.id)
-            dayData.append(result.parameter.test_name)
-            dayData.append(result.value)
-        Data.append(dayData)
-        for i,li in enumerate(Data):
-            for titl in params:
-                if li[0]==result.sample.id:
-                    if titl in li:
-                        val = int(li.index(titl))
-                        val = val + 1
-                        data.append((Data[i][val]))
-                    else:
-                        data.append('-')
-        writer.writerow(data)
+        results = MeasuredValue.objects.filter(sample=sample, parameter__test_name__in = selected_param)
+        if results:
+            dayData = []
+            data = [point.wqmarea, point, sample.taken_by]
+            for result in results:
+                if result.sample.id not in dayData:
+                    dayData.append(result.sample.id)
+                dayData.append(result.parameter.test_name)
+                dayData.append(result.value)
+            Data.append(dayData)
+            for i,li in enumerate(Data):
+                for titl in params:
+                    if li[0]==result.sample.id:
+                        if titl in li:
+                            val = int(li.index(titl))
+                            val = val + 1
+                            data.append((Data[i][val]))
+                        else:
+                            data.append('-')
+            writer.writerow(data)
     return response
 
 @login_and_domain_required

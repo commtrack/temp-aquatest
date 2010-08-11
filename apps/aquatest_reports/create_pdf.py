@@ -29,7 +29,7 @@ def run(response,request,selected_parameters):
     endday = int(ste[2])
     doc = SimpleDocTemplate(response, pagesize=(8.5*inch, 11*inch),)
     lst = []
-    
+
 
     styNormal = styleSheet['Normal']
     styBackground = ParagraphStyle('background', parent=styNormal)
@@ -51,12 +51,6 @@ def run(response,request,selected_parameters):
     pdf = []
     title = [Paragraph('Area', styBackground), Paragraph('Sampling Point', styBackground), Paragraph('Tester', styBackground)]
     params = []
-#    for sample in samples:
-#        results = MeasuredValue.objects.filter(sample=sample)
-#        for result in results:
-#                if result.parameter.test_name not in params:
-#                    title.append(Paragraph(result.parameter.test_name, styBackground))
-#                    params.append(result.parameter.test_name)
     for para in selected_parameters:
         title.append(Paragraph(para, styBackground))
         params.append(para)
@@ -64,28 +58,30 @@ def run(response,request,selected_parameters):
     for sample in samples:
         Data = []
         point = sample.sampling_point
-        results = MeasuredValue.objects.filter(sample=sample)
-        ares = '%s'%point.wqmarea
-        smpling = '%s'%point
-        testr = '%s'% sample.taken_by
-        data = [Paragraph(ares, styBackground),Paragraph(smpling , styBackground),Paragraph(testr, styBackground)]
-        pdf.append(data)
+        results = MeasuredValue.objects.filter(sample=sample,parameter__test_name__in = selected_parameters)
+
         dayData = []
-        for result in results:
-            if result.sample.id not in dayData:
-                dayData.append(result.sample.id)
-            dayData.append(result.parameter.test_name)
-            dayData.append(result.value)
-        Data.append(dayData)
-        for i,li in enumerate(Data):
-            for titl in params:
-                if li[0]==result.sample.id:
-                    if titl in li:
-                        val = int(li.index(titl))
-                        val = val + 1
-                        data.append(Paragraph((Data[i][val]), styBackground))
-                    else:
-                        data.append(Paragraph('-', styBackground))
+        if results:
+            for result in results:
+                if result.sample.id not in dayData:
+                    dayData.append(result.sample.id)
+                dayData.append(result.parameter.test_name)
+                dayData.append(result.value)
+            ares = '%s'%point.wqmarea
+            smpling = '%s'%point
+            testr = '%s'% sample.taken_by
+            data = [Paragraph(ares, styBackground),Paragraph(smpling , styBackground),Paragraph(testr, styBackground)]
+            pdf.append(data)
+            Data.append(dayData)
+            for i,li in enumerate(Data):
+                for titl in params:
+                    if li[0]==result.sample.id:
+                        if titl in li:
+                            val = int(li.index(titl))
+                            val = val + 1
+                            data.append(Paragraph((Data[i][val]), styBackground))
+                        else:
+                            data.append(Paragraph('-', styBackground))
     t1 = Table(
     pdf
         )

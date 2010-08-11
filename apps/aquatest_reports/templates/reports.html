@@ -26,7 +26,7 @@
             <td><input type="checkbox" name="area" value="{{ area.id }}" /></td>
             <td>{{ area }}</td>
         </tr>
-        {% endfor %}       
+        {% endfor %}
     </tbody>
 </table>
 
@@ -37,7 +37,7 @@
 {% endif  %}
 
 {% if sampling_points %}
-<h3>Select Date Sampling Points</h3>
+<h3>Select Sampling Points</h3>
 
 <form action="/report_testers" method="post">
 <table border="1">
@@ -60,7 +60,7 @@
    <input type="hidden" name="selected_wqm" value="{{ i }}" />
    {% endfor %}
 <!--<input type="hidden" name="selected_wqm" value="{{ selected_wqmarea }}" />-->
-<input type="submit" value="ok" name="samplingpoint" /> 
+<input type="submit" value="ok" name="samplingpoint" />
 </form>
 {% endif %}
 
