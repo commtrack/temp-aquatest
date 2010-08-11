@@ -85,13 +85,7 @@ class CalendarController(object):
                     else:
                         a = filter_samples(day,self.curr.month,self.curr.year,self.area)
                     total = a.count()
-#wait for abnormal range fixing issue
-#Write a function here that assign number to abnormal due to number of samples in a day that are abnormal
-#like abnormal vals to be retured shud be
-#1 for 0 abnormal range
-#2 for 1 abnormal range
-#3 for more than 1 banormal range
-#actually the thing abnornal assigns td name to be used by css to put color
+                    #assigns td name to be used by css to put color
                     abnormal = get_normality(day,self.curr.month,self.curr.year)
                 res_line.append((day, data, total,abnormal))
             res.append(res_line)
@@ -153,6 +147,9 @@ def get_normality(day,month,year):
                     set = set + 1
         if set >= 1:
             check.append(1)
+#1 for 0 abnormal samples
+#2 for 1 abnormal sample
+#3 for more than 1 abnormal
     if len(check) == 0:
         normality = 1
     elif len(check) == 1:
