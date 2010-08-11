@@ -16,7 +16,7 @@ def _get_class(count):
 
 
 @register.simple_tag
-def get_samples(samples):
+def get_samples(samples,selected_params):
     title = []
     for sample in samples:
         results = MeasuredValue.objects.filter(sample=sample)
@@ -30,7 +30,7 @@ def get_samples(samples):
             <th>Tester</th>
             '''
     vars = []
-    for i in title:
+    for i in selected_params:
         ret += '<th>%s</th>'% i
         vars.append(i)
     ret +=       '''

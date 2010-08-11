@@ -39,7 +39,7 @@
 {% if sampling_points %}
 <h3>Select Date Sampling Points</h3>
 
-<form action="/testers" method="post">
+<form action="/report_testers" method="post">
 <table border="1">
     <thead>
         <tr>
@@ -67,7 +67,7 @@
 
 {% if testers %}
 <h3>Select Testers</h3>
-<form action="/date_range" method="post">
+<form action="/parameters" method="post">
 <table border="1">
     <thead>
         <tr>
@@ -90,6 +90,45 @@
 
 
 {% endif %}
+
+
+
+
+
+
+
+
+{% if parameter %}
+<h3>Select Parameters</h3>
+<form action="/date_range" method="post">
+<table border="1">
+    <thead>
+        <tr>
+            <th>Select</th>
+            <th>Parameter</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>{% for param in parameter%}
+            <td><input type="checkbox" name="parameter" value="{{ param }}" /></td>
+            <td>{{ param }}</td>
+        </tr>{% endfor %}
+    </tbody>
+</table>
+    {% for samples_id in samples_ids %}
+   <input type="hidden" name="selected_parameter" value="{{ samples_id }}" />
+   {% endfor %}
+<input type="submit" value="ok" name="parameter" />
+</form>
+
+
+{% endif %}
+
+
+
+
+
+
 {% if daterange %}
 <h3>Select Date Range</h3>
       <form action="/create_report" method="post">
@@ -246,6 +285,9 @@
   {% for samples_id in samples_ids %}
    <input type="hidden" name="selected_all" value="{{ samples_id }}"  />
    {% endfor %}
+   {% for selected_param in selected_params %}
+     <input type="hidden" name="selected_params" value="{{ selected_param }}" />
+   {%endfor %}
 <input type="submit" value="ok" name="date" />
 </form>
 
@@ -257,16 +299,25 @@
     {% for i in samples_ids %}
     <input type="hidden" name="samples" value="{{ i }}" />
     {% endfor %}
+    {% for selected_param in selected_params %}
+     <input type="hidden" name="selected_params" value="{{ selected_param }}" />
+   {%endfor %}
     <input type="submit" value="Export CSV" />
-</form><form name="samples_ids" action="/export_pdf" method="post">
+</form>
+
+
+<form name="samples_ids" action="/export_pdf" method="post">
          {% for i in samples_ids %}
              <input type="hidden" name="samples" value="{{ i }}" />
          {% endfor %}
+           {% for selected_param in selected_params %}
+     <input type="hidden" name="selected_params" value="{{ selected_param }}" />
+   {%endfor %}
          <input type="hidden" name="start_date" value="{{ selected_start_date.date }}" />
          <input type="hidden" name="end_date" value="{{ selected_end_date.date }}" />
      <input type="submit" value="Export PDF" />
 </form>
-{% get_samples samples %}
+{% get_samples samples selected_params %}
 
 
 {% endif %}

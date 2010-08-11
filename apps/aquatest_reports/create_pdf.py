@@ -15,7 +15,7 @@ from wqm.models import *
 
 styleSheet = getSampleStyleSheet()
 
-def run(response,request):
+def run(response,request,selected_parameters):
     samples_to_export = request.POST.getlist('samples')
     samples = Sample.objects.filter(id__in = samples_to_export
                                     )
@@ -51,12 +51,15 @@ def run(response,request):
     pdf = []
     title = [Paragraph('Area', styBackground), Paragraph('Sampling Point', styBackground), Paragraph('Tester', styBackground)]
     params = []
-    for sample in samples:
-        results = MeasuredValue.objects.filter(sample=sample)
-        for result in results:
-                if result.parameter.test_name not in params:
-                    title.append(Paragraph(result.parameter.test_name, styBackground))
-                    params.append(result.parameter.test_name)
+#    for sample in samples:
+#        results = MeasuredValue.objects.filter(sample=sample)
+#        for result in results:
+#                if result.parameter.test_name not in params:
+#                    title.append(Paragraph(result.parameter.test_name, styBackground))
+#                    params.append(result.parameter.test_name)
+    for para in selected_parameters:
+        title.append(Paragraph(para, styBackground))
+        params.append(para)
     pdf.append(title)
     for sample in samples:
         Data = []
