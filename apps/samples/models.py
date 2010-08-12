@@ -11,9 +11,8 @@ from reporters.models import Reporter
 from wqm.models import SamplingPoint
 from xformmanager.models import Metadata
 from hq.models import ReporterProfile
-from smsnotifications.models import SmsNotification, send_sms_notifications, _send_sms
-
-
+from smsnotifications.models import SmsNotification
+from smsnotifications.utils import send_sms_notifications
 
 H2S_XMLNS = "http://www.aquatest-za.org/h2s"
 PHYSCHEM_XMLNS = "http://www.aquatest-za.org/physchem"
@@ -110,136 +109,137 @@ class AbnormalRange(Range):
     
     
 def check_and_add_sample(sender, instance, created, **kwargs): #get sender, instance, created
-    # only process newly created forms, not all of them
-    if not created:             return
-    
-    # check the form type to see if it is a new sample
-    form_xmlns = instance.formdefmodel.target_namespace
-    xform = ''
-    if form_xmlns in SAMPLE_XMLNS:
-        # it is an xmlns we care about, so make a new sample
-        sample_data = instance.formdefmodel.row_as_dict(instance.raw_data)
-        sample = Sample()
-        now = datetime.now()
-        
-        # check for which form submitted and create a sample.
-        # h2s test
-        vals = []
-        if form_xmlns == H2S_XMLNS:
-            xform = 'h2s' #these should not be hardcoded
-            point = SamplingPoint.objects.get(code = sample_data["h2s_test_assessment_pointcode"])
-            sample.sampling_point = point
-            sample.date_taken = sample_data["h2s_test_assessment_assessmentdate"]
-            sample.notes = sample_data["h2s_test_datacapture_comments"]
-            sample.date_received = now
-            # sample.created = now
-            
-            # check the reporter using he's/her alias
-            # TODO: Make sure the reporter is a tester (is have a reporter profile)
-            # if he's not a tester(ie does not belong to aquatest domain) issue an error.
-            alias = sample_data["h2s_test_datacapture_enteredby"]
-            try:
-                reporter = Reporter.objects.get(alias__iexact = alias)
-                # make sure the reporter have a profile for a domain.
-                # TODO: Limit the submission to a domain
-                reporter_profile = ReporterProfile.objects.get(reporter=reporter)
-                # save a reporter with a profile
-                sample.taken_by = reporter
-            except Exception, e:
-                raise
-
-            # Note:
-            # this save makes the sample signal to be called with out the measured values
-            sample.save()
-            
-            # generate test result column from the registered paramater
-            parameters = Parameter.objects.all()
-            # initialise the tests, inorder for the index to eqaul the pk of
-            # the parameter. ( a better way of refering to a parameter shuld
-            # be looked upon).
-            tests = [None] * 100 # TODO: Initialise the tests (multiply wit some big number)
-            for para in parameters:
-                test = "h2s_test_testresults_" + para.test_name_short
-                index = int(para.pk)
-                tests.insert(index, test)
-
-            
-            for some in tests:
-                if sample_data.get(some) != None:
-                    para_id = tests.index(some)
-                    # print " >>>>>>>>>>> index : %s " % tests.index(some)
-                    # print Parameter.objects.get(id=tests.index(some))
-
-                    # this test is present in the xform, hence store it's value.
-                    value = MeasuredValue()
-                    value.value = sample_data[some]
-
-                    # TODO: get a parameter for the value. according to the test done.
-                    value.parameter = Parameter.objects.get(id = para_id)
-                    value.sample = sample
-                    value.save()
-                    vals.append(value)
-            
-        # physical chemical test
-        if form_xmlns == PHYSCHEM_XMLNS:
-            xform = 'physchem' #these should not be hardcoded
-            point = SamplingPoint.objects.get(code = sample_data["physchem_test_assessment_pointcode"])
-            sample.sampling_point = point
-            sample.date_taken = sample_data["physchem_test_assessment_assessmentdate"]
-            sample.notes = sample_data["physchem_test_datacapture_comments"]
-            sample.date_received = now
-            sample.created = now
-
-            alias = sample_data["physchem_test_datacapture_enteredby"]
-            try:
-                reporter = Reporter.objects.get(alias__iexact = alias)
-                # make sure the reporter have a profile for a domain.
-                # TODO: Limit the submission to a domain
-                reporter_profile = ReporterProfile.objects.get(reporter=reporter)
-                # save a reporter with a profile
-                sample.taken_by = reporter
-            except Exception, e:
-                raise
-
-           # Note:
-           # this save makes the sample signal to be called with out the measured values
-
-            sample.save()
-
-            # generate test result column from the registered paramater
-            parameters = Parameter.objects.all()
-            # initialise the tests, inorder for the index to eqaul the pk of
-            # the parameter. ( a better way of refering to a parameter shuld
-            # be looked upon).
-            
-            tests = [None] * 100 # TODO: Initialise the tests (multiply wit some big number)
-            for para in parameters:
-                test = "physchem_test_testresults_" + para.test_name_short
-                if sample_data.get(test) == None: # a simple check to get temperature and weather assements
-                    test =  "physchem_test_assessment_" + para.test_name_short
-                index = int(para.pk)
-                tests.insert(index, test)
-            
-            # TODO: ['physchem_test_assessment_temperature'] ['physchem_test_assessment_weather']
-            # shuld this be in test parameter or in the notes??
-
-            # empty list for measured values
-            
-            for some in tests:
-                if sample_data.get(some) != None:
-                    para_id = tests.index(some)
-                    
-                    # this test is present in the xform, hence store it's value.
-                    value = MeasuredValue()
-                    value.value = sample_data[some]
-
-                    # TODO: get a parameter for the value. according to the test done.
-                    value.parameter = Parameter.objects.get(id = para_id)
-                    value.sample = sample
-                    value.save()
-                    vals.append(value)
-    # A function to send sms notification.
-    send_sms_notifications(sample,vals,xform)
+    print "^^^^^^^^^^^^^^^^^^^ here ^^^^^^^^^^^^^^^^^^^^^"
+    # !NOTE metadata is not created!!! 
+#    # only process newly created forms, not all of them
+#    if not created:             return
+#    # check the form type to see if it is a new sample
+#    form_xmlns = instance.formdefmodel.target_namespace
+#    xform = ''
+#    if form_xmlns in SAMPLE_XMLNS:
+#        # it is an xmlns we care about, so make a new sample
+#        sample_data = instance.formdefmodel.row_as_dict(instance.raw_data)
+#        sample = Sample()
+#        now = datetime.now()
+#        
+#        # check for which form submitted and create a sample.
+#        # h2s test
+#        vals = []
+#        if form_xmlns == H2S_XMLNS:
+#            xform = 'h2s' #these should not be hardcoded
+#            point = SamplingPoint.objects.get(code = sample_data["h2s_test_assessment_pointcode"])
+#            sample.sampling_point = point
+#            sample.date_taken = sample_data["h2s_test_assessment_assessmentdate"]
+#            sample.notes = sample_data["h2s_test_datacapture_comments"]
+#            sample.date_received = now
+#            # sample.created = now
+#            
+#            # check the reporter using he's/her alias
+#            # TODO: Make sure the reporter is a tester (is have a reporter profile)
+#            # if he's not a tester(ie does not belong to aquatest domain) issue an error.
+#            alias = sample_data["h2s_test_datacapture_enteredby"]
+#            try:
+#                reporter = Reporter.objects.get(alias__iexact = alias)
+#                # make sure the reporter have a profile for a domain.
+#                # TODO: Limit the submission to a domain
+#                reporter_profile = ReporterProfile.objects.get(reporter=reporter)
+#                # save a reporter with a profile
+#                sample.taken_by = reporter
+#            except Exception, e:
+#                raise
+#
+#            # Note:
+#            # this save makes the sample signal to be called with out the measured values
+#            sample.save()
+#            
+#            # generate test result column from the registered paramater
+#            parameters = Parameter.objects.all()
+#            # initialise the tests, inorder for the index to eqaul the pk of
+#            # the parameter. ( a better way of refering to a parameter shuld
+#            # be looked upon).
+#            tests = [None] * 100 # TODO: Initialise the tests (multiply wit some big number)
+#            for para in parameters:
+#                test = "h2s_test_testresults_" + para.test_name_short
+#                index = int(para.pk)
+#                tests.insert(index, test)
+#
+#            
+#            for some in tests:
+#                if sample_data.get(some) != None:
+#                    para_id = tests.index(some)
+#                    # print " >>>>>>>>>>> index : %s " % tests.index(some)
+#                    # print Parameter.objects.get(id=tests.index(some))
+#
+#                    # this test is present in the xform, hence store it's value.
+#                    value = MeasuredValue()
+#                    value.value = sample_data[some]
+#
+#                    # TODO: get a parameter for the value. according to the test done.
+#                    value.parameter = Parameter.objects.get(id = para_id)
+#                    value.sample = sample
+#                    value.save()
+#                    vals.append(value)
+#            
+#        # physical chemical test
+#        if form_xmlns == PHYSCHEM_XMLNS:
+#            xform = 'physchem' #these should not be hardcoded
+#            point = SamplingPoint.objects.get(code = sample_data["physchem_test_assessment_pointcode"])
+#            sample.sampling_point = point
+#            sample.date_taken = sample_data["physchem_test_assessment_assessmentdate"]
+#            sample.notes = sample_data["physchem_test_datacapture_comments"]
+#            sample.date_received = now
+#            sample.created = now
+#
+#            alias = sample_data["physchem_test_datacapture_enteredby"]
+#            try:
+#                reporter = Reporter.objects.get(alias__iexact = alias)
+#                # make sure the reporter have a profile for a domain.
+#                # TODO: Limit the submission to a domain
+#                reporter_profile = ReporterProfile.objects.get(reporter=reporter)
+#                # save a reporter with a profile
+#                sample.taken_by = reporter
+#            except Exception, e:
+#                raise
+#
+#           # Note:
+#           # this save makes the sample signal to be called with out the measured values
+#
+#            sample.save()
+#
+#            # generate test result column from the registered paramater
+#            parameters = Parameter.objects.all()
+#            # initialise the tests, inorder for the index to eqaul the pk of
+#            # the parameter. ( a better way of refering to a parameter shuld
+#            # be looked upon).
+#            
+#            tests = [None] * 100 # TODO: Initialise the tests (multiply wit some big number)
+#            for para in parameters:
+#                test = "physchem_test_testresults_" + para.test_name_short
+#                if sample_data.get(test) == None: # a simple check to get temperature and weather assements
+#                    test =  "physchem_test_assessment_" + para.test_name_short
+#                index = int(para.pk)
+#                tests.insert(index, test)
+#            
+#            # TODO: ['physchem_test_assessment_temperature'] ['physchem_test_assessment_weather']
+#            # shuld this be in test parameter or in the notes??
+#
+#            # empty list for measured values
+#            
+#            for some in tests:
+#                if sample_data.get(some) != None:
+#                    para_id = tests.index(some)
+#                    
+#                    # this test is present in the xform, hence store it's value.
+#                    value = MeasuredValue()
+#                    value.value = sample_data[some]
+#
+#                    # TODO: get a parameter for the value. according to the test done.
+#                    value.parameter = Parameter.objects.get(id = para_id)
+#                    value.sample = sample
+#                    value.save()
+#                    vals.append(value)
+#    # A function to send sms notification.,xform
+#    send_sms_notifications(sample,vals)
 
 # Register to receive signals each time a Metadata is saved    
 post_save.connect(check_and_add_sample, sender=Metadata)

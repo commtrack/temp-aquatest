@@ -6,7 +6,7 @@ import sys
 import os
 import uuid
 import string
-from datetime import timedelta
+from datetime import timedelta, datetime
 from graphing import dbhelper
 
 from django.http import HttpResponse
@@ -179,6 +179,7 @@ def mapindex(req):
             if form.is_valid():
                 start = form.cleaned_data["startdate"]
                 end = form.cleaned_data["enddate"]
+                print "************ %s - %s ***************" % (start, end) 
 #                failure = req.POST.get("failure","")
 
                 samples = Sample.objects.filter(sampling_point__in = samplingpoints)
