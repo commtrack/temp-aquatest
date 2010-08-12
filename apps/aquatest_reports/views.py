@@ -93,16 +93,42 @@ def testers(request):
 
     return render_to_response(request, template_name,context)
 
-def date_range(request):
+@login_and_domain_required
+def parameters(request):
     selected_testers = request.POST.getlist('testers')
     selected_wqm_samplingPoints = request.POST.getlist('selected_testers')
     samples = Sample.objects.filter(id__in = selected_wqm_samplingPoints,
                                     taken_by__in = selected_testers,
-                                    
+
+                                    )
+    samples_ids=[]
+    parameter=[]
+    for sample in samples:
+        samples_ids.append(sample.id)
+        results = MeasuredValue.objects.filter(sample=sample)
+        for result in results:
+                if result.parameter.test_name not in parameter:
+                    parameter.append(result.parameter.test_name)
+    template_name="reports.html"
+    context = {}
+    context = {
+    "parameter":parameter,
+    "selected_wqma":selected_testers,
+    "samples_ids":samples_ids,
+    }
+
+
+    return render_to_response(request, template_name,context)
+
+def date_range(request):
+    selected_params = request.POST.getlist('parameter')
+
+    selected_wqm_samplingPoints_params = request.POST.getlist('selected_parameter')
+    samples = Sample.objects.filter(id__in = selected_wqm_samplingPoints_params,
                                     )
     samples_ids=[]
     for sample in samples:
-        samples_ids.append(sample.id)
+            samples_ids.append(sample.id)
     daterange = 1
     end_date = datetime.today()
     month_names = ['0','jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
@@ -116,7 +142,8 @@ def date_range(request):
     "samples_ids":samples_ids,
     "start_date":start_date,
     "end_date":end_date,
-    "month_names":month_name
+    "month_names":month_name,
+    "selected_params":selected_params,
 
     }
 
@@ -124,6 +151,9 @@ def date_range(request):
     return render_to_response(request, template_name,context)
 
 def create_report(request):
+    selected_parameters = request.POST.getlist('selected_params')
+    #clean parameters data
+    del selected_parameters[len(selected_parameters)-1]
     selected_wqm_samplingPoints_tester = request.POST.getlist('selected_all')
     selected_start_date = request.POST.getlist('startDate')
     datestart = []
@@ -150,7 +180,8 @@ def create_report(request):
         "selected_start_date":std,
         "selected_end_date":ste,
         "samples_ids":samples_ids,
-        "samples":samples
+        "samples":samples,
+        "selected_params":selected_parameters
     }
 
 
@@ -159,6 +190,7 @@ def create_report(request):
 
 @login_and_domain_required
 def export_csv(request):
+    selected_param = request.POST.getlist('selected_params')
     samples_to_export = request.POST.getlist('samples')
 
     samples = Sample.objects.filter(id__in = samples_to_export
@@ -169,45 +201,46 @@ def export_csv(request):
     response['Content-Disposition'] = 'attachment; filename=AquaTestReport.csv'
 
     writer = csv.writer(response)
+    month_names = ['0','jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
-    title = ['Area', 'Sampling Point', 'Tester']
-    params = []
-    for sample in samples:
-        results = MeasuredValue.objects.filter(sample=sample)
-        for result in results:
-                if result.parameter.test_name not in title:
-                    title.append(result.parameter.test_name)
-                    params.append(result.parameter.test_name)
+    title = ['Date taken','Area', 'Sampling Point', 'Tester']
+    params = selected_param
+    for para in selected_param:
+        title.append(para)
     writer.writerow(title)
 
     for sample in samples:
         Data = []
         point = sample.sampling_point
-        results = MeasuredValue.objects.filter(sample=sample)
-        dayData = []
-        data = [point.wqmarea, point, sample.taken_by]
-        for result in results:
-            if result.sample.id not in dayData:
-                dayData.append(result.sample.id)
-            dayData.append(result.parameter.test_name)
-            dayData.append(result.value)
-        Data.append(dayData)
-        for i,li in enumerate(Data):
-            for titl in params:
-                if li[0]==result.sample.id:
-                    if titl in li:
-                        val = int(li.index(titl))
-                        val = val + 1
-                        data.append((Data[i][val]))
-                    else:
-                        data.append('-')
-        writer.writerow(data)
+        results = MeasuredValue.objects.filter(sample=sample, parameter__test_name__in = selected_param)
+        if results:
+            dayData = []
+            month_name = month_names[sample.date_taken.month]
+            date = '%s-%s-%s'%(sample.date_taken.year,month_name,sample.date_taken.day)
+            data = [date ,point.wqmarea, point, sample.taken_by]
+            for result in results:
+                if result.sample.id not in dayData:
+                    dayData.append(result.sample.id)
+                dayData.append(result.parameter.test_name)
+                dayData.append(result.value)
+            Data.append(dayData)
+            for i,li in enumerate(Data):
+                for titl in params:
+                    if li[0]==result.sample.id:
+                        if titl in li:
+                            val = int(li.index(titl))
+                            val = val + 1
+                            data.append((Data[i][val]))
+                        else:
+                            data.append('-')
+            writer.writerow(data)
     return response
 
 @login_and_domain_required
 def pdf_view(request):
+    selected_parameters = request.POST.getlist('selected_params')
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=AquaTestReport.pdf'
-    create_pdf.run(response, request)
+    create_pdf.run(response, request,selected_parameters)
     return response
 

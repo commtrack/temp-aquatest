@@ -12,3 +12,4 @@ rapidsms-django.log*
 rapidsms.log*
 .settings
 local.ini
+nbproject/*

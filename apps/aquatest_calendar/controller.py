@@ -2,9 +2,7 @@ import eventCalBase
 from samples.models import *
 import calendar
 
-#
-# TODO - should have used id to identify event, not rowid
-#
+
 
 class CalendarController(object):
     """Controller object for calendar"""
@@ -20,19 +18,18 @@ class CalendarController(object):
 ## database related operation (i.e. operation will sync with DB
     def load(self, year, month):
         """load calendar with data from database"""
-        
-        temp = Sample.objects.filter(date_taken__year=year, date_taken__month=month)
+
+        temp = filter_samples(0,month,year,0)
         if temp:    # either 1 record or no record , check models.py
             self.db_cal = temp[0]
-            
+
             if self.area == 0:
-                self.db_events = Sample.objects.filter(date_taken__year=year, date_taken__month=month)
+                self.db_events = filter_samples(0,month,year,self.area)
             else:
-                a = Sample.objects.filter(date_taken__year=year, date_taken__month=month)
-                self.db_events = a.filter(sampling_point__wqmarea = self.area)
+                self.db_events = filter_samples(0,month,year,self.area)
             self.curr = eventCalBase.monthCalendar(self, year, month)
 #put events to map a month
-            for db_e in self.db_events:              
+            for db_e in self.db_events:
                 e = eventCalBase.event(db_e.id, db_e.taken_by,db_e.date_taken, db_e.sampling_point)
                 self.curr.addEvent(e, db_e.date_taken.day)
         else:
@@ -51,7 +48,7 @@ class CalendarController(object):
         else:
             m += 1
         return (y,m)
-        
+
     def prev(self):
         """return a tuple that contains previous year and month"""
         y = self.curr.year
@@ -62,7 +59,7 @@ class CalendarController(object):
         else:
             m -= 1
         return (y,m)
-        
+
     def getWeekHeader(self):
         """return a list of week header"""
         return calendar.weekheader(2).split()
@@ -84,25 +81,16 @@ class CalendarController(object):
                 if day in self.curr.events:
                     data = True
                     if self.area == 0:
-                        a = Sample.objects.filter(date_taken__day = day,
-                                    date_taken__month = self.curr.month,
-                                    date_taken__year = self.curr.year)
+                        a = filter_samples(day,self.curr.month,self.curr.year,0)
                     else:
-                        a = Sample.objects.filter(date_taken__day = day,
-                                            date_taken__month = self.curr.month,
-                                            date_taken__year = self.curr.year,
-                                            sampling_point__wqmarea__id = self.area
-                                            )
+                        a = filter_samples(day,self.curr.month,self.curr.year,self.area)
                     total = a.count()
-##
-#Write a function here that assign number to abnormal due to being in abnormal range
-#wait for abnormal range fixing issue
-##
-                    abnormal = 1
+                    #assigns td name to be used by css to put color
+                    abnormal = get_normality(day,self.curr.month,self.curr.year)
                 res_line.append((day, data, total,abnormal))
             res.append(res_line)
         return res
-        
+
     def getDailyEvents(self):
         """return list of events for the day"""
         return self.curr.getDailyEvents(self.day)
@@ -120,3 +108,52 @@ class CalendarController(object):
         elif self.day % 10 == 3 and self.day != 13:
             result = 'rd'
         return result
+#
+#here is the database interaction
+#
+def filter_samples(day,month,year,area):
+    if area == 0 and month != 0 and day != 0:
+        a = Sample.objects.filter(date_taken__day = day,
+                    date_taken__month = month,
+                    date_taken__year = year)
+    elif area != 0 and day != 0:
+        a = Sample.objects.filter(date_taken__day = day,
+                            date_taken__month = month,
+                            date_taken__year = year,
+                            sampling_point__wqmarea__id = area
+                            )
+    elif day == 0 and area == 0:
+        a = Sample.objects.filter(date_taken__year=year, date_taken__month=month)
+    elif day ==0 and area != 0:
+        b = Sample.objects.filter(date_taken__year=year, date_taken__month=month)
+        a = b.filter(sampling_point__wqmarea = area)
+    return a
+
+def get_normality(day,month,year):
+    samples = Sample.objects.filter(date_taken__day = day,
+                    date_taken__month = month,
+                    date_taken__year = year)
+    check = []
+    for sa in samples:
+        set = 0
+        resul = MeasuredValue.objects.filter(sample = sa)
+        for resu in resul:
+            a = NormalRange.objects.filter(value_rule__parameter = resu.parameter)
+            for kk in a:
+                #normal
+                if kk.minimum <  int(resu.value) and int(resu.value)  < kk.maximum:
+                    pass
+                else:#abnormal
+                    set = set + 1
+        if set >= 1:
+            check.append(1)
+#1 for 0 abnormal samples
+#2 for 1 abnormal sample
+#3 for more than 1 abnormal
+    if len(check) == 0:
+        normality = 1
+    elif len(check) == 1:
+        normality = 2
+    else:
+        normality = 3
+    return normality

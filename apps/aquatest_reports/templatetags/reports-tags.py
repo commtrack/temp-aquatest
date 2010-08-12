@@ -16,15 +16,16 @@ def _get_class(count):
 
 
 @register.simple_tag
-def get_samples(samples):
+def get_samples(samples,selected_params):
     title = []
     for sample in samples:
-        results = MeasuredValue.objects.filter(sample=sample)
+        results = MeasuredValue.objects.filter(sample=sample,parameter__test_name__in = selected_params)
         for result in results:
                 if result.parameter.test_name not in title:
                     title.append(result.parameter.test_name)
     ret = ''
     ret += '''<table>\n<thead><tr>
+            <th>Date</th>
             <th>Area</th>
             <th>Sampling point</th>
             <th>Tester</th>
@@ -37,19 +38,14 @@ def get_samples(samples):
             </tr></thead>
     '''
     count = 1
+    month_names = ['0','jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
     if samples:
         Data = []
         for sample in samples:
                 ret += '\n<tr class="%s">' % _get_class(count)
-                count += 1
                 point = sample.sampling_point
-                ret += '<td>%s</td>' % (point.wqmarea)
-                ret += '<td>%s</td>' % (point)
-                ret += '<td>%s</td>' % (sample.taken_by)
-                
-                results = MeasuredValue.objects.filter(sample=sample)
+                results = MeasuredValue.objects.filter(sample=sample, parameter__test_name__in = selected_params)
                 dayData = []
-                
                 if results:
                     for result in results:
                         if result.sample.id not in dayData:
@@ -57,6 +53,12 @@ def get_samples(samples):
                         dayData.append(result.parameter.test_name)
                         dayData.append(result.value)
                     Data.append(dayData)
+                    count += 1
+                    month_name = month_names[sample.date_taken.month]
+                    ret += '<td>%s-%s-%s</td>' % (sample.date_taken.year,month_name,sample.date_taken.day)
+                    ret += '<td>%s</td>' % (point.wqmarea)
+                    ret += '<td>%s</td>' % (point)
+                    ret += '<td>%s</td>' % (sample.taken_by)
                     for i,li in enumerate(Data):
                         for title in vars:
                             if li[0]==result.sample.id:
