@@ -97,6 +97,7 @@
             GEvent.removeListener(moveEnd);
           });
           map.panTo(marker.getLatLng());
+          map.setCenter(marker.getLatLng(), 10);
         }
 
         

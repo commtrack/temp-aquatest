@@ -170,7 +170,8 @@ def comma(string_or_list):
 
 @login_and_domain_required
 def mapindex(req):
-    samplingpoints = SamplingPoint.objects.all().order_by('wqmarea__name','name')
+    points = SamplingPoint.objects.all().order_by('wqmarea__name','name')
+    samples = Sample.objects.all()
 #    counting the number of abnormal range values..
 #    Get the abnormal values from the sample submitted.
     counts = []
@@ -179,24 +180,28 @@ def mapindex(req):
             if form.is_valid():
                 start = form.cleaned_data["startdate"]
                 end = form.cleaned_data["enddate"]
-                print "************ %s - %s ***************" % (start, end) 
-#                failure = req.POST.get("failure","")
-
-                samples = Sample.objects.filter(sampling_point__in = samplingpoints)
-                samples = samples.filter(date_received__range =(start, end))
-#                points = samplingpoints
+                failure = req.POST.get("failure","")
+                
+                samples = samples.filter(date_taken__range =(start, end))
+                points = []
+                for sample in samples:
+                    if sample.sampling_point in points:
+                        # skip point that is already stored.
+                        pass
+                    else:
+                        points.append(sample.sampling_point)
+                print '>>>>>> %s <<<<<<' % (points,)  
+                    
     else:
         form = DateForm()
-        for samplingpoint in samplingpoints:
-            samples = Sample.objects.filter(sampling_point__in = samplingpoints)
-#        points = samplingpoints
-
-    for point in samplingpoints:
-        counts.append({"count": Sample.objects.filter(sampling_point = point).count()})             
+        samples = Sample.objects.filter(sampling_point__in = points)
+    
+#    for point in samplingpoints:
+#        counts.append({"count": Sample.objects.filter(sampling_point = point).count()})             
     
     return render_to_response(req,'wqm/index.html', {
-        'samplingpoints': samplingpoints,
+        'samplingpoints': points,
         'form': form,
         'counts': counts,
-        'content': render_to_string('wqm/samplepoints.html', {'samplingpoints': samplingpoints}),
+        'content': render_to_string('wqm/samplepoints.html', {'samplingpoints': points}),
     })
