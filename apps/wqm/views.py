@@ -48,7 +48,7 @@ from reporters.models import *
 from wqm.models import SamplingPoint, WqmAuthority, WqmArea
 from wqm.forms import DateForm, SamplingPointForm
 from samples.models import Sample
-
+from smsnotifications.utils import get_normality
 
 logger_set = False
 
@@ -181,7 +181,7 @@ def mapindex(req):
                 start = form.cleaned_data["startdate"]
                 end = form.cleaned_data["enddate"]
                 failure = req.POST.get("failure","")
-                
+                              
                 samples = samples.filter(date_taken__range =(start, end))
                 points = []
                 for sample in samples:
@@ -189,7 +189,11 @@ def mapindex(req):
                         # skip point that is already stored.
                         pass
                     else:
-                        points.append(sample.sampling_point)
+                        if failure == 'failure':
+                            if get_normality(sample):
+                                points.append(sample.sampling_point)
+                        else:
+                            points.append(sample.sampling_point)
                 print '>>>>>> %s <<<<<<' % (points,)  
                     
     else:

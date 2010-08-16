@@ -1,5 +1,6 @@
 from django.forms import ModelForm
-from django import forms
+#from django import forms
+from django.contrib.gis import forms
 from django.contrib.admin import widgets
 from django.forms.fields import CharField
 from django.contrib.gis.admin.options import GeoModelAdmin

@@ -203,9 +203,22 @@ ul {
 }
 
 /******************************************
-** Aquatest
+** Map
 ******************************************/
+#map {
+        width: 700px;
+        height: 450px;
+        border: 1px solid #999;
+        margin: 0 auto;
+    }
 
+#message { 
+		position:absolute; 
+		padding:10px; 
+		background:#555; 
+		color:#fff; 
+		width:75px; 
+	}
 
 /*******************************************
  ** Region for RapidSMS tab rendering
