@@ -141,7 +141,7 @@ def get_normality(day,month,year):
             a = NormalRange.objects.filter(value_rule__parameter = resu.parameter)
             for kk in a:
                 #normal
-                if kk.minimum <  int(resu.value) and int(resu.value)  < kk.maximum:
+                if float(kk.minimum) <=  float(resu.value) and float(resu.value) <= float(kk.maximum):
                     pass
                 else:#abnormal
                     set = set + 1
