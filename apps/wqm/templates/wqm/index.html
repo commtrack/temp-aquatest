@@ -75,6 +75,29 @@
             markers[count] = marker;
             count++;
         }
+
+        function activate_samplingpoints() {
+            // Add samplingpoint click handler
+            $('.samplingpoint').each(function () {
+                $(this).click(function() {
+                    var samplingpoint = samplingpointByID[this.id];
+                    var center = new GLatLng(samplingpoint.lat, samplingpoint.lng);
+                    current_object = $(this);
+                    //if (marker) map.removeOverlay(marker);
+                    marker = new GMarker(center,markerOptions);
+                    map.addOverlay(marker);
+                    map.panTo(center);
+    		var markerOffset = map.fromLatLngToDivPixel(marker.getPoint());
+    		$("#message").show(); 
+                }).hover(
+                    function () {this.className = this.className.replace('OFF', 'ON');}, 
+                    function () {this.className = this.className.replace('ON', 'OFF');}
+                );
+            });
+        }
+
+        activate_samplingpoints();
+
         
         // reposition to marker on click
         $(markers).each(function(i,marker){
