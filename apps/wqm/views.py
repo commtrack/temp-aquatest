@@ -172,16 +172,14 @@ def comma(string_or_list):
 def mapindex(req):
     points = SamplingPoint.objects.all().order_by('wqmarea__name','name')
     samples = Sample.objects.all()
-#    counting the number of abnormal range values..
-#    Get the abnormal values from the sample submitted.
-    counts = []
+    
     if req.method == 'POST':
             form = DateForm(req.POST)
             if form.is_valid():
                 start = form.cleaned_data["startdate"]
                 end = form.cleaned_data["enddate"]
-                failure = req.POST.get("failure","")
-                              
+                failure = form.cleaned_data["failure"]
+                                              
                 samples = samples.filter(date_taken__range =(start, end))
                 points = []
                 for sample in samples:
@@ -189,13 +187,11 @@ def mapindex(req):
                         # skip point that is already stored.
                         pass
                     else:
-                        if failure == 'failure':
+                        if failure:
                             if get_normality(sample):
                                 points.append(sample.sampling_point)
                         else:
-                            points.append(sample.sampling_point)
-                print '>>>>>> %s <<<<<<' % (points,)  
-                    
+                            points.append(sample.sampling_point)    
     else:
         form = DateForm()
         samples = Sample.objects.filter(sampling_point__in = points)
@@ -206,6 +202,5 @@ def mapindex(req):
     return render_to_response(req,'wqm/index.html', {
         'samplingpoints': points,
         'form': form,
-        'counts': counts,
         'content': render_to_string('wqm/samplepoints.html', {'samplingpoints': points}),
     })

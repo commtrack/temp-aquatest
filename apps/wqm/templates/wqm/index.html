@@ -144,8 +144,12 @@
 	{{ form.startdate }}
       and
 	{{ form.enddate }}
+	{{ form.failure }}{{form.failure.help_text}}
+	<!-- 
 	<input type='checkbox' value='failure' name="failure" /> Show failures only
+	-->
     	<input type='submit' value='Filter' />
+     
     </h3>
   </form>
 </div>

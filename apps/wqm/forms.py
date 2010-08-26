@@ -12,7 +12,7 @@ from wqm.models import *
 class DateForm(forms.Form):
     startdate = forms.DateField(widget = widgets.AdminDateWidget())
     enddate = forms.DateField(widget = widgets.AdminDateWidget())
-
+    failure = forms.BooleanField(help_text='Show failures only')
 
 #geomodeladmin =  GeoModelAdmin(SamplingPoint, google_admin)
 #db_field = SamplingPoint._meta.get_field('point')
