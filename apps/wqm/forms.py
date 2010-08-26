@@ -4,10 +4,8 @@ from django.contrib.gis import forms
 from django.contrib.admin import widgets
 from django.forms.fields import CharField
 from django.contrib.gis.admin.options import GeoModelAdmin
-from wqm.admin import google_admin
-#from django.forms.extras.widgets import SelectDateWidget
-#from django.forms.widgets import Input
-#from django.utils.safestring import mark_safe
+
+from wqm.admin import PointWidget
 
 from wqm.models import *
 
@@ -16,20 +14,20 @@ class DateForm(forms.Form):
     enddate = forms.DateField(widget = widgets.AdminDateWidget())
 
 
-geomodeladmin =  GeoModelAdmin(SamplingPoint, google_admin)
-db_field = SamplingPoint._meta.get_field('point')
+#geomodeladmin =  GeoModelAdmin(SamplingPoint, google_admin)
+#db_field = SamplingPoint._meta.get_field('point')
+ 
+
  
 class SamplingPointForm(ModelForm):
-    point = forms.CharField(widget=geomodeladmin.get_map_widget(db_field))
+    point = forms.CharField(widget=PointWidget())
     
     class Meta:
         model = SamplingPoint
         exclude = ('longitude','latitude','modified','created','type','parent')
     
     class Media:
-                js = (
-                    "http://openlayers.org/api/2.6/OpenLayers.js",
-                 )
+                js = ("http://openlayers.org/api/2.6/OpenLayers.js",)
  
 #class GMapInput(Input):
 #    """

@@ -68,7 +68,7 @@ def get_normality(this_sample):
         a = NormalRange.objects.filter(value_rule__parameter = result.parameter)
         for kk in a:
             # Normal
-            if kk.minimum <  int(result.value) and int(result.value)  < kk.maximum:
+            if float(kk.minimum) <  float(result.value) and float(result.value)  < float(kk.maximum):
                 pass
             else:
                 # Abnormal

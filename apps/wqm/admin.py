@@ -50,8 +50,8 @@ admin.site.register(SamplingPoint, SamplingPointAdmin)
 admin.site.register(DeliverySystem)
 
 class SamplingPointAdminGoogle(admin.OSMGeoAdmin):
-    extra_js = [GMAP.api_url + GMAP.key]
-    map_template = 'wqm/admin/google.html'
+    #extra_js = [GMAP.api_url + GMAP.key]
+    #map_template = 'wqm/admin/google.html'
     
     list_display = ('name', 'wqmarea', 'modified', 'created')
     search_fields = ('name', 'wqmarea', 'modified', 'created')
@@ -70,3 +70,11 @@ class SamplingPointAdminGoogle(admin.OSMGeoAdmin):
 # Register the google enabled admin site
 google_admin = admin.AdminSite()
 google_admin.register(SamplingPoint, SamplingPointAdminGoogle)
+
+# Getting an instance so we can generate the map widget; also
+# getting the geometry field for the model.
+admin_instance = SamplingPointAdminGoogle(SamplingPoint, admin.site)
+point_field = SamplingPoint._meta.get_field('point')
+
+# Generating the widget.
+PointWidget = admin_instance.get_map_widget(point_field)
