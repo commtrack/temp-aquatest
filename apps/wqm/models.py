@@ -26,8 +26,7 @@ class WqmArea(WqmLocation):
         return self.name
 
 class DeliverySystem(models.Model):
-    name = models.CharField(max_length=100, 
-                            help_text="house connection, public tap, borehole, protected spring, unprotected spring, river, dam or lake, reservoir,distribution system")
+    name = models.CharField(max_length=100)
     
     def __unicode__(self):
         return self.name
@@ -35,14 +34,16 @@ class DeliverySystem(models.Model):
 class SamplingPoint(WqmLocation):
     """ The point the tests are done """
     
-    POINT_TYPE_CHOICES = (
-                                  ("ground", "Ground"),
-                                  ("surface","Surface"),
-                                  )
+    POINT_TYPE_CHOICES = (                        
+        ("ground", "Ground"),
+        ("surface","Surface"),
+    )
+    
     TREATMENT_CHOICES = (
-                          ('treated', 'Treated'),
-                          ('untreated', 'Untreated'),
-                          )
+        ('treated', 'Treated'),
+        ('untreated', 'Untreated'), 
+    )
+    
     wqmarea = models.ForeignKey(WqmArea)
     point_type = models.CharField(max_length=30, choices=POINT_TYPE_CHOICES)
     delivery_system = models.ForeignKey(DeliverySystem)
